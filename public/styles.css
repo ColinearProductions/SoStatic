@@ -1,0 +1,27 @@
+.main {
+
+    height: calc(100vh - 50px);
+    flex-shrink: 0;
+}
+
+.header .mdl-layout__header-row {
+    padding-left: 40px;
+}
+
+
+.layout.is-small-screen .content {
+    padding: 40px 28px;
+}
+
+
+.footer .mdl-mini-footer--link-list a {
+    font-size: 13px;
+}
+
+.footer {
+    height: 50px;
+    padding-left: 40px;
+    margin-top: -50px;
+    padding-top:10px;
+    padding-bottom:0;
+}
