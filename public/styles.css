@@ -1,27 +1,37 @@
-.main {
-
-    height: calc(100vh - 50px);
-    flex-shrink: 0;
+.page-footer{
+    padding-top:0;
 }
 
-.header .mdl-layout__header-row {
-    padding-left: 40px;
+.p-10{
+    padding:10px;
+}
+
+.header{
+    color: #ee6e73;
+    font-weight: 300;
+}
+
+.neck{
+    background-color: #ee6e73;
+    width:100%;
+    height:500px;
+}
+
+.p-b-60{
+    padding-bottom:60px;
+}
+
+.p-t-60{
+    padding-top:60px;
 }
 
 
-.layout.is-small-screen .content {
-    padding: 40px 28px;
+.m-0{
+    margin:0;
 }
 
+.h1{
+    font-size: 4.2rem;
+    line-height: 110%;
 
-.footer .mdl-mini-footer--link-list a {
-    font-size: 13px;
-}
-
-.footer {
-    height: 50px;
-    padding-left: 40px;
-    margin-top: -50px;
-    padding-top:10px;
-    padding-bottom:0;
 }

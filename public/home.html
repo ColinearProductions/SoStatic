@@ -1,52 +1,155 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-    <title>Material Design Lite</title>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
 <body>
-<div class="layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
 
 
-    <main class="main mdl-layout__content">
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Logo</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+
+            <li><a href="badges.html">Pricing</a></li>
+            <li><a href="collapsible.html">Documentation</a></li>
+            <li><a class="waves-effect waves-light btn">Login</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style="z-index:1000">
+            <li><a href="badges.html">Pricing</a></li>
+            <li><a href="collapsible.html">Documentation</a></li>
+            <li><a class="waves-effect waves-light btn">Login</a></li>
+
+        </ul>
+    </div>
+</nav>
 
 
-        <header class="header mdl-layout__header ">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Material Design Lite</span>
-                <div class="mdl-layout-spacer"></div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                        <i class="material-icons">search</i>
-                    </label>
-                    <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="search">
-                        <label class="mdl-textfield__label" for="search">Enter your query...</label>
-                    </div>
+<main>
+
+    <div class="section" id="index-banner" style="height:calc( 100vh - 64px); ">
+        <div class="valign-wrapper" style="height:100%">
+            <div class="container ">
+                <h1 class="header center">SoStatic.xyz</h1>
+                <div class="row center">
+                    <h4 class="header col s12 light center">Simplest way to submit forms directly to email without a
+                        server.</h4>
                 </div>
+                <div class="row center">
+                    <a href="http://materializecss.com/getting-started.html" id="download-button"
+                       class="btn-large waves-effect waves-light">Get Started</a>
+                </div>
+                <div class="row center"><a class="red-text text-lighten-4"
+                                           href="https://github.com/Dogfalo/materialize">beta
+                    release v0.100.2</a></div>
+
+
             </div>
-        </header>
-
-
-
-    </main>
-
-    <footer class="footer mdl-mini-footer">
-        <div class="mdl-mini-footer--left-section">
-            <ul class="mdl-mini-footer--link-list">
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Privacy and Terms</a></li>
-                <li><a href="#">User Agreement</a></li>
-            </ul>
         </div>
-    </footer>
-</div>
-<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    </div>
+
+    <div class="container">
+    <h1 class="header center p-b-60">How it works</h1>
+    <div>
+
+
+        <h3 class="header center p-b-60">1. How it works</h3>
+        <div class="row" >
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+
+
+                <p  class="flow-text m-0">Some security-sensitive actions—such as deleting an account, setting a primary email address,
+                    and changing a password—require that the user has recently signed in. If you perform one of
+                    these actions, and the user signed in too long ago, the action fails with an error. When this
+                    happens, re-authenticate the user by getting new sign-in credentials from the user and passing
+                    the credentials to reauthenticateWithCredential. For example:</p>
+
+            </div>
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+                <img class="responsive-img" src="http://materializecss.com/images/responsive.png">
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        <h3 class="header center p-b-60 p-t-60">2. How it works</h3>
+
+
+        <div class="row" >
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+                <img class="responsive-img" src="http://materializecss.com/images/responsive.png">
+            </div>
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+
+
+                <p  class="flow-text m-0">Some security-sensitive actions—such as deleting an account, setting a primary email address,
+                    and changing a password—require that the user has recently signed in. If you perform one of
+                    these actions, and the user signed in too long ago, the action fails with an error. When this
+                    happens, re-authenticate the user by getting new sign-in credentials from the user and passing
+                    the credentials to reauthenticateWithCredential. For example:</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+        <h3 class="header center p-b-60 p-t-60">3. How it works</h3>
+
+        <div class="row" >
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+
+
+                <p  class="flow-text m-0"> Some security-sensitive actions—such as deleting an account, setting a primary email address,
+                    and changing a password—require that the user has recently signed in. If you perform one of
+                    these actions, and the user signed in too long ago, the action fails with an error. When this
+                    happens, re-authenticate the user by getting new sign-in credentials from the user and passing
+                    the credentials to reauthenticateWithCredential. For example:</p>
+
+            </div>
+            <div class="col l6 s12" style="padding-left:40px; padding-right: 40px;">
+                <img class="responsive-img" src="http://materializecss.com/images/responsive.png">
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</main>
+
+
+<footer class="page-footer">
+
+    <div class="footer-copyright">
+        <div class="container">
+            © 2018 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
+
+
 </body>
+<script>
+    $(".button-collapse").sideNav();
+</script>
 </html>
