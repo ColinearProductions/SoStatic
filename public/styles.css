@@ -17,8 +17,25 @@
     height:500px;
 }
 
+.p-0{
+    padding:0 !important;
+}
+
+.m-x-60{
+    margin-top:60px;
+    margin-bottom:60px;
+}
+
+.p-20{
+    padding:20px !important;
+}
+
 .p-b-60{
     padding-bottom:60px;
+}
+
+.p-b-30{
+    padding-bottom: 30px;
 }
 
 .p-t-60{
@@ -27,8 +44,9 @@
 
 
 .m-0{
-    margin:0;
+    margin:0 !important;
 }
+
 
 .h1{
     font-size: 4.2rem;
