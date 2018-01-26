@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Compiled and minified JavaScript -->
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+</head>
+<body>
+
+
+<main>
+
+    <div class="section   deep-purple lighten-2 valign-wrapper"
+         style="height:calc( 100vh ); background-image: url('images/Photoshop/Untitled-1.png') ">
+
+        <div class="container ">
+
+
+
+            <div class="row m-0" style="width:100%; background-color:whitesmoke">
+                <div class="">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a href="#login_tab" class="deep-purple-text  text-lighten-1">Login</a></li>
+                        <li class="tab col s3"><a href="#register_tab"  class="deep-purple-text  text-lighten-1">Register</a></li>
+                        <li class="tab col s3"><a href="#recover_tab"  class="deep-purple-text  text-lighten-1">Recover</a></li>
+                        <div class="indicator deep-purple lighten-1" style="z-index:1"></div>
+                    </ul>
+                </div>
+
+
+
+
+
+                <div id="login_tab" class="col s12 p-20" style="height:55vh; width:100%">
+                    <div class="valign-wrapper" style="height:100%">
+
+                        <div class="col xl8 s10 offset-xl2 offset-s1">
+                            <h3 class="header m-0  deep-purple-text  text-lighten-1"> Login </h3>
+                            <div class="row">
+                                <div class="input-field col s12 ">
+                                    <input id="login_email" type="email" class="validate m-0  deep-purple-text  text-lighten-1">
+                                    <label for="login_email" class=" deep-purple-text  text-lighten-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="login_password" type="password" class="validate m-0   deep-purple-text  text-lighten-1">
+                                    <label for="login_password"  class=" deep-purple-text  text-lighten-1">Password</label>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <a class="waves-effect waves-light btn center-align deep-purple lighten-1">Login</a>
+
+
+                            </div>
+                            <a class="deep-purple-text text-lighten-3 goto_tab center-align" data-target="recover_tab"
+                               href="#!">Forgot your password?</a>
+                            <a class="deep-purple-text text-lighten-3  goto_tab center-align"
+                               style="float: left; padding-right:20px;" data-target="register_tab" href="#!">Dont have
+                                an account?</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="register_tab" class="col p-20" style="height:55vh; width:100%">
+
+                    <div class="valign-wrapper" style="height:100%">
+                        <div class="col xl8 s10 offset-xl2 offset-s1">
+                            <h3 class="header m-0 deep-purple-text  text-lighten-1"> Register </h3>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="email" type="email" class="validate m-0">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate m-0">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+
+                            <p>
+                                <input type="checkbox" class="purple-checkbox" id="test5"/>
+                                <label for="test5" class="deep-purple-text text-lighten-2">Subscribe to our newsletter</label>
+                            </p>
+
+                            <a class="waves-effect waves-light btn  deep-purple lighten-1">Register</a>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="recover_tab" class="col p-20" style="height:55vh; width:100%">
+                    <div class="valign-wrapper" style="height:100%">
+                        <div class="col xl8 s10 offset-xl2 offset-s1">
+                            <h3 class="header m-0 deep-purple-text  text-lighten-1"> Recover </h3>
+                            <h6> Enter your email, we will send you the steps required to recover your account</h6>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="recover_email" type="email" class="validate m-0">
+                                    <label for="recover_email">Email</label>
+                                </div>
+                            </div>
+
+                            <a class="waves-effect waves-light btn  deep-purple lighten-1">Send Recovery Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row m-0 right-align">
+                    <a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1" style="margin-right:30px; margin-bottom:30px;" href="index.html"><i class="material-icons">arrow_back</i></a>
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+</body>
+<script>
+    $(".button-collapse").sideNav();
+
+    $(document).ready(function () {
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+        $('ul.tabs').tabs();
+    });
+
+
+    function select_tab(id) {
+        $('ul.tabs').tabs('select_tab', id);
+    }
+
+    $(".goto_tab").on("click", function () {
+        select_tab($(this).data("target"));
+    });
+
+
+    function show_login_modal() {
+        $("#login_modal").modal("open");
+        select_tab("login_tab");
+    }
+
+    function show_register_modal() {
+        $("#login_modal").modal("open");
+        select_tab("register_tab");
+        select_tab("register_tab");
+    }
+
+
+    $(".smooth_scroll").on('click', function (event) {
+        event.preventDefault();
+
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top
+        }, 500);
+
+    });
+
+</script>
+</html>
