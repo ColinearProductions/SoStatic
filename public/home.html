@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script>
+        var redirectLogin = false
+    </script>
+
+
+</head>
+<body>
+
+
+<nav>
+    <div class="nav-wrapper  deep-purple  darken-1">
+        <a href="#!" class="brand-logo"></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+
+            <li><a href="badges.html">Pricing</a></li>
+            <li><a href="collapsible.html">Documentation</a></li>
+            <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"  onclick="logout()">Logout</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style="z-index:1000">
+            <li><a href="badges.html">Pricing</a></li>
+            <li><a href="collapsible.html">Documentation</a></li>
+            <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!" onclick="logout()">Logout</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<main>
+
+    <div class="section   deep-purple lighten-2" style="height:calc( 100vh - 64px); background-image: url('images/Photoshop/Untitled-1.png') ">
+        <div class="valign-wrapper" style="height:100%">
+            <div class="container ">
+                <h1 class="header center white-text">HOME</h1>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<footer class="page-footer  deep-purple  lighten-1">
+
+    <div class="footer-copyright">
+        <div class="container">
+            © 2018 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script type="text/javascript" src="script.js"></script>
+
+
+<script>
+    $(".button-collapse").sideNav();
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        console.log(user);
+        if (!user) {
+                window.location.href = "index.html";
+        }
+    });
+
+
+
+
+</script>
+</html>

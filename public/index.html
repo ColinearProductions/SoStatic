@@ -15,6 +15,13 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        var redirectLogin = true;
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+
+
 
 </head>
 <body>
@@ -46,7 +53,7 @@
         <div class="valign-wrapper" style="height:100%">
             <div class="container ">
                 <h1 class="header center white-text">SoStatic.xyz</h1>
-                <div class="row center">
+                <div class="row center p-20">
                     <h4 class="header col s12 white-text center">Simplest way to submit forms directly to email without a
                         server.</h4>
                 </div>
@@ -157,25 +164,16 @@
 
 
 </body>
+
+
+
+
 <script>
     $(".button-collapse").sideNav();
 
-    $(document).ready(function () {
-        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-        $('ul.tabs').tabs();
-    });
 
 
 
-    $(".smooth_scroll").on('click', function (event) {
-        event.preventDefault();
-
-        $('html, body').animate({
-            scrollTop: $($.attr(this, 'href')).offset().top
-        }, 500);
-
-    });
 
 </script>
 </html>
