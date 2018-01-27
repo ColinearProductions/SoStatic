@@ -21,7 +21,6 @@
     <script type="text/javascript" src="script.js"></script>
 
 
-
 </head>
 <body>
 
@@ -32,25 +31,25 @@
          style="height:calc( 100vh ); background-image: url('images/Photoshop/Untitled-1.png') ">
 
         <div class="overlay-container valign-wrapper " style="display:none">
-                    <div class="card-panel center p-40">
-                        <div class="preloader-wrapper big active">
-                            <div class="spinner-layer spinner-blue-only">
-                                <div class="circle-clipper left">
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="gap-patch">
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="circle-clipper right">
-                                    <div class="circle"></div>
-                                </div>
-                            </div>
+            <div class="card-panel center p-40">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
                         </div>
-
-                        <p class="overlay-message">
-                            We are creating your account
-                        </p>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
                     </div>
+                </div>
+
+                <p class="overlay-message">
+                    We are creating your account
+                </p>
+            </div>
         </div>
 
 
@@ -96,7 +95,8 @@
 
 
                             <div class="row">
-                                <a class="waves-effect waves-light btn center-align deep-purple lighten-1" onclick="onLoginPressed()">Login</a>
+                                <a class="waves-effect waves-light btn center-align deep-purple lighten-1"
+                                   onclick="onLoginPressed()">Login</a>
 
 
                             </div>
@@ -116,13 +116,15 @@
                             <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="register_email" type="email" class=" deep-purple-text  text-lighten-1 validate m-0">
+                                    <input id="register_email" type="email"
+                                           class=" deep-purple-text  text-lighten-1 validate m-0">
                                     <label for="register_email">Email</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="register_password" type="password" class=" deep-purple-text  text-lighten-1 validate m-0">
+                                    <input id="register_password" type="password"
+                                           class=" deep-purple-text  text-lighten-1 validate m-0">
                                     <label for="register_password">Password</label>
                                 </div>
                             </div>
@@ -147,12 +149,13 @@
                             <h6> Enter your email, we will send you the steps required to recover your account</h6>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="recover_email" type="email" class=" deep-purple-text  text-lighten-1 validate m-0">
+                                    <input id="recover_email" type="email"
+                                           class=" deep-purple-text  text-lighten-1 validate m-0">
                                     <label for="recover_email">Email</label>
                                 </div>
                             </div>
 
-                            <a class="waves-effect waves-light btn  deep-purple lighten-1">Send Recovery Email</a>
+                            <a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!" onclick="onSendRecoveryEmailPressed()">Send Recovery Email</a>
                         </div>
                     </div>
                 </div>
@@ -202,38 +205,13 @@
     var loginEmailField = $("#login_email");
     var loginPasswordField = $("#login_password");
 
+    var recoveryEmailField = $("#recover_email");
+
 
     var state = null;
 
-
-    function onRegisterPressed() {
-        register($(registerEmailField).val(), $(registerPasswordField).val());
-        state= "registering";
-        showLoading("We are creating your account...");
-    }
-
-    function onLoginPressed() {
-        login($(loginEmailField).val(), $(loginPasswordField).val());
-        state = "logging-in";
-        showLoading("Logging in");
-    }
-
-    function onRegisterError(error) {
-
-        hideLoading();
-        state=null;
-        alert(error.message);
-    }
-
-    function onLoginError(error) {
-
-        hideLoading();
-        state=null;
-        alert(error.message);
-    }
-
-
     var overlay = $(".overlay-container");
+
 
     function showLoading(message) {
         $(overlay).find(".overlay-message").text(message);
@@ -245,35 +223,63 @@
     }
 
 
+    function onRegisterPressed() {
+        register($(registerEmailField).val(), $(registerPasswordField).val(), function (error) {
+            hideLoading();
+            state = null;
+            alert(error.message);
+        });
+        state = "registering";
+        showLoading("We are creating your account...");
+    }
+
+    function onLoginPressed() {
+        login($(loginEmailField).val(), $(loginPasswordField).val(), function (error) {
+            hideLoading();
+            state = null;
+            alert(error.message);
+        });
+        state = "logging-in";
+        showLoading("Logging in");
+    }
+
+
+    function onSendRecoveryEmailPressed(){
+        showLoading("Sending recovery email");
+        forgotPassword($(recoveryEmailField).val(), function (error) {
+            if(error === undefined){
+                Materialize.toast('You should receive a recovery email soon', 4000); // 4000 is the duration of the toast
+            }else{
+                Materialize.toast('There has been an error: ' + error.message, 4000); // 4000 is the duration of the toast
+            }
+            hideLoading();
+        })
+    }
+
+
 
 
     firebase.auth().onAuthStateChanged(function (user) {
         console.log(user);
         if (user) {
 
-            if(state==="registering"){
+            if (state === "registering") {
                 hideLoading();
                 Materialize.toast('Succesfully registered', 4000);// 4000 is the duration of the toast
-                state=null;
-            }else if(state==="logging-in"){
+                state = null;
+            } else if (state === "logging-in") {
                 hideLoading();
-                state=null;
+                state = null;
                 Materialize.toast('Succesfully logged in', 4000); // 4000 is the duration of the toast
-            }else{
-                Materialize.toast('Welcome back ' +user.email, 4000); // 4000 is the duration of the toast
+            } else {
+                Materialize.toast('Welcome back ' + user.email, 4000); // 4000 is the duration of the toast
             }
-
-
 
 
         } else {
             hideLoading();
         }
     });
-
-
-
-
 
 
 </script>

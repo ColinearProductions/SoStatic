@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
 
     <link rel="stylesheet" href="styles.css">
 
@@ -20,29 +20,43 @@
 <body>
 
 
-<nav>
-    <div class="nav-wrapper  deep-purple  darken-1">
-        <a href="#!" class="brand-logo"></a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
+<header>
 
-            <li><a href="badges.html">Pricing</a></li>
-            <li><a href="collapsible.html">Documentation</a></li>
-            <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"  onclick="logout()">Logout</a></li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo" style="z-index:1000">
-            <li><a href="badges.html">Pricing</a></li>
-            <li><a href="collapsible.html">Documentation</a></li>
-            <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!" onclick="logout()">Logout</a></li>
+    <nav class="top-nav dropshadow deep-purple  darken-1">
+        <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+            <i class="material-icons">menu</i>
+        </a></div>
+    </nav>
 
-        </ul>
-    </div>
-</nav>
+    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+
+        <div class="valign-wrapper deep-purple" style="height:64px; background: red;">
+
+
+                        <span class="logo-text white-text" style="width:100%; text-align: center;">Materialize</span>
+
+
+        </div>
+
+
+
+        <li class="bold"><a href="about.html" class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="getting-started.html" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="bold"><a href="mobile.html" class="waves-effect waves-teal">Mobile</a></li>
+        <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
+        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
+        <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"  onclick="logout()">Logout</a></li>
+    </ul>
+
+</header>
+
 
 
 <main>
 
-    <div class="section   deep-purple lighten-2" style="height:calc( 100vh - 64px); background-image: url('images/Photoshop/Untitled-1.png') ">
+    <div class="section   deep-purple lighten-2" style="height:calc( 93vh - 45px); background-image: url('images/Photoshop/Untitled-1.png') ">
+
+
         <div class="valign-wrapper" style="height:100%">
             <div class="container ">
                 <h1 class="header center white-text">HOME</h1>
@@ -58,9 +72,9 @@
 </main>
 
 
-<footer class="page-footer  deep-purple  lighten-1">
+<footer class="page-footer ">
 
-    <div class="footer-copyright">
+    <div class="footer-copyright  deep-purple  lighten-1" style="min-height:5vh; padding-top:1vh; padding-bottom:1vh">
         <div class="container">
             © 2018 Copyright Text
             <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
@@ -83,9 +97,8 @@
 
 
     firebase.auth().onAuthStateChanged(function (user) {
-        console.log(user);
         if (!user) {
-                window.location.href = "index.html";
+                window.location.href = "authentication.html";
         }
     });
 

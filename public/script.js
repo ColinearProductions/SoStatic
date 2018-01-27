@@ -17,18 +17,18 @@ firebase.initializeApp(config);
 
 
 
-function register(user, pass) {
+function register(user, pass, callback) {
     firebase.auth().createUserWithEmailAndPassword(user, pass).catch(function (error) {
         console.log(error.message);
-        onRegisterError(error);
+        callback(error);
     });
 }
 
 
-function login(user, pass) {
+function login(user, pass, callback) {
     firebase.auth().signInWithEmailAndPassword(user, pass).catch(function (error) {
         console.log(error.message);
-        onLoginError(error);
+        callback(error)
     });
 }
 
@@ -37,6 +37,15 @@ function logout(){
         console.log('Signed Out');
     }, function(error) {
         console.error('Sign Out Error', error);
+    });
+}
+
+
+function forgotPassword(email, callback){
+    firebase.auth().sendPasswordResetEmail(email).then(function() {
+        callback();
+    }).catch(function(error) {
+        callback(error);
     });
 }
 
