@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     console.log(user);
     if (user) {
         if(redirectLogin)
-            window.location.href = "home.html";
+            window.location.href = "dashboard.html";
 
     }
 });

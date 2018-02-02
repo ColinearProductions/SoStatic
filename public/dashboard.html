@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="materialize.css">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script>
+        var redirectLogin = false
+    </script>
+
+
+</head>
+
+
+<style>
+
+    header, main, .page-footer, nav {
+        padding-left: 300px !important;
+    }
+
+    @media only screen and (max-width: 992px) {
+        header, main, .page-footer, nav {
+            padding-left: 0 !important;
+        }
+    }
+
+
+</style>
+
+<body style="background-color: #fcfcfc">
+
+
+<header>
+
+    <nav class="top-nav dropshadow deep-purple  darken-1">
+        <div class="container"><a href="#" data-activates="nav-mobile"
+                                  class="button-collapse top-nav full hide-on-large-only">
+            <i class="material-icons">menu</i>
+        </a></div>
+    </nav>
+
+    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+
+        <div class="valign-wrapper deep-purple" style="height:64px;">
+
+
+            <span class="logo-text white-text" style="width:100%; text-align: center;">Materialize</span>
+
+
+        </div>
+
+
+        <li class="bold active"><a href="dashboard.html" class="waves-effect waves-light "> <i class="material-icons">dashboard</i>
+            Dashboard</a></li>
+        <li class="bold"><a href="websites.html" class="waves-effect waves-light"> <i class="material-icons">web</i>
+            Websites</a></li>
+        <li class="bold"><a href="#!" class="waves-effect waves-light"> <i
+                class="material-icons">insert_comment</i> Messages</a></li>
+        <li class="bold"><a href="#!" class="waves-effect waves-light"> <i class="material-icons">settings</i>
+            Settings</a></li>
+
+        <li><a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!" onclick="logout()">Logout</a></li>
+    </ul>
+
+</header>
+
+
+<main>
+
+    <div class="section "
+         style="height:calc( 93vh - 45px); background-image: url('images/Photoshop/Untitled-1.png'); padding-right:1rem; padding-left:1rem ">
+
+
+        <div class="fixed-action-btn" style="bottom: 65px; right: 24px;">
+            <a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1" ><i class="material-icons">add</i></a>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col s12 p-x-10">
+                <a class="waves-effect waves-teal btn-flat p-0 bold deep-purple-text " style="font-size:22px"><i class="material-icons left">add</i> Add Website</a>
+            </div>
+        </div>
+        <div class="row" style="width:100%;">
+
+            <div class="col s12 m4">
+                <div class="card" style="min-width:100%">
+                    <div class="card-content black-text">
+                        <div>
+                            <span class=" deep-purple-text m-0" style="font-size:30px;">Website Name</span><br>
+                            <a class="deep-purple-text lighten-5" style="font-size:17px;">http://sostatic.xyz</a>
+
+                            <p class="bold deep-purple-text lighten-1 m-t-20 " >
+                                Forms  2/3
+                            </p>
+                            <div class="progress deep-purple lighten-4">
+                                <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
+                            </div>
+
+                            <p class="bold deep-purple-text lighten-1 m-t-20">
+                                Messages  281/2000
+                            </p>
+                            <div class="progress deep-purple lighten-4">
+                                <div class="determinate deep-purple lighten-1" style="width: 14%"></div>
+                            </div>
+
+
+                            <p class="bold deep-purple-text lighten-1 m-t-20" >
+                                Recaptcha <small class="red-text lighten-4"> disabled </small>
+                            </p>
+
+
+
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="card-action">
+                        <a href="#" class="bold deep-purple-text lighten-2" >Go to website</a>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<footer class="page-footer ">
+
+    <div class="footer-copyright  deep-purple  lighten-1" style="min-height:5vh; padding-top:1vh; padding-bottom:1vh">
+        <div class="container">
+            © 2018 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script type="text/javascript" src="script.js"></script>
+
+
+<script>
+    $(".button-collapse").sideNav();
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            window.location.href = "authentication.html";
+        }
+    });
+
+
+</script>
+</html>
