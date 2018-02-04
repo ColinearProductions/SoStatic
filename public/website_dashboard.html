@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+        <li class="valign-wrapper " style="height:64px;">
+            <span class="logo-text " style="width:100%; text-align: center;">Materialize</span>
+        </li>
+        <li class="bold ">
+            <a href="dashboard.html" class="waves-effect waves-light ">
+                <i class="material-icons">dashboard</i>
+                Dashboard
+            </a>
+        </li>
+        <li class="bold active">
+            <a href="websites.html" class="waves-effect waves-light">
+                <i class="material-icons">web</i>
+                Websites
+            </a>
+        </li>
+        <li class="bold">
+            <a href="messages.html" class="waves-effect waves-light"> <i
+                    class="material-icons">insert_comment</i>
+                Messages</a>
+        </li>
+        <li class="bold">
+            <a href="settings.html" class="waves-effect waves-light">
+                <i class="material-icons">settings</i>
+                Settings
+            </a>
+        </li>
+
+        <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
+    </ul>
+</header>
+<main class="with-sidenav">
+    <div class="section" style="height:calc( 93vh - 45px); padding:0">
+
+        <!--FAB-->
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large deep-purple tooltipped modal-trigger" data-position="left" data-delay="50"
+               data-tooltip="Add Form" href="#add_form_modal">
+                <i class="material-icons ">add</i>
+            </a>
+        </div>
+
+        <!-- Navbar -->
+        <nav>
+            <div class="nav-wrapper deep-purple  " style="padding-left:20px;">
+                <a href="#" data-activates="nav-mobile"
+                   class="button-collapse top-nav full hide-on-large-only">
+                    <i class="material-icons">menu</i>
+                </a>
+                <div class="col s12">
+                    <a href="#!" class="breadcrumb">Websites</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Content -->
+        <div style="padding:1vh">
+
+            <div class="row" style="width:100%;">
+
+
+                <div class="col l6 m12 s12">
+                    <div class="card" style="min-width:100%">
+                        <div class="card-content black-text mh1">
+                            <div>
+                                <span class=" deep-purple-text m-0" style="font-size:30px;">Website Info</span><br>
+                                <a class="deep-purple-text text-lighten-1 p-5" style="font-size:17px;">http://sostatic.xyz</a>,
+                                <a class="deep-purple-text text-lighten-2 p-5" style="font-size:14px;">http://sostatic.xyz</a>,
+                                <a class="deep-purple-text text-lighten-2 p-5" style="font-size:14px;">http://sostatic.xyz</a>
+
+                                <div class="row m-t-10">
+
+                                    <p style="display:inline-block">
+                                        <input type="checkbox" class="purple-checkbox" id="test5"/>
+                                        <label for="test5" class="deep-purple-text text-lighten-2 checkbox-label">Include
+                                            HTTPs</label>
+                                    </p>
+                                </div>
+
+
+                                <p class="bold deep-purple-text lighten-1 m-t-20  ">
+                                    ReCAPTCHA
+                                    <small style="font-size:12px;">Disabled</small>
+                                </p>
+
+                                <p class="bold deep-purple-text lighten-1  m-b-10 " style="font-size:14px;">
+                                    Secret
+                                </p>
+
+
+                                <a class="deep-purple-text text-lighten-2 p-10 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
+
+
+                                <p class="bold deep-purple-text lighten-1 m-b-10 " style="font-size:14px;">
+                                    Site-key
+                                </p>
+
+
+                                <a class="deep-purple-text text-lighten-2 p-10 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="card-action">
+                            <a href="#edit_website_modal" class="bold deep-purple-text lighten-2 modal-trigger">Edit</a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col l6 m12 s12">
+                    <div class="card" style="min-width:100%">
+                        <div class="card-content black-text mh1">
+                            <div>
+                                <span class=" deep-purple-text m-0" style="font-size:30px;">Contacts</span><br>
+
+
+                                <ul class="collection ">
+
+                                    <li class="collection-item">
+                                        <div>Alvin
+                                            <a href="#!" class="secondary-content">
+                                                <i class="material-icons">delete</i>
+                                                <i class="material-icons">pause</i>
+                                                <i class="material-icons">mode_edit</i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li class="collection-item">
+                                        <div>Alvin
+                                            <a href="#!" class="secondary-content">
+                                                <i class="material-icons">delete</i>
+                                                <i class="material-icons">pause</i>
+                                                <i class="material-icons">mode_edit</i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="card-action">
+                            <a href="#edit_website_modal" class="bold deep-purple-text lighten-2 modal-trigger">Add</a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col s12 ">
+                    <h5 class="m-0 deep-purple-text text-lighten-1"> Forms</h5>
+                </div>
+
+
+                <div class="col l4 m6 s12">
+                    <div class="card">
+                        <div class="card-content black-text ">
+                            <div>
+                                <span class=" deep-purple-text " style="font-size:26px;"> Form alias</span><br>
+                                <a class="deep-purple-text text-lighten-2" style="font-size:12px;">Added on
+                                    18-01-2017</a>
+                                <br>
+
+                                <p class="bold deep-purple-text lighten-1 m-t-20 " style="font-size:18px;">
+                                    Messages 2/3
+                                </p>
+
+
+                                <div class="progress deep-purple lighten-4">
+                                    <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
+                                </div>
+
+
+                                <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
+                                    ReCAPTCHA
+                                    <small style="font-size:12px;">Disabled</small>
+                                </p>
+
+                                <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
+                                    Endpoint:
+                                </p>
+
+                                <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate">http://localhost:63342/SoStatic/public/individual_websit</a>
+
+                                <a class="p-10 bold deep-purple-text modal-trigger" href="#boilerplate_modal">Generate
+                                    form boilerplate</a>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="card-action">
+                            <a href="individual_website.html" class="bold deep-purple-text lighten-2">Edit</a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Boilerplate Modal -->
+            <div id="boilerplate_modal" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Modal Header</h4>
+                    <h6>Here is a sample code, filled with your information, for a form that will post to our
+                        service</h6>
+
+                    <pre>
+                <code class="language-markup">
+                    <script type="prism-html-markup">
+<form action="/action_page.php" target="_blank" method="GET">
+    First name:<br>
+    <input type="text" name="firstname" value="Mickey">
+    <br>
+    Last name:<br>
+    <input type="text" name="lastname" value="Mouse">
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+                    </script>
+                </code>
+            </pre>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                    <a href="#!" class="modal-action waves-effect waves-green btn-flat ">Copy</a>
+                </div>
+            </div>
+
+            <!-- Add form Modal -->
+            <div id="add_form_modal" class="modal small-modal">
+                <div class="modal-content">
+
+
+                    <div class="container">
+
+                        <h4>Add form</h4>
+
+
+                        <div class="input-field tooltipped "
+                             data-tooltip="Email to redirect the messages to (can add more later)" data-position="top">
+                            <input id="last_name6" type="text">
+                            <label for="last_name6" class="">Form Alias</label>
+                        </div>
+
+
+                        <p class="bold deep-purple-text lighten-1 m-0  ">
+                            ReCAPTCHA
+                        </p>
+
+
+                        <div class="switch  tooltipped m-t-10" data-tooltip="Enable message filtering with recaptcha"
+                             data-position="top" style="display:inline-block">
+                            <label>
+                                Off
+                                <input type="checkbox">
+                                <span class="lever deep-purple lighten-4"></span>
+                                On
+                            </label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+                </div>
+            </div>
+
+            <!-- Edit Website Modal -->
+            <div id="edit_website_modal" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Modal Header</h4>
+
+                    <div class="row">
+
+
+                        <div class="input-field col s6">
+
+                            <input id="icon_prefix" type="text" class="validate">
+                            <label for="icon_prefix">Alias</label>
+                        </div>
+                        <div class="input-field col s6">
+
+                            <input id="icon_telephone" type="tel" class="validate">
+                            <label for="icon_telephone">Email</label>
+                        </div>
+
+
+                        <div class="switch  tooltipped m-b-25 " data-tooltip="Enable message filtering with recaptcha"
+                             data-position="top" style="display:inline-block">
+                            <label>
+                                Single
+                                <input type="checkbox">
+                                <span class="lever deep-purple lighten-4"></span>
+                                Multiple
+                            </label>
+                        </div>
+
+                        <div class="input-field col s12" style="display:">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Paste a list of emails here</label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                </div>
+            </div>
+
+            <!-- Edit Contacts Modal -->
+            <div id="edit_contacts_modal" class="modal ">
+                <div class="modal-content">
+
+
+                    <div class="row">
+                        <div class="col m6 offset-m3 s12 ">
+                            <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
+
+                            <div class="input-field tooltipped " data-tooltip="An alias for your website"
+                                 data-position="right">
+                                <input id="last_name" class="m-b-5" type="text">
+                                <label for="last_name" class="">Website Name</label>
+                            </div>
+                            <div class="input-field tooltipped "
+                                 data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
+                                 data-position="right">
+                                <input id="last_name2" type="text">
+                                <label for="last_name2" class="">Website URL</label>
+                            </div>
+
+
+                            <p style="display:inline-block" class=" tooltipped "
+                               data-tooltip="Online consider messages sent from the HTTPS version of the site"
+                               data-position="right">
+                                <input type="checkbox" class="purple-checkbox" id="test5"/>
+                                <label for="test5" class="deep-purple-text text-lighten-2 checkbox-label">Only
+                                    HTTPs</label>
+                            </p>
+
+
+                            <div class="input-field tooltipped "
+                                 data-tooltip="Email to redirect the messages to (can add more later)"
+                                 data-position="right">
+                                <input id="last_name6" type="text">
+                                <label for="last_name6" class="">Contact EMAIL</label>
+                            </div>
+
+
+                            <p class="bold deep-purple-text lighten-1 m-0  ">
+                                ReCAPTCHA
+                            </p>
+
+
+                            <div class="switch  tooltipped m-t-10"
+                                 data-tooltip="Enable message filtering with recaptcha"
+                                 data-position="right" style="display:inline-block">
+                                <label>
+                                    Off
+                                    <input type="checkbox">
+                                    <span class="lever deep-purple lighten-4"></span>
+                                    On
+                                </label>
+                            </div>
+
+
+                            <div class="m-t-20">
+                                <div class="input-field">
+                                    <input id="last_name3" type="text">
+                                    <label for="last_name3" class="">ReCAPTCHA Secret</label>
+                                </div>
+
+                                <div class="input-field">
+                                    <input id="last_name4" type="text">
+                                    <label for="last_name4" class="">ReCAPTCHA Site-key</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+                    <a href="#!" class="  waves-effect waves-green btn-flat ">Confirm</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/prism.js"></script>
+<script type="text/javascript" src="js/matchHeight.js"></script>
+
+<script>
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            window.location.href = "authentication.html";
+        }
+    });
+
+
+</script>
+</html>

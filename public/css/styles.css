@@ -35,6 +35,10 @@
     margin-bottom:25px;
 }
 
+.m-b-0{
+    margin-bottom: 0;
+}
+
 .p-x-10{
     padding-top:10px;
     padding-bottom:10px;
@@ -80,6 +84,11 @@
     margin:0 !important;
 }
 
+
+.m-t-0{
+    margin-top: 0;
+}
+
 .m-t-20{
     margin-top:20px !important;
 }
@@ -103,7 +112,9 @@ li.active> a > i{
 }
 
 
-
+body{
+    background-color: #fcfcfc!important;
+}
 
 
 
@@ -231,3 +242,31 @@ li.active> a > i{
 
 }
 
+
+
+
+
+
+
+
+input.select-dropdown{
+    padding-bottom: 2px !important;
+    padding-top: 4px !important;
+    margin-bottom:0;
+}
+
+td, th{
+    padding: 10px 5px !important;
+}
+
+
+
+main.with-sidenav {
+    padding-left: 300px !important;
+}
+
+@media only screen and (max-width: 992px) {
+    main.with-sidenav {
+        padding-left: 0 !important;
+    }
+}

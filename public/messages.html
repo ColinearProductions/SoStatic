@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+        <li class="valign-wrapper " style="height:64px;">
+            <span class="logo-text " style="width:100%; text-align: center;">Materialize</span>
+        </li>
+        <li class="bold ">
+            <a href="dashboard.html" class="waves-effect waves-light ">
+                <i class="material-icons">dashboard</i>
+                Dashboard
+            </a>
+        </li>
+        <li class="bold ">
+            <a href="websites.html" class="waves-effect waves-light">
+                <i class="material-icons">web</i>
+                Websites
+            </a>
+        </li>
+        <li class="bold active">
+            <a href="messages.html" class="waves-effect waves-light"> <i
+                    class="material-icons">insert_comment</i>
+                Messages</a>
+        </li>
+        <li class="bold">
+            <a href="settings.html" class="waves-effect waves-light">
+                <i class="material-icons">settings</i>
+                Settings
+            </a>
+        </li>
+
+        <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
+    </ul>
+</header>
+<main class="with-sidenav">
+    <div class="section" style="height:calc( 93vh - 45px); padding:0">
+
+        <!--FAB-->
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large deep-purple tooltipped modal-trigger" data-position="left" data-delay="50"
+               data-tooltip="Add Form" href="#modal_id">
+                <i class="material-icons ">add</i>
+            </a>
+        </div>
+
+        <!-- Navbar -->
+        <nav>
+            <div class="nav-wrapper deep-purple  " style="padding-left:20px;">
+                <a href="#" data-activates="nav-mobile"
+                   class="button-collapse top-nav full hide-on-large-only">
+                    <i class="material-icons">menu</i>
+                </a>
+                <div class="col s12">
+                    <a href="#!" class="breadcrumb">Websites</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Content -->
+        <div style="padding:1vh">
+            <div class="row m-0">
+                <div class="col s12 ">
+                    <div class="card ">
+                        <div class="card-content white-text" style="padding-bottom:0; padding-top:10px;">
+                            <div class="row m-b-0">
+
+                                <h4 class="deep-purple-text m-t-0 m-b-5"> Filters </h4>
+
+                                <div class="col m2 s6 p-0">
+                                    <div class="input-field col s12 deep-purple-text">
+                                        <select>
+                                            <option value="0" selected>All</option>
+                                            <option value="1">Option 1</option>
+                                            <option value="2">Option 2</option>
+                                            <option value="3">Option 3</option>
+                                        </select>
+                                        <label>Website</label>
+                                    </div>
+                                </div>
+
+                                <div class="col m2 s6 p-0">
+                                    <div class="input-field col s12 deep-purple-text">
+                                        <select>
+                                            <option value="0" selected>All</option>
+                                            <option value="1">Option 1</option>
+                                            <option value="2">Option 2</option>
+                                            <option value="3">Option 3</option>
+                                        </select>
+                                        <label>Website</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col m2 s6">
+                                    <label for="birthdate" class="active">Starting From</label>
+                                    <input type="text" class="input-field datepicker deep-purple-text" id="birthdate" placeholder="Select start date">
+
+                                </div>
+
+                                <div class="col m2 s6">
+                                    <label for="birthdate2" class="active">Until</label>
+                                    <input type="text" class="input-field datepicker deep-purple-text" id="birthdate2" placeholder="Select start date">
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col s12 l4 xl4 ">
+                    <div class="card ">
+                        <div class="card-content white-text" >
+                            <div class="row m-b-0">
+
+                                <p class="deep-purple-text" style="font-size:24px">
+                                    Website >  <span style="font-size:20px;">  Form</span>
+                                </p>
+
+                                <p class="deep-purple-text text-lighten-3">
+                                    Received on
+                                </p>
+
+                                <div>
+                                    <table class="deep-purple-text">
+                                        <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Value</th>
+
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <td>Subject</td>
+                                            <td>Inquiry about the price</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Jellybean</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Message</td>
+                                            <td>Too long, view all
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4 class="right-align m-0"><a class="bold deep-purple-text" style="font-size:20px;" href="#!">
+                                    View all
+                                </a></h4>
+
+
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/prism.js"></script>
+<script type="text/javascript" src="js/matchHeight.js"></script>
+
+<script>
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            window.location.href = "authentication.html";
+        }
+    });
+
+
+</script>
+</html>
