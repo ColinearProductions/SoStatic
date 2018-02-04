@@ -115,78 +115,89 @@
 
             </div>
             <!-- Modal Structure -->
-            <div id="add_form_modal" class="modal ">
+
+            <div id="add_form_modal" class="modal">
                 <div class="modal-content">
 
 
-                    <div class="row">
-                        <div class="col m6 offset-m3 s12 ">
-                            <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
 
-                            <div class="input-field tooltipped "  data-tooltip="An alias for your website"  data-position="right">
-                                <input id="last_name" class="m-b-5" type="text" >
-                                <label for="last_name" class="">Website Name</label>
-                            </div>
-                            <div class="input-field tooltipped "  data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"  data-position="right">
-                                <input id="last_name2" type="text">
-                                <label for="last_name2" class="">Website URL</label>
-                            </div>
+                        <div class="row">
+                            <div class="col m6 offset-m3 s12 ">
+                                <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
 
-
-
-                            <p style="display:inline-block"  class=" tooltipped "  data-tooltip="Online consider messages sent from the HTTPS version of the site"  data-position="right">
-                                <input type="checkbox" class="purple-checkbox" id="test5"/>
-                                <label for="test5" class="deep-purple-text text-lighten-2 checkbox-label">Only HTTPs</label>
-                            </p>
-
-
-
-
-                            <div class="input-field tooltipped "  data-tooltip="Email to redirect the messages to (can add more later)"  data-position="right">
-                                <input id="last_name6" type="text">
-                                <label for="last_name6" class="">Contact EMAIL</label>
-                            </div>
-
-
-                            <p class="bold deep-purple-text lighten-1 m-0  ">
-                                ReCAPTCHA
-                            </p>
-
-
-                            <div class="switch  tooltipped m-t-10"  data-tooltip="Enable message filtering with recaptcha"  data-position="right" style="display:inline-block">
-                                <label>
-                                    Off
-                                    <input type="checkbox">
-                                    <span class="lever deep-purple lighten-4"></span>
-                                    On
-                                </label>
-                            </div>
-
-
-                            <div class="m-t-20">
-                                <div class="input-field">
-                                    <input id="last_name3" type="text">
-                                    <label for="last_name3" class="">ReCAPTCHA Secret</label>
+                                <div class="input-field tooltipped " data-tooltip="An alias for your website"
+                                     data-position="right">
+                                    <input id="website_alias" name="website_alias" class="m-b-5" type="text" value="website name">
+                                    <label for="website_alias">Website Name</label>
+                                </div>
+                                <div class="input-field tooltipped "
+                                     data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
+                                     data-position="right">
+                                    <input id="website_url" name="website_url" type="text" value="website url">
+                                    <label for="website_url">Website URL</label>
                                 </div>
 
-                                <div class="input-field">
-                                    <input id="last_name4" type="text">
-                                    <label for="last_name4" class="">ReCAPTCHA Site-key</label>
+
+                                <p style="display:inline-block" class="tooltipped"
+                                   data-tooltip="Online consider messages sent from the HTTPS version of the site"
+                                   data-position="right">
+                                    <input type="checkbox" class="purple-checkbox" id="only_https" name="only_https" checked/>
+                                    <label for="only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
+                                        HTTPs</label>
+                                </p>
+
+
+                                <div class="input-field tooltipped "
+                                     data-tooltip="Email to redirect the messages to (can add more later)"
+                                     data-position="right">
+                                    <input id="email" type="text" name="email" value="contact email">
+                                    <label for="email">Contact EMAIL</label>
                                 </div>
+
+
+                                <p class="bold deep-purple-text lighten-1 m-0  ">
+                                    ReCAPTCHA
+                                </p>
+
+
+                                <div class="switch  tooltipped m-t-10"
+                                     data-tooltip="Enable message filtering with recaptcha" data-position="right"
+                                     style="display:inline-block">
+                                    <label>
+                                        Off
+                                        <input type="checkbox" name="recaptcha" id="use_recaptcha" checked>
+                                        <span class="lever deep-purple lighten-4"></span>
+                                        On
+                                    </label>
+                                </div>
+
+
+                                <div class="m-t-20">
+                                    <div class="input-field">
+                                        <input id="recaptcha_secret" type="text" name="recaptcha_secrets" value="recaptcha secret">
+                                        <label for="recaptcha_secret">ReCAPTCHA Secret</label>
+                                    </div>
+
+                                    <div class="input-field">
+                                        <input id="recaptcha_site_key" type="text" name="recaptcha_site_key" value="recaptcha sitekey">
+                                        <label for="recaptcha_site_key">ReCAPTCHA Site-key</label>
+                                    </div>
+                                </div>
+
                             </div>
+
 
                         </div>
-
-
-                    </div>
 
 
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                    <a href="#!" class="  waves-effect waves-green btn-flat ">Confirm</a>
+                    <button onclick="onAddWebsiteClicked()" class="waves-effect waves-green btn-flat ">Confirm</button>
                 </div>
             </div>
+
+
 
 
         </div>
@@ -200,15 +211,35 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/prism.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
+<script type="text/javascript" src="js/functionality.js"></script>
 
 <script>
 
 
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (!user) {
-            window.location.href = "authentication.html";
-        }
-    });
+
+
+    function onAddWebsiteClicked() {
+        let websiteAlis = $("#website_alias").val();
+        let websiteUrl = $("#website_url").val();
+        let onlyHttps = $("#only_https").val();
+        let contact = $("#email").val();
+        let useRecaptcha = $("#use_recaptcha").val();
+        let recaptchaSecret = $("#recaptcha_secret").val();
+        let recaptchaSitekey = $("#recaptcha_site_key").val();
+
+        let website = new Website(websiteAlis, websiteUrl, onlyHttps, contact, useRecaptcha, recaptchaSecret, recaptchaSitekey);
+
+        addWebsite(website, onWebsiteAdded);
+    }
+
+
+    function onWebsiteAdded(snapshot){
+        let id = snapshot.key;
+        window.location.href = "website_dashboard.html?website_id="+id;
+
+    }
+
+
 
 
 </script>

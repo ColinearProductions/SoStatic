@@ -1,10 +1,8 @@
 
+var user = null;
 
 
-
-
-
-var config = {
+let config = {
     apiKey: "AIzaSyDOpoNcoeSWE8weaKuT8DvMWt2qSTok11k",
     authDomain: "sostatic-1d381.firebaseapp.com",
     databaseURL: "https://sostatic-1d381.firebaseio.com",
@@ -51,12 +49,10 @@ function forgotPassword(email, callback){
 
 
 
-firebase.auth().onAuthStateChanged(function (user) {
-    console.log(user);
-    if (user) {
-        if(redirectLogin)
-            window.location.href = "dashboard.html";
-
+firebase.auth().onAuthStateChanged(function (authenticatedUser) {
+    console.log(authenticatedUser);
+    if (authenticatedUser) {
+        user = authenticatedUser
     }
 });
 
