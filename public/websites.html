@@ -70,47 +70,7 @@
         </nav>
         <!-- Content -->
         <div style="padding:1vh">
-            <div class="row" style="width:100%;">
-
-
-                <div class="col s12 m4">
-                    <div class="card" style="min-width:100%">
-                        <div class="card-content black-text">
-                            <div>
-                                <span class=" deep-purple-text m-0" style="font-size:30px;">Website Name</span><br>
-                                <a class="deep-purple-text lighten-5" style="font-size:17px;">http://sostatic.xyz</a>
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20 ">
-                                    Forms 2/3
-                                </p>
-                                <div class="progress deep-purple lighten-4">
-                                    <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
-                                </div>
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20">
-                                    Messages 281/2000
-                                </p>
-                                <div class="progress deep-purple lighten-4">
-                                    <div class="determinate deep-purple lighten-1" style="width: 14%"></div>
-                                </div>
-
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20">
-                                    Recaptcha
-                                    <small class="red-text lighten-4"> disabled</small>
-                                </p>
-
-
-                            </div>
-
-
-                        </div>
-                        <div class="card-action">
-                            <a href="website_dashboard.html" class="bold deep-purple-text lighten-2">Go to website</a>
-
-                        </div>
-                    </div>
-                </div>
+            <div class="row" style="width:100%;" id="websites_container">
 
 
             </div>
@@ -120,74 +80,105 @@
                 <div class="modal-content">
 
 
+                    <div class="row">
 
-                        <div class="row">
-                            <div class="col m6 offset-m3 s12 ">
-                                <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
+                        <div class="col m6 offset-m3 s12 ">
+                            <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
 
-                                <div class="input-field tooltipped " data-tooltip="An alias for your website"
-                                     data-position="right">
-                                    <input id="website_alias" name="website_alias" class="m-b-5" type="text" value="website name">
-                                    <label for="website_alias">Website Name</label>
-                                </div>
-                                <div class="input-field tooltipped "
-                                     data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
-                                     data-position="right">
-                                    <input id="website_url" name="website_url" type="text" value="website url">
-                                    <label for="website_url">Website URL</label>
-                                </div>
-
-
-                                <p style="display:inline-block" class="tooltipped"
-                                   data-tooltip="Online consider messages sent from the HTTPS version of the site"
-                                   data-position="right">
-                                    <input type="checkbox" class="purple-checkbox" id="only_https" name="only_https" checked/>
-                                    <label for="only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
-                                        HTTPs</label>
-                                </p>
-
-
-                                <div class="input-field tooltipped "
-                                     data-tooltip="Email to redirect the messages to (can add more later)"
-                                     data-position="right">
-                                    <input id="email" type="text" name="email" value="contact email">
-                                    <label for="email">Contact EMAIL</label>
-                                </div>
-
-
-                                <p class="bold deep-purple-text lighten-1 m-0  ">
-                                    ReCAPTCHA
-                                </p>
-
-
-                                <div class="switch  tooltipped m-t-10"
-                                     data-tooltip="Enable message filtering with recaptcha" data-position="right"
-                                     style="display:inline-block">
-                                    <label>
-                                        Off
-                                        <input type="checkbox" name="recaptcha" id="use_recaptcha" checked>
-                                        <span class="lever deep-purple lighten-4"></span>
-                                        On
-                                    </label>
-                                </div>
-
-
-                                <div class="m-t-20">
-                                    <div class="input-field">
-                                        <input id="recaptcha_secret" type="text" name="recaptcha_secrets" value="recaptcha secret">
-                                        <label for="recaptcha_secret">ReCAPTCHA Secret</label>
-                                    </div>
-
-                                    <div class="input-field">
-                                        <input id="recaptcha_site_key" type="text" name="recaptcha_site_key" value="recaptcha sitekey">
-                                        <label for="recaptcha_site_key">ReCAPTCHA Site-key</label>
-                                    </div>
-                                </div>
-
+                            <div class="input-field tooltipped " data-tooltip="An alias for your website"
+                                 data-position="right">
+                                <input id="website_alias" name="website_alias" class="m-b-5" type="text"
+                                       value="website name">
+                                <label for="website_alias">Website Name</label>
+                            </div>
+                            <div class="input-field tooltipped "
+                                 data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
+                                 data-position="right">
+                                <input id="website_url" name="website_url" type="text" value="website url">
+                                <label for="website_url">Website URL</label>
                             </div>
 
 
+                            <p style="display:inline-block" class="tooltipped"
+                               data-tooltip="Online consider messages sent from the HTTPS version of the site"
+                               data-position="right">
+                                <input type="checkbox" class="purple-checkbox" id="only_https" name="only_https"
+                                       checked/>
+                                <label for="only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
+                                    HTTPs</label>
+                            </p>
+
+
+                            <br>
+
+                            <p class="bold deep-purple-text lighten-1 m-b-5  ">Contacts </p>
+
+                            <div class="switch  tooltipped m-b-5 "
+                                 data-tooltip="Enable message filtering with recaptcha"
+                                 data-position="top" style="display:inline-block">
+                                <label>
+                                    Single
+                                    <input type="checkbox" id="contacts_multiple_switch">
+                                    <span class="lever deep-purple lighten-4"></span>
+                                    Multiple
+                                </label>
+                            </div>
+
+
+                            <div class="input-field" id="contacts_multiple_container" style="display: none">
+                                <textarea id="contacts_multiple_textarea" class="materialize-textarea"></textarea>
+                                <label for="contacts_multiple_textarea">Paste a list of emails here</label>
+                            </div>
+
+                            <div id="contacts_single_container">
+                                <div class="input-field col s4 " style="padding-left:0;">
+
+                                    <input id="single_contact_alias" type="text" class="validate">
+                                    <label for="single_contact_alias">Alias</label>
+                                </div>
+                                <div class="input-field col s8 p-0">
+
+                                    <input id="single_contact_email" type="email" class="validate">
+                                    <label for="single_contact_email">Email</label>
+                                </div>
+                            </div>
+
+
+                            <p class="bold deep-purple-text lighten-1 m-0  ">
+                                ReCAPTCHA
+                            </p>
+
+
+                            <div class="switch  tooltipped m-t-10"
+                                 data-tooltip="Enable message filtering with recaptcha" data-position="right"
+                                 style="display:inline-block">
+                                <label>
+                                    Off
+                                    <input type="checkbox" name="recaptcha" id="use_recaptcha">
+                                    <span class="lever deep-purple lighten-4"></span>
+                                    On
+                                </label>
+                            </div>
+
+
+                            <div class="m-t-20" id="recaptcha_container" style="display: none;">
+                                <div class="input-field">
+                                    <input id="recaptcha_secret" type="text" name="recaptcha_secrets"
+                                           value="recaptcha secret">
+                                    <label for="recaptcha_secret">ReCAPTCHA Secret</label>
+                                </div>
+
+                                <div class="input-field">
+                                    <input id="recaptcha_site_key" type="text" name="recaptcha_site_key"
+                                           value="recaptcha sitekey">
+                                    <label for="recaptcha_site_key">ReCAPTCHA Site-key</label>
+                                </div>
+                            </div>
+
                         </div>
+
+
+                    </div>
 
 
                 </div>
@@ -198,12 +189,57 @@
             </div>
 
 
-
-
         </div>
     </div>
 </main>
 </body>
+
+
+<script id="website_template" type="x-tmpl-mustache">
+
+    <div class="col s12 m4">
+        <div class="card" style="min-width:100%">
+            <div class="card-content black-text">
+                <div>
+                    <span class=" deep-purple-text m-0" style="font-size:30px;">{{alias}}</span><br>
+                    <a class="deep-purple-text lighten-5" style="font-size:17px;">{{url}}</a>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20 ">
+                        Forms {{formsCount}}/3
+                    </p>
+                    <div class="progress deep-purple lighten-4">
+                        <div class="determinate deep-purple lighten-1" style="width: {{formsPercentage}}%"></div>
+                    </div>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20">
+                        Messages {{messagesCount}}/2000
+                    </p>
+                    <div class="progress deep-purple lighten-4">
+                        <div class="determinate deep-purple lighten-1" style="width: {{messagesPercentage}}%"></div>
+                    </div>
+
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20">
+                        Recaptcha
+                        {{#recaptcha}}
+                        <small class="green-text lighten-4"> Enabled</small>
+                        {{/recaptcha}}
+                        {{^recaptcha}}
+                        <small class="red-text lighten-4"> Disabled</small>
+                        {{/recaptcha}}
+                    </p>
+
+                </div>
+            </div>
+            <div class="card-action">
+                <a href="website_dashboard.html?website_id={{key}}" class="bold deep-purple-text lighten-2">Go to
+                    website</a>
+
+            </div>
+        </div>
+    </div>
+
+</script>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -212,34 +248,123 @@
 <script type="text/javascript" src="js/prism.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
 <script type="text/javascript" src="js/functionality.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+
 
 <script>
 
 
+    let websiteTemplate = $("#website_template").html();
+    Mustache.parse(websiteTemplate);
+    let container = $("#websites_container");
+
+
+    let contactsMultiple = $("#contacts_multiple_switch");
+    let contactsSingleContainer = $("#contacts_single_container");
+    let contactsMultipleContainer = $("#contacts_multiple_container");
+
+
+    let recaptchaContainer = $("#recaptcha_container");
+    let useRecaptcha = $("#use_recaptcha");
+
+    $(contactsMultiple).on("change", function () {
+
+        if ($(contactsMultiple).prop("checked")) {
+            contactsMultipleContainer.show();
+            contactsSingleContainer.hide();
+        } else {
+            contactsMultipleContainer.hide();
+            contactsSingleContainer.show();
+        }
+    });
+
+    $(useRecaptcha).on("change", function () {
+        if ($(useRecaptcha).prop("checked"))
+            $(recaptchaContainer).show();
+        else
+            $(recaptchaContainer).hide();
+    });
 
 
     function onAddWebsiteClicked() {
         let websiteAlis = $("#website_alias").val();
         let websiteUrl = $("#website_url").val();
-        let onlyHttps = $("#only_https").val();
-        let contact = $("#email").val();
-        let useRecaptcha = $("#use_recaptcha").val();
+        let onlyHttps = $("#only_https").prop("checked");
+
+        let contacts = [];
+        if ($(contactsMultiple).prop("checked")) {
+            let tmp = $("#contacts_multiple_textarea").val().split('\n');
+
+            tmp.forEach(entry => {
+                //todo maybe check if entry is valid
+                let alias = entry.split("@")[0];
+                contacts.push({
+                    'alias': alias,
+                    'email': entry
+                });
+            })
+
+
+        } else {
+            contacts.push({
+                'alias': $("#single_contact_email").val(),
+                'email': $("#single_contact_alis").val(),
+            });
+        }
+
+
+        let useRecaptcha = $("#use_recaptcha").prop("checked");
         let recaptchaSecret = $("#recaptcha_secret").val();
         let recaptchaSitekey = $("#recaptcha_site_key").val();
 
-        let website = new Website(websiteAlis, websiteUrl, onlyHttps, contact, useRecaptcha, recaptchaSecret, recaptchaSitekey);
+        let website = new Website(websiteAlis, websiteUrl, onlyHttps, contacts, useRecaptcha, recaptchaSecret, recaptchaSitekey);
 
         addWebsite(website, onWebsiteAdded);
     }
 
 
-    function onWebsiteAdded(snapshot){
+    function onWebsiteAdded(snapshot) {
         let id = snapshot.key;
-        window.location.href = "website_dashboard.html?website_id="+id;
+        window.location.href = "website_dashboard.html?website_id=" + id;
 
     }
 
 
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            window.location.href = "authentication.html";
+        } else {
+            getWebsitesOfUser(onUserWebsitesLoaded);
+        }
+    });
+
+
+    function onUserWebsitesLoaded(websites) {
+        console.log(websites);
+
+        websites.forEach(website => {
+            if (website.forms === undefined) {
+                website.formsCount = 0;
+                website.messagesCount = 0;
+            }
+            else {
+                website.formsCount = website.forms.length;
+                let messagesTotal = 0;
+                website.forms.forEach(form => {
+                    if (form.messages !== undefined)
+                        messagesTotal += form.messages.length;
+                });
+                website.messagesCount = messagesTotal;
+            }
+
+            website.formsPercentage = Math.ceil((website.formsCount / 3) * 100);
+            website.messagesPercentage = Math.ceil((website.messagesCount / 2000) * 100);
+
+
+            let rendered = Mustache.render(websiteTemplate, website);
+            $(container).append(rendered);
+        });
+    }
 
 
 </script>

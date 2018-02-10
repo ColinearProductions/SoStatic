@@ -1,5 +1,5 @@
 
-var user = null;
+
 
 
 let config = {
@@ -49,14 +49,6 @@ function forgotPassword(email, callback){
 
 
 
-firebase.auth().onAuthStateChanged(function (authenticatedUser) {
-    console.log(authenticatedUser);
-    if (authenticatedUser) {
-        user = authenticatedUser
-    }
-});
-
-
 
 
 $(".smooth_scroll").on('click', function (event) {
@@ -97,3 +89,35 @@ $(document).ready(function () {
 function matchHeightUpdate() {
     $.fn.matchHeight._update()
 }
+
+
+function snapshotToArray(snapshot) {
+    let returnArr = [];
+
+    snapshot.forEach(function(childSnapshot) {
+        let item = childSnapshot.val();
+        item.key = childSnapshot.key;
+
+        returnArr.push(item);
+    });
+
+    return returnArr;
+}
+
+
+$.extend({
+    getUrlVars: function(){
+        let vars = [], hash;
+        let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(let i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1].replace("#","");
+        }
+        return vars;
+    },
+    getUrlVar: function(name){
+        return $.getUrlVars()[name];
+    }
+});
