@@ -113,34 +113,16 @@
 
                             <p class="bold deep-purple-text lighten-1 m-b-5  ">Contacts </p>
 
-                            <div class="switch  tooltipped m-b-5 "
-                                 data-tooltip="Enable message filtering with recaptcha"
-                                 data-position="top" style="display:inline-block">
-                                <label>
-                                    Single
-                                    <input type="checkbox" id="contacts_multiple_switch">
-                                    <span class="lever deep-purple lighten-4"></span>
-                                    Multiple
-                                </label>
+
+                            <div class="input-field col s4 " style="padding-left:0;">
+
+                                <input id="single_contact_alias" type="text" class="validate">
+                                <label for="single_contact_alias">Alias</label>
                             </div>
+                            <div class="input-field col s8 p-0">
 
-
-                            <div class="input-field" id="contacts_multiple_container" style="display: none">
-                                <textarea id="contacts_multiple_textarea" class="materialize-textarea"></textarea>
-                                <label for="contacts_multiple_textarea">Paste a list of emails here</label>
-                            </div>
-
-                            <div id="contacts_single_container">
-                                <div class="input-field col s4 " style="padding-left:0;">
-
-                                    <input id="single_contact_alias" type="text" class="validate">
-                                    <label for="single_contact_alias">Alias</label>
-                                </div>
-                                <div class="input-field col s8 p-0">
-
-                                    <input id="single_contact_email" type="email" class="validate">
-                                    <label for="single_contact_email">Email</label>
-                                </div>
+                                <input id="single_contact_email" type="email" class="validate">
+                                <label for="single_contact_email">Email</label>
                             </div>
 
 
@@ -259,24 +241,9 @@
     let container = $("#websites_container");
 
 
-    let contactsMultiple = $("#contacts_multiple_switch");
-    let contactsSingleContainer = $("#contacts_single_container");
-    let contactsMultipleContainer = $("#contacts_multiple_container");
-
-
     let recaptchaContainer = $("#recaptcha_container");
     let useRecaptcha = $("#use_recaptcha");
 
-    $(contactsMultiple).on("change", function () {
-
-        if ($(contactsMultiple).prop("checked")) {
-            contactsMultipleContainer.show();
-            contactsSingleContainer.hide();
-        } else {
-            contactsMultipleContainer.hide();
-            contactsSingleContainer.show();
-        }
-    });
 
     $(useRecaptcha).on("change", function () {
         if ($(useRecaptcha).prop("checked"))
@@ -292,25 +259,11 @@
         let onlyHttps = $("#only_https").prop("checked");
 
         let contacts = [];
-        if ($(contactsMultiple).prop("checked")) {
-            let tmp = $("#contacts_multiple_textarea").val().split('\n');
 
-            tmp.forEach(entry => {
-                //todo maybe check if entry is valid
-                let alias = entry.split("@")[0];
-                contacts.push({
-                    'alias': alias,
-                    'email': entry
-                });
-            })
-
-
-        } else {
-            contacts.push({
-                'alias': $("#single_contact_email").val(),
-                'email': $("#single_contact_alis").val(),
-            });
-        }
+        contacts.push({
+            'alias': $("#single_contact_alias").val(),
+            'email': $("#single_contact_email").val(),
+        });
 
 
         let useRecaptcha = $("#use_recaptcha").prop("checked");
@@ -318,7 +271,7 @@
         let recaptchaSitekey = $("#recaptcha_site_key").val();
 
         let website = new Website(websiteAlis, websiteUrl, onlyHttps, contacts, useRecaptcha, recaptchaSecret, recaptchaSitekey);
-
+        console.log(website);
         addWebsite(website, onWebsiteAdded);
     }
 

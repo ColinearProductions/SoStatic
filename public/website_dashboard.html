@@ -141,7 +141,8 @@
 
                         </div>
                         <div class="card-action">
-                            <a href="#add_contacts_modal" id="add_contacts_button" class="bold deep-purple-text lighten-2 modal-trigger">Add</a>
+                            <a href="#add_contacts_modal" id="add_contacts_button"
+                               class="bold deep-purple-text lighten-2 modal-trigger">Edit</a>
 
                         </div>
                     </div>
@@ -281,42 +282,87 @@
 
 
                     <div class="container">
-                        <h5 class="deep-purple-text lighten-1">Modal Header</h5>
-
-                        <div class="switch  tooltipped m-b-5  m-t-20" data-tooltip="Enable message filtering with recaptcha"
-                             data-position="top" style="display:inline-block">
-                            <label>
-                                Single
-                                <input type="checkbox" id="contacts_multiple_switch">
-                                <span class="lever deep-purple lighten-4"></span>
-                                Multiple
-                            </label>
-                        </div>
+                        <h5 class="deep-purple-text lighten-1">Edit contacts</h5>
 
 
-                        <div class="input-field" id="contacts_multiple_container" style="display: none">
-                            <textarea id="contacts_multiple_textarea" class="materialize-textarea"></textarea>
-                            <label for="contacts_multiple_textarea">Paste a list of emails here</label>
-                        </div>
+                        <div class="row" id="edit_contacts_list">
 
-                        <div id="contacts_single_container">
-                            <div class="input-field col s4 " style="padding-left:0;">
+                            <div class="contacts-list-entry" data-entry-index="0">
 
-                                <input id="single_contact_alias" type="text" class="validate">
-                                <label for="single_contact_alias">Alias</label>
+
+                                <div class="input-field col s4 " style="padding-left:0;">
+                                    <input id="single_contact_alias1" type="text" class="validate contacts-alias">
+                                    <label for="single_contact_alias1">Alias</label>
+                                </div>
+
+                                <div class="input-field col s8 p-0">
+                                    <input id="single_contact_email1" type="email" class="validate contacts-email">
+                                    <label for="single_contact_email1">Email</label>
+                                </div>
+
                             </div>
-                            <div class="input-field col s8 p-0">
+                            <div class="contacts-list-entry" data-entry-index="1">
+                                <div class="input-field col s4 " style="padding-left:0;">
+                                    <input id="single_contact_alias2" type="text" class="validate contacts-alias">
+                                    <label for="single_contact_alias2">Alias</label>
+                                </div>
 
-                                <input id="single_contact_email" type="email" class="validate">
-                                <label for="single_contact_email">Email</label>
+                                <div class="input-field col s8 p-0">
+                                    <input id="single_contact_email2" type="email" class="validate contacts-email">
+                                    <label for="single_contact_email2">Email</label>
+                                </div>
                             </div>
+
+                            <div class="contacts-list-entry" data-entry-index="2">
+
+                                <div class="input-field col s4 " style="padding-left:0;">
+                                    <input id="single_contact_alias3" type="text" class="validate contacts-alias">
+                                    <label for="single_contact_alias3">Alias</label>
+                                </div>
+
+                                <div class="input-field col s8 p-0">
+                                    <input id="single_contact_email3" type="email" class="validate contacts-email">
+                                    <label for="single_contact_email3">Email</label>
+                                </div>
+
+                            </div>
+
+                            <div class="contacts-list-entry" data-entry-index="3">
+
+                                <div class="input-field col s4 " style="padding-left:0;">
+                                    <input id="single_contact_alias4" type="text" class="validate contacts-alias">
+                                    <label for="single_contact_alias4">Alias</label>
+                                </div>
+
+                                <div class="input-field col s8 p-0">
+                                    <input id="single_contact_email4" type="email" class="validate contacts-email">
+                                    <label for="single_contact_email4">Email</label>
+                                </div>
+
+
+                            </div>
+
+                            <div class="contacts-list-entry" data-entry-index="4">
+                                <div class="input-field col s4 " style="padding-left:0;">
+                                    <input id="single_contact_alias5" type="text" class="validate contacts-alias">
+                                    <label for="single_contact_alias5">Alias</label>
+                                </div>
+
+                                <div class="input-field col s8 p-0">
+                                    <input id="single_contact_email5" type="email" class="validate contacts-email">
+                                    <label for="single_contact_email5">Email</label>
+                                </div>
+                            </div>
+
+
                         </div>
 
 
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                    <a id="confirm_edit_contacts_button"
+                       class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
                 </div>
             </div>
 
@@ -331,22 +377,22 @@
 
                             <div class="input-field tooltipped " data-tooltip="An alias for your website"
                                  data-position="right">
-                                <input id="last_name" class="m-b-5" type="text">
-                                <label for="last_name" class="">Website Name</label>
+                                <input id="edit_website_name" class="m-b-5" type="text">
+                                <label for="edit_website_name" class="">Website Name</label>
                             </div>
                             <div class="input-field tooltipped "
                                  data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
                                  data-position="right">
-                                <input id="last_name2" type="text">
-                                <label for="last_name2" class="">Website URL</label>
+                                <input id="edit_website_url" type="text">
+                                <label for="edit_website_url" class="">Website URL</label>
                             </div>
 
 
                             <p style="display:inline-block" class=" tooltipped "
                                data-tooltip="Online consider messages sent from the HTTPS version of the site"
                                data-position="right">
-                                <input type="checkbox" class="purple-checkbox" id="test5"/>
-                                <label for="test5" class="deep-purple-text text-lighten-2 checkbox-label">Only
+                                <input type="checkbox" class="purple-checkbox" id="edit_only_https" checked/>
+                                <label for="edit_only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
                                     HTTPs</label>
                             </p>
 
@@ -361,22 +407,22 @@
                                  data-position="right" style="display:inline-block">
                                 <label>
                                     Off
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="edit_website_recaptcha_switch">
                                     <span class="lever deep-purple lighten-4"></span>
                                     On
                                 </label>
                             </div>
 
 
-                            <div class="m-t-20">
+                            <div class="m-t-20" id="edit_recaptcha_container">
                                 <div class="input-field">
-                                    <input id="last_name3" type="text">
-                                    <label for="last_name3" class="">ReCAPTCHA Secret</label>
+                                    <input id="edit_recaptcha_secret" type="text">
+                                    <label for="edit_recaptcha_secret" class="">ReCAPTCHA Secret</label>
                                 </div>
 
                                 <div class="input-field">
-                                    <input id="last_name4" type="text">
-                                    <label for="last_name4" class="">ReCAPTCHA Site-key</label>
+                                    <input id="edit_recaptcha_sitekey" type="text">
+                                    <label for="edit_recaptcha_sitekey" class="">ReCAPTCHA Site-key</label>
                                 </div>
                             </div>
 
@@ -389,7 +435,7 @@
                 </div>
                 <div class="modal-footer">
                     <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                    <a class="  waves-effect waves-green btn-flat ">Confirm</a>
+                    <a class="  waves-effect waves-green btn-flat" id="on_edit_website_confirm_button">Confirm</a>
                 </div>
             </div>
 
@@ -405,14 +451,13 @@
         {{#contacts}}
         <li class="collection-item">
             <div>
-                <p class="deep-purple-text lighten-1 bold">{{alias}}</p> {{email}}
+                <p class="deep-purple-text lighten-1 bold" style="display: inline-block;">{{alias}}</p> {{email}}
                 <a class="secondary-content">
-                    <i class="material-icons deep-purple-text text-lighten-1"
-                        onclick="onDeleteContactClicked('{{email}}')">delete</i>
-                    <i class="material-icons deep-purple-text text-lighten-1"
+                    <i class="material-icons deep-purple-text text-lighten-1 pointer"
+                       onclick="onDeleteContactClicked('{{email}}')">delete</i>
+                    <i class="material-icons deep-purple-text text-lighten-1 pointer"
                        onclick="onPauseContactClicked('{{email}}')">pause</i>
-                    <i class="material-icons deep-purple-text text-lighten-1"
-                       onclick="onEditContactClicked('{{email}}')">mode_edit</i>
+
                 </a>
             </div>
         </li>
@@ -431,40 +476,163 @@
 
 <script>
 
-    let websiteName = $("#website_name");
-    let websiteUrl = $("#website_url");
-    let onlyHttps = $("#only_https");
-    let recaptchaState = $("#website_recaptcha_state");
-    let websiteRecaptchaContainer = $("#website_recaptcha_container");
-    let recaptchaSecret = $("#recaptcha_secret");
-    let recaptchaSitekey = $("#recaptcha_site_key");
-
 
     //////////// CONTACTS THINGS ////////////
-    let contactsTemplate = $("#contacts_template").html();
-    Mustache.parse(contactsTemplate);
-    let contactsContainer = $("#contacts_container");
+
+    let websiteElement = {
+        websiteName: $("#website_name"),
+        websiteUrl: $("#website_url"),
+        onlyHttps: $("#only_https"),
+        recaptchaState: $("#website_recaptcha_state"),
+        websiteRecaptchaContainer: $("#website_recaptcha_container"),
+        recaptchaSecret: $("#recaptcha_secret"),
+        recaptchaSitekey: $("#recaptcha_site_key"),
+
+        editWebsiteName: $("#edit_website_name"),
+        editWebsiteUrl: $("#edit_website_url"),
+        editWebsiteOnlyHttps: $("#edit_only_https"),
+        editWebsiteRecaptchaSwitch: $("#edit_website_recaptcha_switch"),
+        editWebsiteRecaptchaSecret: $("#edit_recaptcha_secret"),
+        editWebsiteRecaptchaSitekey: $("#edit_recaptcha_sitekey"),
+        editRecaptchaContainer: $("#edit_recaptcha_container"),
+        editWebsiteConfirmButton: $("#on_edit_website_confirm_button"),
+
+        init: function (website) {
+            $(this.websiteName).text(website.alias);
+            $(this.editWebsiteName).val(website.alias);
+
+            $(this.websiteUrl).text(website.url);
+            $(this.editWebsiteUrl).val(website.url);
 
 
-    let contactsMultiple = $("#contacts_multiple_switch");
-    let contactsSingleContainer = $("#contacts_single_container");
-    let contactsMultipleContainer = $("#contacts_multiple_container");
+            if (!website.httpsOnly) {
+
+                $(this.onlyHttps).hide();
+                $(this.editWebsiteOnlyHttps).prop("checked", false)
+            }
+
+            if (website.recaptcha) {
+
+                $(this.recaptchaState).text("Enabled");
+                $(this.recaptchaState).addClass("green-text");
+
+                $(this.recaptchaSecret).text(website.secret);
+                $(this.recaptchaSitekey).text(website.sitekey);
 
 
-    $(contactsMultiple).on("change", function () {
+                $(this.editWebsiteRecaptchaSecret).val(website.secret);
+                $(this.editWebsiteRecaptchaSitekey).val(website.sitekey);
 
-        if ($(contactsMultiple).prop("checked")) {
-            contactsMultipleContainer.show();
-            contactsSingleContainer.hide();
-        } else {
-            contactsMultipleContainer.hide();
-            contactsSingleContainer.show();
+
+                $(this.editWebsiteRecaptchaSwitch).prop("checked", true);
+
+            } else {
+                $(this.recaptchaState).text("Disabled");
+                $(this.recaptchaState).addClass("red-text");
+                $(this.websiteRecaptchaContainer).hide();
+
+                $(this.editWebsiteRecaptchaSwitch).prop("checked", false);
+
+            }
+            this.updateEditRecaptchaSwitch(website.recaptcha);
+
+            this.editWebsiteConfirmButton.on("click", this.onUpdateConfirmClicked);
+
+            $(this.editWebsiteRecaptchaSwitch).on("change", function () {
+                websiteElement.updateEditRecaptchaSwitch($(websiteElement.editWebsiteRecaptchaSwitch).prop("checked"));
+            });
+
+            contactsElement.init(website.contacts);
+
+            Materialize.updateTextFields(); // fix overlapping label on text input
+            matchHeightUpdate();
+        },
+        onUpdateConfirmClicked: function () {
+
+            let updateObj = {
+                'alias': $(websiteElement.editWebsiteName).val(),
+                'url': $(websiteElement.editWebsiteUrl).val(),
+                'httpsOnly': $(websiteElement.editWebsiteOnlyHttps).prop("checked"),
+                'recaptcha': $(websiteElement.editWebsiteRecaptchaSwitch).prop("checked"),
+                'secret': $(websiteElement.editWebsiteRecaptchaSecret).val(),
+                'sitekey': $(websiteElement.editWebsiteRecaptchaSitekey).val()
+            };
+
+            console.log(updateObj);
+            let websiteId = $.getUrlVar('website_id');
+
+            updateWebsite(websiteId, updateObj, () => {
+                window.location.reload();
+            });
+
+
+        },
+        updateEditRecaptchaSwitch: function (checked) {
+            if (checked)
+                $(websiteElement.editRecaptchaContainer).show();
+            else
+                $(websiteElement.editRecaptchaContainer).hide();
         }
-    });
 
 
-    //////////////////////////////////////////
+    };
 
+    let contactsElement = {
+        template: $("#contacts_template").html(),
+        container: $("#contacts_container"),
+        editContactsInputList: $("#edit_contacts_list"),
+        addContactsButton: $("#add_contacts_button"),
+        confirmEditContactsButton: $("#confirm_edit_contacts_button"),
+
+        init: function (contacts) {
+            Mustache.parse(this.contactsTemplate);
+
+
+            if (contacts !== undefined) {
+                let rendered = Mustache.render(this.template, {'contacts': contacts});
+                $(this.container).html(rendered);
+            }
+
+
+            $(this.editContactsInputList).find('.contacts-list-entry').each(function () {
+                let aliasInput = $(this).find('.contacts-alias');
+                let emailInput = $(this).find('.contacts-email');
+                let idx = $(this).data('entry-index');
+
+                if (contacts !== undefined) {
+                    if (contacts[idx] !== undefined) {
+                        aliasInput.val(contacts[idx].alias);
+                        emailInput.val(contacts[idx].email);
+                    }
+                }
+
+            });
+
+            $(this.confirmEditContactsButton).on('click', this.onConfirmClicked);
+
+
+        },
+        onConfirmClicked: function () {
+            let contacts = [];
+            $(contactsElement.editContactsInputList).find('.contacts-list-entry').each(function () {
+
+                let aliasInput = $(this).find('.contacts-alias');
+                let emailInput = $(this).find('.contacts-email');
+                if (aliasInput.val().length >= 1) {
+                    contacts.push({
+                        'alias': aliasInput.val(),
+                        'email': emailInput.val()
+                    });
+                }
+            });
+
+            updateContacts($.getUrlVar('website_id'), contacts, function () {
+                window.location.reload()
+            });
+
+        }
+
+    };
 
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -473,46 +641,14 @@
         } else {
             let websiteId = $.getUrlVar('website_id');
             getWebsiteById(websiteId, onWebsiteLoaded);
+
         }
     });
 
 
     function onWebsiteLoaded(website) {
+        websiteElement.init(website);
         console.log(website);
-        $(websiteName).text(website.alias);
-        $(websiteUrl).text(website.url);
-        if (!website.httpOnly)
-            $(onlyHttps).hide();
-
-        if (website.recaptcha) {
-            $(recaptchaState).text("Enabled");
-            $(recaptchaState).addClass("green-text");
-
-            $(recaptchaSecret).text(website.secret);
-            $(recaptchaSitekey).text(website.sitekey);
-
-        } else {
-            $(recaptchaState).text("Disabled");
-            $(recaptchaState).addClass("red-text");
-            $(websiteRecaptchaContainer).hide();
-
-        }
-
-
-        /////////////////// CONTACTS /////////////////
-
-        if (website.contacts !== undefined) {
-            let rendered = Mustache.render(contactsTemplate,{'contacts':website.contacts});
-            $(contactsContainer).html(rendered)
-
-            if(website.contacts.length>2){
-                let addContactsButton = $("#add_contacts_button");
-                $(addContactsButton).attr("href","#");
-                $(addContactsButton).removeClass("deep-purple-text").removeClass("modal-trigger").addClass("grey-text");
-            }
-        }
-
-        matchHeightUpdate();
     }
 
 </script>

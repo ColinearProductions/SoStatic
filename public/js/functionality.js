@@ -38,3 +38,18 @@ function getWebsitesOfUser(callback){
     })
 }
 
+
+function updateContacts(website_id, contacts, callback){
+    firebase.database().ref('/websites/'+website_id+'/contacts').set(contacts).then(function(){
+       callback();
+    });
+}
+
+
+function updateWebsite(website_id, updateObj, callback){
+    firebase.database().ref('/websites/'+website_id).update(updateObj).then(function(){
+        callback();
+    });
+}
+
+
