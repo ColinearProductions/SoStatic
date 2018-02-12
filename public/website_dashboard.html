@@ -154,84 +154,43 @@
                     <h5 class="m-0 deep-purple-text text-lighten-1"> Forms</h5>
                 </div>
 
-
-                <div class="col l4 m6 s12">
-                    <div class="card">
-                        <div class="card-content black-text ">
-                            <div>
-                                <span class=" deep-purple-text " style="font-size:26px;"> Form alias</span><br>
-                                <a class="deep-purple-text text-lighten-2" style="font-size:12px;">Added on
-                                    18-01-2017</a>
-                                <br>
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20 " style="font-size:18px;">
-                                    Messages 2/3
-                                </p>
-
-
-                                <div class="progress deep-purple lighten-4">
-                                    <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
-                                </div>
-
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
-                                    ReCAPTCHA
-                                    <small style="font-size:12px;">Disabled</small>
-                                </p>
-
-                                <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
-                                    Endpoint:
-                                </p>
-
-                                <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate">http://localhost:63342/SoStatic/public/individual_websit</a>
-
-                                <a class="p-10 bold deep-purple-text modal-trigger" href="#boilerplate_modal">Generate
-                                    form boilerplate</a>
-
-
-                            </div>
-
-
-                        </div>
-                        <div class="card-action">
-                            <a href="individual_website.html" class="bold deep-purple-text lighten-2">Edit</a>
-
-                        </div>
-                    </div>
+                <div id="forms_container">
 
                 </div>
+
+
 
 
             </div>
 
 
             <!-- Boilerplate Modal -->
-            <div id="boilerplate_modal" class="modal modal-fixed-footer">
+            <div id="boilerplate_modal" class="modal ">
                 <div class="modal-content">
                     <h4>Modal Header</h4>
                     <h6>Here is a sample code, filled with your information, for a form that will post to our
                         service</h6>
 
-                    <pre>
-                        <code class="language-markup">
-                            <script type="prism-html-markup">
-                                <form action="/action_page.php" target="_blank" method="GET">
-                                    First name:<br>
-                                    <input type="text" name="firstname" value="Mickey">
-                                    <br>
-                                    Last name:<br>
-                                    <input type="text" name="lastname" value="Mouse">
-                                    <br><br>
-                                    <input type="submit" value="Submit">
-                                </form>
-                            </script>
-                        </code>
-                    </pre>
+<pre>
+<code class="language-markup">
+<script type="prism-html-markup">
+<form action="/action_page.php" target="_blank" method="GET">
+    First name:<br>
+    <input type="text" name="firstname" value="Mickey">
+    <br>
+    Last name:<br>
+    <input type="text" name="lastname" value="Mouse">
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+</script>
+</code>
+</pre>
 
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
-                    <a href="#!" class="modal-action waves-effect waves-green btn-flat ">Copy</a>
+                    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+                    <a class="modal-action waves-effect waves-green btn-flat ">Copy</a>
                 </div>
             </div>
 
@@ -247,8 +206,8 @@
 
                         <div class="input-field tooltipped "
                              data-tooltip="Email to redirect the messages to (can add more later)" data-position="top">
-                            <input id="last_name6" type="text">
-                            <label for="last_name6" class="">Form Alias</label>
+                            <input id="add_form_alias" type="text">
+                            <label for="add_form_alias" class="">Form Alias</label>
                         </div>
 
 
@@ -261,7 +220,7 @@
                              data-position="top" style="display:inline-block">
                             <label>
                                 Off
-                                <input type="checkbox">
+                                <input type="checkbox" id="add_form_use_recaptcha">
                                 <span class="lever deep-purple lighten-4"></span>
                                 On
                             </label>
@@ -272,7 +231,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+                    <a onclick="formsElement.onAddFormConfirmed()" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
                 </div>
             </div>
 
@@ -456,13 +415,85 @@
                     <i class="material-icons deep-purple-text text-lighten-1 pointer"
                        onclick="onDeleteContactClicked('{{email}}')">delete</i>
                     <i class="material-icons deep-purple-text text-lighten-1 pointer"
-                       onclick="onPauseContactClicked('{{email}}')">pause</i>
+
+                       onclick="onPauseContactClicked('{{email}}')">
+
+                        {{#paused}}
+                            play_arrow
+                        {{/paused}}
+
+                        {{^paused}}
+                             pause
+                        {{/paused}}
+
+
+                    </i>
 
                 </a>
             </div>
         </li>
         {{/contacts}}
     </ul>
+</script>
+
+<script id="forms_template" type="x-tmpl-mustache">
+
+    {{#forms}}
+    <div class="col l4 m6 s12">
+        <div class="card">
+            <div class="card-content black-text ">
+                <div>
+                    <span class=" deep-purple-text " style="font-size:26px;"> {{alias}}</span><br>
+                    <a class="deep-purple-text text-lighten-2" style="font-size:12px;">
+                       Added on  {{formated_date}}
+                    </a>
+                    <br>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20 " style="font-size:18px;">
+                        Messages 2/3
+                    </p>
+
+
+                    <div class="progress deep-purple lighten-4">
+                        <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
+                    </div>
+
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
+                        ReCAPTCHA
+                        {{#recaptcha}}
+                        <small style="font-size:12px;">Enabled</small>
+                        {{/recaptcha}}
+                        {{^recaptcha}}
+                        <small style="font-size:12px;">Disabled</small>
+                        {{/recaptcha}}
+                    </p>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
+                        Endpoint:
+                    </p>
+
+                    <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate">
+                        https://sostatic.xyz/forms/{{key}}
+                    </a>
+
+                    <a class="p-10 bold deep-purple-text modal-trigger" href="#boilerplate_modal">Generate
+                        form boilerplate</a>
+
+
+                </div>
+
+
+            </div>
+            <div class="card-action">
+                <a href="individual_website.html" class="bold deep-purple-text lighten-2">Edit</a>
+
+            </div>
+        </div>
+
+    </div>
+
+    {{/forms}}
 </script>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -472,12 +503,14 @@
 <script type="text/javascript" src="js/prism.js"></script>
 <script type="text/javascript" src="js/functionality.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
 <script>
 
 
     //////////// CONTACTS THINGS ////////////
+    let website;
 
     let websiteElement = {
         websiteName: $("#website_name"),
@@ -543,6 +576,7 @@
             });
 
             contactsElement.init(website.contacts);
+            formsElement.init(website);
 
             Materialize.updateTextFields(); // fix overlapping label on text input
             matchHeightUpdate();
@@ -621,7 +655,8 @@
                 if (aliasInput.val().length >= 1) {
                     contacts.push({
                         'alias': aliasInput.val(),
-                        'email': emailInput.val()
+                        'email': emailInput.val(),
+                        'paused': false
                     });
                 }
             });
@@ -630,9 +665,72 @@
                 window.location.reload()
             });
 
+        },
+        onDeleteContactClicked: function(email){
+            let contacts = website.contacts;
+            for (let i = 0; i < contacts.length; i++) {
+                if (contacts[i].email === email) {
+                    contacts.splice(i, 1);
+                    break;
+                }
+            }
+            updateWebsite($.getUrlVar('website_id'), {contacts: contacts}, function () {
+                window.location.reload();
+            })
+        },
+        onPauseContactClicked: function (email) {
+            let contacts = website.contacts;
+            for (let i = 0; i < contacts.length; i++) {
+                if (contacts[i].email === email) {
+                    contacts[i].paused = !contacts[i].paused;
+                    break;
+                }
+            }
+            updateWebsite($.getUrlVar('website_id'), {contacts: contacts}, function () {
+                window.location.reload();
+            })
         }
 
     };
+
+
+
+    let formsElement = {
+        template: $("#forms_template").html(),
+        container: $("#forms_container"),
+        addFormAliasInput: $("#add_form_alias"),
+        addFormUseRecaptcha: $("#add_form_use_recaptcha"),
+        init: function(website){
+            Mustache.parse(this.contactsTemplate);
+
+            if(website.forms !== undefined){
+
+
+                let forms = objToArray(website.forms);
+
+
+                forms = forms.map((form)=>{
+                    form.formated_date = moment.unix(form.added_on/1000).format("YYYY-MM-DD HH:mm");
+                    return form;
+                });
+
+                let rendered = Mustache.render(this.template, {'forms': forms});
+
+                $(this.container).append(rendered);
+            }
+        },
+        onAddFormConfirmed: function(){
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $(formsElement.addFormAliasInput).val(),
+                'recaptcha': $(formsElement.addFormUseRecaptcha).prop('checked')
+            };
+            addFormToWebsite(websiteId, forminfo, ()=>{
+               window.location.reload();
+            });
+        }
+    };
+
 
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -640,16 +738,18 @@
             window.location.href = "authentication.html";
         } else {
             let websiteId = $.getUrlVar('website_id');
-            getWebsiteById(websiteId, onWebsiteLoaded);
+            getWebsiteById(websiteId, (ws)=>{
+                websiteElement.init(ws);
+                website = ws;
+            });
 
         }
     });
 
 
-    function onWebsiteLoaded(website) {
-        websiteElement.init(website);
-        console.log(website);
-    }
+
+
+
 
 </script>
 </html>

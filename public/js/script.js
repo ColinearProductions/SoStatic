@@ -94,14 +94,25 @@ function matchHeightUpdate() {
 function snapshotToArray(snapshot) {
     let returnArr = [];
 
+    console.log(typeof snapshot);
+
     snapshot.forEach(function(childSnapshot) {
         let item = childSnapshot.val();
         item.key = childSnapshot.key;
+
+
 
         returnArr.push(item);
     });
 
     return returnArr;
+}
+
+function objToArray(obj){
+   return Object.keys(obj).map(function (key) {
+       obj[key]['key'] = key;
+       return obj[key];
+   });
 }
 
 

@@ -263,6 +263,7 @@
         contacts.push({
             'alias': $("#single_contact_alias").val(),
             'email': $("#single_contact_email").val(),
+            'paused': false
         });
 
 
@@ -301,11 +302,13 @@
                 website.messagesCount = 0;
             }
             else {
-                website.formsCount = website.forms.length;
+                let forms = objToArray(website.forms);
+                website.formsCount = forms.length;
                 let messagesTotal = 0;
-                website.forms.forEach(form => {
-                    if (form.messages !== undefined)
-                        messagesTotal += form.messages.length;
+
+                console.log(forms);
+                forms.forEach(form => {
+                        messagesTotal += form.message_count;
                 });
                 website.messagesCount = messagesTotal;
             }

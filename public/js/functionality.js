@@ -24,6 +24,13 @@ function addWebsite(website, callback){
     firebase.database().ref('/websites').push(website).then(callback);
 }
 
+function addFormToWebsite(website_id, form_info, callback){
+    form_info.added_on = firebase.database.ServerValue.TIMESTAMP;
+    form_info.message_count = 128;
+
+    firebase.database().ref('/websites/'+website_id+"/forms").push(form_info).then(callback);
+}
+
 
 function getWebsiteById(website_id, callback){
     firebase.database().ref('/websites/' + website_id).once('value').then(function(snapshot) {

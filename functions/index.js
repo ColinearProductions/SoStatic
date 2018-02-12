@@ -5,27 +5,16 @@ const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
 
-exports.addMessage = functions.https.onRequest((req, res) => {
-    const original = req.query.text;
-    admin.database().ref('/messages').push({original: original}).then(snapshot => {
-        res.redirect(303, snapshot.ref);
-    });
-});
-
-
-
-
-exports.addWebsite = functions.https.onRequest((req, res) => {
-
-
-
-
-
-    console.log(req.body);
-
-
-
-    admin.database().ref('/messages').push({original: req.body}).then(snapshot => {
-        res.redirect(303, snapshot.ref);
-    });
+exports.makeUppercase = functions.database.ref('/messages').onWrite((event) => {
+// [END makeUppercaseTrigger]
+    // [START makeUppercaseBody]
+    // Grab the current value of what was written to the Realtime Database.
+    const original = event.data.val();
+    console.log('Uppercasing', event.params.pushId, original);
+    const uppercase = original.toUpperCase();
+    // You must return a Promise when performing asynchronous tasks inside a Functions such as
+    // writing to the Firebase Realtime Database.
+    // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
+    return event.data.ref.parent.child('uppercase').set(uppercase);
+    // [END makeUppercaseBody]
 });
