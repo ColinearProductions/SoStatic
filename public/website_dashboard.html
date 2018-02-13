@@ -50,10 +50,10 @@
 
         <!--FAB-->
         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large deep-purple tooltipped modal-trigger" data-position="left" data-delay="50"
-               data-tooltip="Add Form" href="#add_form_modal">
+            <button class="btn-floating btn-large deep-purple tooltipped" data-position="left" data-delay="50"
+                    data-tooltip="Add Form" onclick="formInfoModal.init()">
                 <i class="material-icons ">add</i>
-            </a>
+            </button>
         </div>
 
         <!-- Navbar -->
@@ -63,7 +63,7 @@
                    class="button-collapse top-nav full hide-on-large-only">
                     <i class="material-icons">menu</i>
                 </a>
-                <div class="col s12">
+                <div class="col s12" id="breadcrumbs">
                     <a href="#!" class="breadcrumb">Websites</a>
                 </div>
             </div>
@@ -159,8 +159,6 @@
                 </div>
 
 
-
-
             </div>
 
 
@@ -171,7 +169,7 @@
                     <h6>Here is a sample code, filled with your information, for a form that will post to our
                         service</h6>
 
-<pre>
+                    <pre>
 <code class="language-markup">
 <script type="prism-html-markup">
 <form action="/action_page.php" target="_blank" method="GET">
@@ -194,20 +192,21 @@
                 </div>
             </div>
 
-            <!-- Add form Modal -->
-            <div id="add_form_modal" class="modal small-modal">
+            <!-- Form Info Modal -->
+            <div id="form_info_modal" class="modal small-modal">
                 <div class="modal-content">
 
 
+                    <input type="hidden" id="form_info_id">
                     <div class="container">
 
-                        <h4>Add form</h4>
+                        <h4 id="form_info_title">Add form</h4>
 
 
-                        <div class="input-field tooltipped "
+                        <div class="input-field tooltipped m-t-20"
                              data-tooltip="Email to redirect the messages to (can add more later)" data-position="top">
-                            <input id="add_form_alias" type="text">
-                            <label for="add_form_alias" class="">Form Alias</label>
+                            <input id="form_info_modal_alias" type="text">
+                            <label for="form_info_modal_alias" class="">Form Alias</label>
                         </div>
 
 
@@ -220,7 +219,7 @@
                              data-position="top" style="display:inline-block">
                             <label>
                                 Off
-                                <input type="checkbox" id="add_form_use_recaptcha">
+                                <input type="checkbox" id="form_info_modal_use_recaptcha">
                                 <span class="lever deep-purple lighten-4"></span>
                                 On
                             </label>
@@ -230,8 +229,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                    <a onclick="formsElement.onAddFormConfirmed()" class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                    <button id="modal_info_confirm_button" class="waves-effect waves-green btn-flat">Add</button>
                 </div>
             </div>
 
@@ -413,17 +412,17 @@
                 <p class="deep-purple-text lighten-1 bold" style="display: inline-block;">{{alias}}</p> {{email}}
                 <a class="secondary-content">
                     <i class="material-icons deep-purple-text text-lighten-1 pointer"
-                       onclick="onDeleteContactClicked('{{email}}')">delete</i>
+                       onclick="contactsElement.onDeleteContactClicked('{{email}}')">delete</i>
                     <i class="material-icons deep-purple-text text-lighten-1 pointer"
 
-                       onclick="onPauseContactClicked('{{email}}')">
+                       onclick="contactsElement.onPauseContactClicked('{{email}}')">
 
                         {{#paused}}
-                            play_arrow
+                        play_arrow
                         {{/paused}}
 
                         {{^paused}}
-                             pause
+                        pause
                         {{/paused}}
 
 
@@ -445,7 +444,7 @@
                 <div>
                     <span class=" deep-purple-text " style="font-size:26px;"> {{alias}}</span><br>
                     <a class="deep-purple-text text-lighten-2" style="font-size:12px;">
-                       Added on  {{formated_date}}
+                        Added on {{formated_date}}
                     </a>
                     <br>
 
@@ -486,7 +485,7 @@
 
             </div>
             <div class="card-action">
-                <a href="individual_website.html" class="bold deep-purple-text lighten-2">Edit</a>
+                <a onclick="onEditFormClicked('{{key}}')" class="bold deep-purple-text lighten-2 pointer">Edit</a>
 
             </div>
         </div>
@@ -648,15 +647,30 @@
         },
         onConfirmClicked: function () {
             let contacts = [];
+            let getContactByEmail = (email) => {
+                return objToArray(website.contacts).filter((contact) => {
+                    return contact.email === email;
+                })[0]
+            };
             $(contactsElement.editContactsInputList).find('.contacts-list-entry').each(function () {
 
                 let aliasInput = $(this).find('.contacts-alias');
                 let emailInput = $(this).find('.contacts-email');
+
+
+                let preexistentContact = getContactByEmail(emailInput.val());
+                let paused = null;
+                if (preexistentContact === undefined)
+                    paused = false;
+                else
+                    paused = preexistentContact.paused;
+
+
                 if (aliasInput.val().length >= 1) {
                     contacts.push({
                         'alias': aliasInput.val(),
                         'email': emailInput.val(),
-                        'paused': false
+                        'paused': paused
                     });
                 }
             });
@@ -666,7 +680,7 @@
             });
 
         },
-        onDeleteContactClicked: function(email){
+        onDeleteContactClicked: function (email) {
             let contacts = website.contacts;
             for (let i = 0; i < contacts.length; i++) {
                 if (contacts[i].email === email) {
@@ -694,23 +708,27 @@
     };
 
 
+    let breadcrumbs = $('#breadcrumbs');
+
 
     let formsElement = {
         template: $("#forms_template").html(),
         container: $("#forms_container"),
         addFormAliasInput: $("#add_form_alias"),
         addFormUseRecaptcha: $("#add_form_use_recaptcha"),
-        init: function(website){
+        init: function (website) {
             Mustache.parse(this.contactsTemplate);
 
-            if(website.forms !== undefined){
+            $("#breadcrumbs").append('<a href="#!" class="breadcrumb">' + website.Name + " - " + website.url + '</a>\n')
+
+            if (website.forms !== undefined) {
 
 
                 let forms = objToArray(website.forms);
 
 
-                forms = forms.map((form)=>{
-                    form.formated_date = moment.unix(form.added_on/1000).format("YYYY-MM-DD HH:mm");
+                forms = forms.map((form) => {
+                    form.formated_date = moment.unix(form.added_on / 1000).format("YYYY-MM-DD HH:mm");
                     return form;
                 });
 
@@ -719,18 +737,79 @@
                 $(this.container).append(rendered);
             }
         },
-        onAddFormConfirmed: function(){
+        onAddFormConfirmed: function () {
             let websiteId = $.getUrlVar('website_id');
             let forminfo = {
                 'alias': $(formsElement.addFormAliasInput).val(),
                 'recaptcha': $(formsElement.addFormUseRecaptcha).prop('checked')
             };
-            addFormToWebsite(websiteId, forminfo, ()=>{
-               window.location.reload();
+            addFormToWebsite(websiteId, forminfo, () => {
+                window.location.reload();
             });
         }
     };
 
+    function onEditFormClicked(form_id) {
+        formInfoModal.init(form_id);
+    }
+
+    let formInfoModal = {
+
+        init: (form_id) => {
+            console.log(this);
+            if (form_id !== undefined) {
+
+                let form = getFormById(form_id);
+                console.log(form);
+                $("#form_info_title").text("Update form");
+                $("#form_info_modal_alias").val(form.alias);
+                $("#form_info_modal_use_recaptcha").attr("checked", form.recaptcha);
+                $("#form_info_id").val(form.key);
+                $("#modal_info_confirm_button").on('click', formInfoModal.onUpdateFormConfirmed);
+            } else {
+                $("#form_info_modal_alias").val("");
+                $("#form_info_title").text("Add form");
+                $("#modal_info_confirm_button").on('click', formInfoModal.onAddFormConfirmed);
+            }
+
+            $("#form_info_modal").modal('open');
+            Materialize.updateTextFields();
+
+        },
+        onUpdateFormConfirmed: () => {
+
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $("#form_info_modal_alias").val(),
+                'recaptcha': $("#form_info_modal_use_recaptcha").prop('checked')
+            };
+            let formKey = $("#form_info_id").val();
+            updateForm(websiteId, forminfo, formKey, () => {
+                window.location.reload();
+            })
+
+        },
+        onAddFormConfirmed: () => {
+
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $("#form_info_modal_alias").val(),
+                'recaptcha': $("#form_info_modal_use_recaptcha").prop('checked')
+            };
+            addFormToWebsite(websiteId, forminfo, () => {
+                window.location.reload();
+            });
+        }
+
+    };
+
+    function getFormById(form_id) {
+        return objToArray(website.forms).filter((form) => {
+
+                return form.key === form_id
+            }
+        )[0];
+    }
 
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -738,17 +817,14 @@
             window.location.href = "authentication.html";
         } else {
             let websiteId = $.getUrlVar('website_id');
-            getWebsiteById(websiteId, (ws)=>{
+            getWebsiteById(websiteId, (ws) => {
                 websiteElement.init(ws);
+
                 website = ws;
             });
 
         }
     });
-
-
-
-
 
 
 </script>

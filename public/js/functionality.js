@@ -60,3 +60,11 @@ function updateWebsite(website_id, updateObj, callback){
 }
 
 
+function updateForm(websiteId, forminfo, formKey, callback){
+    console.log(forminfo);
+    firebase.database().ref('/websites/'+websiteId+"/forms/"+formKey).update(forminfo).then(function(){
+        callback();
+    });
+}
+
+
