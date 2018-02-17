@@ -3,6 +3,6 @@
     "public": "public"
   },
   "functions": {
-  "source": "functions"
-}
+    "source": "functions"
+  }
 }

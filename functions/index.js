@@ -1,20 +1,97 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+let request = require('request');
+let admin = require("firebase-admin");
+const cors = require('cors')({origin: true});
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+const requestPromise = require('request-promise');
+
+const express = require("express");
+let recaptchaValidationURL = "https://recaptcha.google.com/recaptcha/api/siteverify";
+
+const gmailUsername = "sostatic.xyz";
+const gmailPassword = "jQ6sbEu3";
+const mailtransport = nodemailer.createTransport(
+    'smtps://'+gmailUsername+':'+gmailPassword+'@smtp.gmail.com');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 admin.initializeApp(functions.config().firebase);
+let db = admin.database();
 
 
-exports.makeUppercase = functions.database.ref('/messages').onWrite((event) => {
-// [END makeUppercaseTrigger]
-    // [START makeUppercaseBody]
-    // Grab the current value of what was written to the Realtime Database.
-    const original = event.data.val();
-    console.log('Uppercasing', event.params.pushId, original);
-    const uppercase = original.toUpperCase();
-    // You must return a Promise when performing asynchronous tasks inside a Functions such as
-    // writing to the Firebase Realtime Database.
-    // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
-    return event.data.ref.parent.child('uppercase').set(uppercase);
-    // [END makeUppercaseBody]
+
+
+app.post("/:websiteid/:formid", (request, response)=>{
+    let websiteid = request.params['websiteid'];
+    let formid = request.params['formid'];
+    let formParams = request.body;
+
+    //read website configuration
+    db.ref('/websites/'+websiteid).once('value').then(snapshot=>{
+
+        let website= snapshot.val();
+        let currentForm = website.forms[formid];
+
+
+        if(website.httpsOnly && request.protocol!=='https')
+            console.log("Website expected https, dropping request");
+
+        if(website.url !== request.get('host').split(":")[0])
+            console.log("Website defined domain does not match source domain of request, dropping request");
+
+        if(currentForm.recaptcha)
+            validateRecaptcha(website.secret, formParams);
+
+
+
+
+        console.log(website);
+
+    });
+    let messageObj =request.body;
+    response.send(messageObj)
+   // let messagesRef = db.ref('/messages/'+websiteid+'/');
+
+    //
+
+
+    //ref.push(messageObj);
+
+//todo redirect url
+
 });
+
+
+function validateRecaptcha(secret, message, website){
+    requestPromise({
+        uri:recaptchaValidationURL,
+        method:'POST',
+        formData:{
+            secret: secret,
+            response: message['g-recaptcha-response']
+        },
+        json: true
+    }).then(result=>{
+        if(result.success)
+            emailMessage(message, website);
+        else
+            console.log("Recaptcha validation failed, dropping message")
+
+    });
+}
+
+
+function emailMessage(message, website){
+    console.log("WEOOO HOOO ");
+}
+
+
+
+const endpoint = functions.https.onRequest(app);
+
+module.exports = {
+    endpoint
+};

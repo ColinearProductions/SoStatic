@@ -68,3 +68,4 @@ function updateForm(websiteId, forminfo, formKey, callback){
 }
 
 
+//todo url should actually be called HOST or even better, DOMAIN
