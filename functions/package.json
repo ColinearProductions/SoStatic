@@ -15,7 +15,9 @@
     "sync-request":"4.1.0",
     "cors":"2.8.4",
     "nodemailer": "^4.0.1",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "mustache": "^2.3.0"
+
   },
   "private": true
 }

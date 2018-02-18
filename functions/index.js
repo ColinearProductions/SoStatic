@@ -14,6 +14,9 @@ const gmailPassword = "jQ6sbEu3";
 const mailtransport = nodemailer.createTransport(
     'smtps://'+gmailUsername+':'+gmailPassword+'@smtp.gmail.com');
 
+
+const pathToTemplate = "https://sostatic.xyz/email/inlined.html";
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -43,7 +46,8 @@ app.post("/:websiteid/:formid", (request, response)=>{
             console.log("Website defined domain does not match source domain of request, dropping request");
 
         if(currentForm.recaptcha)
-            validateRecaptcha(website.secret, formParams);
+            onValidMessage(formParams, website, currentForm);
+           // validateRecaptcha(website.secret, formParams,website,  currentForm);
 
 
 
@@ -65,7 +69,7 @@ app.post("/:websiteid/:formid", (request, response)=>{
 });
 
 
-function validateRecaptcha(secret, message, website){
+function validateRecaptcha(secret, message, website, form){
     requestPromise({
         uri:recaptchaValidationURL,
         method:'POST',
@@ -76,7 +80,7 @@ function validateRecaptcha(secret, message, website){
         json: true
     }).then(result=>{
         if(result.success)
-            emailMessage(message, website);
+            emailMessage(message, website, form);
         else
             console.log("Recaptcha validation failed, dropping message")
 
@@ -84,8 +88,51 @@ function validateRecaptcha(secret, message, website){
 }
 
 
+function onValidMessage(message, website, form){
+
+    //todo save message to db
+    //todo email message
+
+    emailMessage(message, website);
+}
+
+function getTemplate(message, website){
+    request(pathToTemplate, (error, response, body) =>{
+        let template = body;
+
+        let rendered;
+
+
+        emailMessage(rendered, website)
+    });
+}
+
+
 function emailMessage(message, website){
-    console.log("WEOOO HOOO ");
+
+
+
+
+    let email = objToArray(website.contacts)[0].email;
+    const mailOptions = {
+        from: "So Static",
+        to: email
+    };
+
+    // The user subscribed to the newsletter.
+    mailOptions.subject = 'New submission  - ' + website.alias;
+    mailOptions.text = JSON.stringify(message);
+
+    console.log(mailOptions);
+    return mailtransport.sendMail(mailOptions).then(() => {
+        console.log('New welcome email sent to:', email);
+    }).catch((resolve, reject)=>{
+        console.log(resolve);
+        console.log(reject);
+
+    });
+
+
 }
 
 
@@ -95,3 +142,11 @@ const endpoint = functions.https.onRequest(app);
 module.exports = {
     endpoint
 };
+
+
+function objToArray(obj){
+    return Object.keys(obj).map(function (key) {
+        obj[key]['key'] = key;
+        return obj[key];
+    });
+}
