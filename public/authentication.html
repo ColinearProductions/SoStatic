@@ -11,16 +11,6 @@
     <link rel="stylesheet" href="css/styles.css">
 
 
-    <script>
-        var redirectLogin = true;
-    </script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-
-
 </head>
 <body>
 
@@ -114,30 +104,39 @@
                     <div class="valign-wrapper" style="height:100%">
                         <div class="col xl8 s10 offset-xl2 offset-s1">
                             <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="register_email" type="email"
-                                           class=" deep-purple-text  text-lighten-1 validate m-0">
-                                    <label for="register_email">Email</label>
+                            <form onsubmit="return onRegisterPressed()"  data-parsley-validate autocomplete="off">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="register_email" type="email"
+                                               class=" deep-purple-text  text-lighten-1 validate m-0"
+                                               data-parsley-type="email" required
+                                               autocomplete="off">
+                                        <label for="register_email">Email</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <input id="register_password" type="password"
-                                           class=" deep-purple-text  text-lighten-1 validate m-0">
-                                    <label for="register_password">Password</label>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="register_password" type="password"
+                                               class=" deep-purple-text  text-lighten-1 validate m-0"
+                                               data-parsley-minlength="8" required>
+
+                                        <label for="register_password">Password</label>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <p>
-                                <input type="checkbox" class="purple-checkbox" id="test5"/>
-                                <label for="test5" class="deep-purple-text text-lighten-2">Subscribe to our
-                                    newsletter</label>
-                            </p>
+                                <p>
+                                    <input type="checkbox" class="purple-checkbox" id="test5"/>
+                                    <label for="test5" class="deep-purple-text text-lighten-2">Subscribe to our
+                                        newsletter</label>
+                                </p>
 
-                            <a class="waves-effect waves-light btn  deep-purple lighten-1"
-                               onclick="onRegisterPressed()">Register</a>
+                                <button type="submit" class="waves-effect waves-light btn  deep-purple lighten-1">
+                                    Register
+                                </button>
+
+                            </form>
                         </div>
+
                     </div>
 
 
@@ -155,7 +154,8 @@
                                 </div>
                             </div>
 
-                            <a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!" onclick="onSendRecoveryEmailPressed()">Send Recovery Email</a>
+                            <a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"
+                               onclick="onSendRecoveryEmailPressed()">Send Recovery Email</a>
                         </div>
                     </div>
                 </div>
@@ -179,6 +179,13 @@
 
 </body>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/parsely.js"></script>
+
 
 <script>
     $(".button-collapse").sideNav();
@@ -199,18 +206,18 @@
     });
 
 
-    var registerEmailField = $("#register_email");
-    var registerPasswordField = $("#register_password");
+    let registerEmailField = $("#register_email");
+    let registerPasswordField = $("#register_password");
 
-    var loginEmailField = $("#login_email");
-    var loginPasswordField = $("#login_password");
+    let loginEmailField = $("#login_email");
+    let loginPasswordField = $("#login_password");
 
-    var recoveryEmailField = $("#recover_email");
+    let recoveryEmailField = $("#recover_email");
 
 
-    var state = null;
+    let state = null;
 
-    var overlay = $(".overlay-container");
+    let overlay = $(".overlay-container");
 
 
     function showLoading(message) {
@@ -231,6 +238,7 @@
         });
         state = "registering";
         showLoading("We are creating your account...");
+        return false;
     }
 
     function onLoginPressed() {
@@ -244,19 +252,17 @@
     }
 
 
-    function onSendRecoveryEmailPressed(){
+    function onSendRecoveryEmailPressed() {
         showLoading("Sending recovery email");
         forgotPassword($(recoveryEmailField).val(), function (error) {
-            if(error === undefined){
+            if (error === undefined) {
                 Materialize.toast('You should receive a recovery email soon', 4000); // 4000 is the duration of the toast
-            }else{
+            } else {
                 Materialize.toast('There has been an error: ' + error.message, 4000); // 4000 is the duration of the toast
             }
             hideLoading();
         })
     }
-
-
 
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -281,6 +287,7 @@
         }
     });
 
+    Materialize.updateTextFields()
 
 </script>
 </html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress JSJQueryEfficiency -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="css/materialize.css">
-    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/highlight.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -165,30 +166,15 @@
             <!-- Boilerplate Modal -->
             <div id="boilerplate_modal" class="modal ">
                 <div class="modal-content">
-                    <h4>Modal Header</h4>
-                    <h6>Here is a sample code, filled with your information, for a form that will post to our
-                        service</h6>
-
-                    <pre>
-<code class="language-markup">
-<script type="prism-html-markup">
-<form action="/action_page.php" target="_blank" method="GET">
-    First name:<br>
-    <input type="text" name="firstname" value="Mickey">
-    <br>
-    Last name:<br>
-    <input type="text" name="lastname" value="Mouse">
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
-</script>
-</code>
-</pre>
-
+                    <div>
+                           <pre>
+                               <code class="" id="boilerplate_container"></code>
+                           </pre>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <a class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
-                    <a class="modal-action waves-effect waves-green btn-flat ">Copy</a>
+                    <a class="modal-action waves-effect waves-green btn-flat" id="copy_boilerplate_button">Copy</a>
                 </div>
             </div>
 
@@ -472,11 +458,13 @@
                         Endpoint:
                     </p>
 
-                    <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate">
-                        https://sostatic.xyz/forms/{{key}}
+
+                    <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate  pointer cpy-button"
+                    >
+                        https://sostatic.xyz/{{websiteid}}/{{key}}
                     </a>
 
-                    <a class="p-10 bold deep-purple-text modal-trigger" href="#boilerplate_modal">Generate
+                    <a class="p-10 bold deep-purple-text pointer" onclick="onGenerateBoilerplateClicked('{{key}}')">Generate
                         form boilerplate</a>
 
 
@@ -495,11 +483,44 @@
     {{/forms}}
 </script>
 
+
+<script id="code_boilerplate_template" type="x-tmpl-mustache">
+
+
+    {{#withRecaptcha}}
+    <!-- Include recaptcha from Google's CDN-->
+    {{{url_to_recaptcha}}}
+    {{/withRecaptcha}}
+
+    <form action="https://sostatic.xyz/{{websiteId}}/{{formId}}" method="POST">
+        <label>
+            Name
+            <input type="text" name="name">
+        </label>
+        <label>
+            Email
+            <input type="text" name="email">
+        </label>
+        <label> Message
+            <textarea name="message" placeholder="Your message"></textarea>
+        </label>
+
+        {{#withRecaptcha}}
+        <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+        {{/withRecaptcha}}
+        <input type="submit" value="Submit">
+    </form>
+
+
+</script>
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/firebase4.9.0.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/prism.js"></script>
+<script type="text/javascript" src="js/highlight.js"></script>
+
+
 <script type="text/javascript" src="js/functionality.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
@@ -509,7 +530,9 @@
 
 
     //todo if website doesnt have a recaptha on. dont allow forms to turn it on either;
-
+    let websiteId = $.getUrlVar('website_id');
+    let boilerplateTemplate = $("#code_boilerplate_template").html();
+    Mustache.parse(boilerplateTemplate);
 
 
     //////////// CONTACTS THINGS ////////////
@@ -733,13 +756,36 @@
 
                 forms = forms.map((form) => {
                     form.formated_date = moment.unix(form.added_on / 1000).format("YYYY-MM-DD HH:mm");
+                    form.websiteid = websiteId;
                     return form;
                 });
 
                 let rendered = Mustache.render(this.template, {'forms': forms});
 
                 $(this.container).append(rendered);
+
+
             }
+
+            $(".cpy-button").each(function (i, obj) {
+                $(obj).on('click', function () {
+                    let aux = document.createElement("input");
+
+                    console.log($(this).data("target"));
+
+                    if ($(this).data("target") === undefined)
+                        aux.setAttribute("value", this.innerHTML);
+                    else
+                        aux.setAttribute("value", document.getElementById($(this).data("target")).innerHTML);
+                    document.body.appendChild(aux);
+                    aux.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(aux);
+                    Materialize.toast("Copied to clipboard", 4000)
+
+                });
+            });
+
         },
         onAddFormConfirmed: function () {
             let websiteId = $.getUrlVar('website_id');
@@ -759,6 +805,7 @@
 
     let formInfoModal = {
 
+        confirmButton: $("#modal_info_confirm_button"),
         init: (form_id) => {
             console.log(this);
             if (form_id !== undefined) {
@@ -766,14 +813,16 @@
                 let form = getFormById(form_id);
                 console.log(form);
                 $("#form_info_title").text("Update form");
+                $(this.confirmButton).text("Update");
                 $("#form_info_modal_alias").val(form.alias);
                 $("#form_info_modal_use_recaptcha").attr("checked", form.recaptcha);
                 $("#form_info_id").val(form.key);
-                $("#modal_info_confirm_button").on('click', formInfoModal.onUpdateFormConfirmed);
+                $(this.confirmButton).on('click', formInfoModal.onUpdateFormConfirmed);
             } else {
                 $("#form_info_modal_alias").val("");
+                $(this.confirmButton).text("Add");
                 $("#form_info_title").text("Add form");
-                $("#modal_info_confirm_button").on('click', formInfoModal.onAddFormConfirmed);
+                $(this.confirmButton).on('click', formInfoModal.onAddFormConfirmed);
             }
 
             $("#form_info_modal").modal('open');
@@ -820,7 +869,7 @@
         if (!user) {
             window.location.href = "authentication.html";
         } else {
-            let websiteId = $.getUrlVar('website_id');
+
             getWebsiteById(websiteId, (ws) => {
                 websiteElement.init(ws);
 
@@ -830,6 +879,56 @@
         }
     });
 
+
+    function onGenerateBoilerplateClicked(formId) {
+
+        let urlToRecaptcha = '<script src="https://www.google.com/recaptcha/api.js" async defer><' + '/script>';
+        let form = getFormById(formId);
+        let data = {
+            'url_to_recaptcha': urlToRecaptcha,
+            'websiteId': websiteId,
+            'formId': formId,
+            'sitekey': website.sitekey,
+            'withRecaptcha': form.recaptcha && website.recaptcha
+        };
+
+        let rendered = Mustache.render(boilerplateTemplate, data);
+
+        console.log(rendered);
+
+        let container = $("#boilerplate_container");
+
+        $(container).html(rendered);
+
+
+        $('code').each(function () {
+            var that = $(this);
+            // cache the content of 'code'
+            var html = that.html().trim();
+            that.empty();
+            // escape the content
+            that.text(html);
+        });
+
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        $("#copy_boilerplate_button").off("click");
+        $("#copy_boilerplate_button").on("click", () => {
+            let aux = document.createElement("input");
+
+
+            aux.setAttribute("value", rendered);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand("copy");
+            document.body.removeChild(aux);
+            Materialize.toast("Copied to clipboard", 4000)
+        });
+
+        $("#boilerplate_modal").modal('open');
+    }
 
 </script>
 </html>

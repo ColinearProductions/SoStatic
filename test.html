@@ -22,4 +22,32 @@
 
     <input type="submit" value="Submit">
 </form>
+
+
+
+<br><br><br><br><br><br><br><br><br>
+
+
+
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+<form action="{{endpoint}}" method="POST">
+
+    <label>
+        Name
+        <input type="text" name="name">
+    </label>
+    <label>
+        Email
+        <input type="text" name="email">
+    </label>
+    <label> Message
+        <textarea name="message" placeholder="Your message"></textarea>
+    </label>
+    <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+    <input type="submit" value="Submit">
+</form>
+
 </body>
