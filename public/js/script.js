@@ -1,7 +1,3 @@
-
-
-
-
 let config = {
     apiKey: "AIzaSyDOpoNcoeSWE8weaKuT8DvMWt2qSTok11k",
     authDomain: "sostatic-1d381.firebaseapp.com",
@@ -12,7 +8,6 @@ let config = {
 };
 
 firebase.initializeApp(config);
-
 
 
 function register(user, pass, callback) {
@@ -30,25 +25,22 @@ function login(user, pass, callback) {
     });
 }
 
-function logout(){
-    firebase.auth().signOut().then(function() {
+function logout() {
+    firebase.auth().signOut().then(function () {
         console.log('Signed Out');
-    }, function(error) {
+    }, function (error) {
         console.error('Sign Out Error', error);
     });
 }
 
 
-function forgotPassword(email, callback){
-    firebase.auth().sendPasswordResetEmail(email).then(function() {
+function forgotPassword(email, callback) {
+    firebase.auth().sendPasswordResetEmail(email).then(function () {
         callback();
-    }).catch(function(error) {
+    }).catch(function (error) {
         callback(error);
     });
 }
-
-
-
 
 
 $(".smooth_scroll").on('click', function (event) {
@@ -61,16 +53,18 @@ $(".smooth_scroll").on('click', function (event) {
 });
 
 
-
-
 $(document).ready(function () {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
     $('select').material_select();
 
-    $(".mh1").matchHeight({
-        property: 'min-height'
-    });
+    try {
+        $(".mh1").matchHeight({
+            property: 'min-height'
+        })
+
+    } catch (err) {
+    }
 
     $(".button-collapse").sideNav();
 
@@ -84,9 +78,95 @@ $(document).ready(function () {
     });
 
 
+    Materialize.updateTextFields();
+
+
+    let validationItems = $(".mvalidate");
+    $(validationItems).on("focusout", onValidateInput);
 
 
 });
+
+
+ function showError(element, message) {
+    $(element).siblings('.validation-error').remove();
+    $('<p class="validation-error">' + message + '</p>').insertAfter(element);
+    $(element).addClass("invalid");
+}
+
+function hideError(element) {
+    $(element).siblings('.validation-error').remove();
+    $(element).removeClass("invalid");
+}
+
+
+function onValidateInput() {
+
+    let val = $(this).val();
+
+
+
+
+
+    if ($(this).data("validate-email") !== undefined) {
+        let err_msg = "This field must contain a valid email";
+        if (validateEmail(val))
+            hideError(this);
+        else {
+            showError(this, err_msg);
+            return;
+        }
+    }
+
+    if ($(this).data("min-length") !== undefined) {
+        if(val.length<$(this).data("min-length")) {
+            showError(this, "Text too short, must have at least " + $(this).data("min-length") + " character(s)");
+            return;
+        }else
+            hideError(this)
+    }
+
+    if ($(this).data("max-length") !== undefined) {
+        if(val.length>$(this).data("max-length")) {
+            showError(this, "Text too long, use at most " + $(this).data("max-length") + " characters");
+            return;
+        }else
+            hideError(this)
+
+    }
+
+    if ($(this).data("validate-required") !== undefined) {
+        if (val.length < 1) {
+            showError(this, "This field is required");
+            return;
+        }else
+            hideError(this);
+    }
+
+
+}
+
+function isFormCompleted(form){
+     let ret  = true;
+    $(form).find("[data-validate-required]").each((i,obj)=>{
+        if($(obj).val().length<1) {
+            showError(obj, "This field is required");
+            ret = false
+        }
+    });
+
+    if($(form).find(".invalid").length>0){
+        ret= false;
+    }
+
+    return ret;
+}
+
+
+function validateEmail(email) {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
 
 function matchHeightUpdate() {
@@ -99,10 +179,9 @@ function snapshotToArray(snapshot) {
 
     console.log(typeof snapshot);
 
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
         let item = childSnapshot.val();
         item.key = childSnapshot.key;
-
 
 
         returnArr.push(item);
@@ -111,27 +190,26 @@ function snapshotToArray(snapshot) {
     return returnArr;
 }
 
-function objToArray(obj){
-   return Object.keys(obj).map(function (key) {
-       obj[key]['key'] = key;
-       return obj[key];
-   });
+function objToArray(obj) {
+    return Object.keys(obj).map(function (key) {
+        obj[key]['key'] = key;
+        return obj[key];
+    });
 }
 
 
 $.extend({
-    getUrlVars: function(){
+    getUrlVars: function () {
         let vars = [], hash;
         let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(let i = 0; i < hashes.length; i++)
-        {
+        for (let i = 0; i < hashes.length; i++) {
             hash = hashes[i].split('=');
             vars.push(hash[0]);
-            vars[hash[0]] = hash[1].replace("#","");
+            vars[hash[0]] = hash[1].replace("#", "");
         }
         return vars;
     },
-    getUrlVar: function(name){
+    getUrlVar: function (name) {
         return $.getUrlVars()[name];
     }
 });

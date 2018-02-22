@@ -179,9 +179,17 @@ body{
 }
 /* invalid color */
 .input-field input.invalid {
-    border-bottom: 1px solid #9575cd !important; ;
-    box-shadow: 0 1px 0 0 #9575cd  !important;;
+    border-bottom: 1px solid #ef5350  !important; ;
+    box-shadow: 0 1px 0 0 #ef5350  !important;;
+    color: #ef5350   !important;;
 }
+
+.validation-error{
+    color: #ef5350;
+    margin-top:3px;
+}
+
+
 
 
 
@@ -241,8 +249,6 @@ body{
     }
 
 }
-
-
 
 
 

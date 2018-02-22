@@ -101,24 +101,24 @@
                 </div>
                 <div id="register_tab" class="col p-20" style="height:55vh; width:100%">
 
-                    <div class="valign-wrapper" style="height:100%">
-                        <div class="col xl8 s10 offset-xl2 offset-s1">
-                            <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
-                            <form onsubmit="return onRegisterPressed()"  data-parsley-validate autocomplete="off">
+
+                        <div class="valign-wrapper" style="height:100%">
+                            <div class="col xl8 s10 offset-xl2 offset-s1">
+                                <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="register_email" type="email"
-                                               class=" deep-purple-text  text-lighten-1 validate m-0"
-                                               data-parsley-type="email" required
-                                               autocomplete="off">
+                                        <input id="register_email" type="text"
+                                               class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
+                                                data-validate-email data-validate-required>
                                         <label for="register_email">Email</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="register_password" type="password"
-                                               class=" deep-purple-text  text-lighten-1 validate m-0"
-                                               data-parsley-minlength="8" required>
+                                               class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
+                                               data-validate-required data-min-length="6"
+                                              >
 
                                         <label for="register_password">Password</label>
                                     </div>
@@ -130,14 +130,14 @@
                                         newsletter</label>
                                 </p>
 
-                                <button type="submit" class="waves-effect waves-light btn  deep-purple lighten-1">
+                                <button  class="waves-effect waves-light btn  deep-purple lighten-1"
+                                        onclick="onRegisterPressed()">
                                     Register
                                 </button>
 
-                            </form>
-                        </div>
+                            </div>
 
-                    </div>
+                        </div>
 
 
                 </div>
@@ -149,7 +149,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="recover_email" type="email"
-                                           class=" deep-purple-text  text-lighten-1 validate m-0">
+                                           class=" deep-purple-text  text-lighten-1  m-0">
                                     <label for="recover_email">Email</label>
                                 </div>
                             </div>
@@ -162,7 +162,8 @@
 
                 <div class="row m-0 right-align">
                     <a class="btn-floating btn-large waves-effect waves-light deep-purple lighten-1"
-                       style="margin-right:30px; margin-bottom:30px;" href="index.html"><i class="material-icons">arrow_back</i></a>
+                       style="margin-right:30px; margin-bottom:30px;" href="index.html"><i
+                            class="material-icons">arrow_back</i></a>
                 </div>
 
 
@@ -181,10 +182,11 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/parsely.js"></script>
 
 
 <script>
@@ -231,6 +233,11 @@
 
 
     function onRegisterPressed() {
+
+        if(!isFormCompleted($("#register_tab")))
+            return;
+
+
         register($(registerEmailField).val(), $(registerPasswordField).val(), function (error) {
             hideLoading();
             state = null;
@@ -238,7 +245,7 @@
         });
         state = "registering";
         showLoading("We are creating your account...");
-        return false;
+        return ;
     }
 
     function onLoginPressed() {
@@ -287,7 +294,8 @@
         }
     });
 
-    Materialize.updateTextFields()
+
+    $("form").validate();
 
 </script>
 </html>
