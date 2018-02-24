@@ -1,3 +1,48 @@
+let config = {
+    apiKey: "AIzaSyDOpoNcoeSWE8weaKuT8DvMWt2qSTok11k",
+    authDomain: "sostatic-1d381.firebaseapp.com",
+    databaseURL: "https://sostatic-1d381.firebaseio.com",
+    projectId: "sostatic-1d381",
+    storageBucket: "sostatic-1d381.appspot.com",
+    messagingSenderId: "446439468118"
+};
+
+firebase.initializeApp(config);
+
+////////////////////////////////////   AUTH   //////////////////////////////////////////////////////
+
+function register(user, pass, callback) {
+    firebase.auth().createUserWithEmailAndPassword(user, pass).catch(function (error) {
+        console.log(error);
+        callback(error);
+    });
+}
+
+
+function login(user, pass, callback) {
+    firebase.auth().signInWithEmailAndPassword(user, pass).catch(function (error) {
+        console.log(error);
+        callback(error)
+    });
+}
+
+function logout() {
+    firebase.auth().signOut().then(function () {
+        console.log('Signed Out');
+    }, function (error) {
+        console.error('Sign Out Error', error);
+    });
+}
+
+
+function forgotPassword(email, callback) {
+    firebase.auth().sendPasswordResetEmail(email).then(function () {
+        callback();
+    }).catch(function (error) {
+        callback(error);
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 const database = firebase.database();

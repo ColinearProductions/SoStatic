@@ -70,14 +70,16 @@
                             <div class="row">
                                 <div class="input-field col s12 ">
                                     <input id="login_email" type="email"
-                                           class="validate m-0  deep-purple-text  text-lighten-1">
+                                           class="validate m-0  deep-purple-text  text-lighten-1 mvalidate"
+                                           data-validate-email data-validate-required>
                                     <label for="login_email" class=" deep-purple-text  text-lighten-1">Email</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="login_password" type="password"
-                                           class="validate m-0   deep-purple-text  text-lighten-1">
+                                           class="validate m-0   deep-purple-text  text-lighten-1 mvalidate"
+                                           data-validate-required data-min-length="6">
                                     <label for="login_password"
                                            class=" deep-purple-text  text-lighten-1">Password</label>
                                 </div>
@@ -85,9 +87,11 @@
 
 
                             <div class="row">
-                                <a class="waves-effect waves-light btn center-align deep-purple lighten-1"
+                                <div class="col s12">
+                                <a id="login_button"
+                                   class="waves-effect waves-light btn center-align deep-purple lighten-1"
                                    onclick="onLoginPressed()">Login</a>
-
+                                </div>
 
                             </div>
                             <a class="deep-purple-text text-lighten-3 goto_tab center-align" data-target="recover_tab"
@@ -102,42 +106,41 @@
                 <div id="register_tab" class="col p-20" style="height:55vh; width:100%">
 
 
-                        <div class="valign-wrapper" style="height:100%">
-                            <div class="col xl8 s10 offset-xl2 offset-s1">
-                                <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="register_email" type="text"
-                                               class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
-                                                data-validate-email data-validate-required>
-                                        <label for="register_email">Email</label>
-                                    </div>
+                    <div class="valign-wrapper" style="height:100%">
+                        <div class="col xl8 s10 offset-xl2 offset-s1">
+                            <h3 class="header m-b-15 deep-purple-text  text-lighten-1"> Register </h3>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="register_email" type="text"
+                                           class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
+                                           data-validate-email data-validate-required>
+                                    <label for="register_email">Email</label>
                                 </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <input id="register_password" type="password"
-                                               class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
-                                               data-validate-required data-min-length="6"
-                                              >
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="register_password" type="password"
+                                           class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
+                                           data-validate-required data-min-length="6">
 
-                                        <label for="register_password">Password</label>
-                                    </div>
+                                    <label for="register_password">Password</label>
                                 </div>
-
-                                <p>
-                                    <input type="checkbox" class="purple-checkbox" id="test5"/>
-                                    <label for="test5" class="deep-purple-text text-lighten-2">Subscribe to our
-                                        newsletter</label>
-                                </p>
-
-                                <button  class="waves-effect waves-light btn  deep-purple lighten-1"
-                                        onclick="onRegisterPressed()">
-                                    Register
-                                </button>
-
                             </div>
 
+                            <p>
+                                <input type="checkbox" class="purple-checkbox" id="test5"/>
+                                <label for="test5" class="deep-purple-text text-lighten-2">Subscribe to our
+                                    newsletter</label>
+                            </p>
+
+                            <button id="register_button" class="waves-effect waves-light btn  deep-purple lighten-1"
+                                    onclick="onRegisterPressed()">
+                                Register
+                            </button>
+
                         </div>
+
+                    </div>
 
 
                 </div>
@@ -149,12 +152,13 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <input id="recover_email" type="email"
-                                           class=" deep-purple-text  text-lighten-1  m-0">
+                                           class=" deep-purple-text  text-lighten-1  m-0 mvalidate"
+                                           data-validate-email data-validate-required>
                                     <label for="recover_email">Email</label>
                                 </div>
                             </div>
 
-                            <a class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"
+                            <a id="recover_button" class="waves-effect waves-light btn  deep-purple lighten-1" href="#!"
                                onclick="onSendRecoveryEmailPressed()">Send Recovery Email</a>
                         </div>
                     </div>
@@ -184,20 +188,12 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-
+<script type="text/javascript" src="js/functionality.js"></script>
 
 <script>
     $(".button-collapse").sideNav();
-
-    $(document).ready(function () {
-        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-        $('ul.tabs').tabs();
-    });
-
 
     function select_tab(id) {
         $('ul.tabs').tabs('select_tab', id);
@@ -234,39 +230,52 @@
 
     function onRegisterPressed() {
 
-        if(!isFormCompleted($("#register_tab")))
+        if (!isFormCompleted($("#register_tab")))
             return;
 
 
         register($(registerEmailField).val(), $(registerPasswordField).val(), function (error) {
             hideLoading();
             state = null;
-            alert(error.message);
+            if (error !== undefined)
+                showError($("#register_button"), error.message);
         });
         state = "registering";
         showLoading("We are creating your account...");
-        return ;
     }
 
     function onLoginPressed() {
+
+        if (!isFormCompleted($("#login_tab")))
+            return;
+
+
         login($(loginEmailField).val(), $(loginPasswordField).val(), function (error) {
             hideLoading();
             state = null;
-            alert(error.message);
+            if (error !== undefined)
+                showError($("#login_button"), error.message);
         });
         state = "logging-in";
         showLoading("Logging in");
     }
 
 
+
     function onSendRecoveryEmailPressed() {
+
+        if (!isFormCompleted($("#recover_tab")))
+            return;
+
+
         showLoading("Sending recovery email");
         forgotPassword($(recoveryEmailField).val(), function (error) {
-            if (error === undefined) {
+            if (error === undefined)
                 Materialize.toast('You should receive a recovery email soon', 4000); // 4000 is the duration of the toast
-            } else {
-                Materialize.toast('There has been an error: ' + error.message, 4000); // 4000 is the duration of the toast
-            }
+            else
+                showError($("#recover_button"), error.message);
+
+
             hideLoading();
         })
     }
@@ -279,13 +288,16 @@
             if (state === "registering") {
                 hideLoading();
                 Materialize.toast('Succesfully registered', 4000);// 4000 is the duration of the toast
+
                 state = null;
             } else if (state === "logging-in") {
                 hideLoading();
                 state = null;
                 Materialize.toast('Succesfully logged in', 4000); // 4000 is the duration of the toast
+                window.location.href = "websites.html"
             } else {
                 Materialize.toast('Welcome back ' + user.email, 4000); // 4000 is the duration of the toast
+                window.location.href = "websites.html"
             }
 
 
@@ -294,8 +306,6 @@
         }
     });
 
-
-    $("form").validate();
 
 </script>
 </html>

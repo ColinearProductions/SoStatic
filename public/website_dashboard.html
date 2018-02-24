@@ -803,26 +803,30 @@
         formInfoModal.init(form_id);
     }
 
+
+
     let formInfoModal = {
 
         confirmButton: $("#modal_info_confirm_button"),
         init: (form_id) => {
-            console.log(this);
+
+
             if (form_id !== undefined) {
 
                 let form = getFormById(form_id);
                 console.log(form);
                 $("#form_info_title").text("Update form");
-                $(this.confirmButton).text("Update");
+                $(formInfoModal.confirmButton).text("Update");
                 $("#form_info_modal_alias").val(form.alias);
                 $("#form_info_modal_use_recaptcha").attr("checked", form.recaptcha);
                 $("#form_info_id").val(form.key);
-                $(this.confirmButton).on('click', formInfoModal.onUpdateFormConfirmed);
+                $(formInfoModal.confirmButton).on('click', formInfoModal.onUpdateFormConfirmed);
             } else {
+                console.log(form_id);
                 $("#form_info_modal_alias").val("");
-                $(this.confirmButton).text("Add");
+                $(formInfoModal.confirmButton).text("Add");
                 $("#form_info_title").text("Add form");
-                $(this.confirmButton).on('click', formInfoModal.onAddFormConfirmed);
+                $(formInfoModal.confirmButton).on('click', formInfoModal.onAddFormConfirmed);
             }
 
             $("#form_info_modal").modal('open');
@@ -843,6 +847,7 @@
 
         },
         onAddFormConfirmed: () => {
+
 
             let websiteId = $.getUrlVar('website_id');
             let forminfo = {

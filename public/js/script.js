@@ -1,62 +1,11 @@
-let config = {
-    apiKey: "AIzaSyDOpoNcoeSWE8weaKuT8DvMWt2qSTok11k",
-    authDomain: "sostatic-1d381.firebaseapp.com",
-    databaseURL: "https://sostatic-1d381.firebaseio.com",
-    projectId: "sostatic-1d381",
-    storageBucket: "sostatic-1d381.appspot.com",
-    messagingSenderId: "446439468118"
-};
 
-firebase.initializeApp(config);
-
-
-function register(user, pass, callback) {
-    firebase.auth().createUserWithEmailAndPassword(user, pass).catch(function (error) {
-        console.log(error.message);
-        callback(error);
-    });
-}
-
-
-function login(user, pass, callback) {
-    firebase.auth().signInWithEmailAndPassword(user, pass).catch(function (error) {
-        console.log(error.message);
-        callback(error)
-    });
-}
-
-function logout() {
-    firebase.auth().signOut().then(function () {
-        console.log('Signed Out');
-    }, function (error) {
-        console.error('Sign Out Error', error);
-    });
-}
-
-
-function forgotPassword(email, callback) {
-    firebase.auth().sendPasswordResetEmail(email).then(function () {
-        callback();
-    }).catch(function (error) {
-        callback(error);
-    });
-}
-
-
-$(".smooth_scroll").on('click', function (event) {
-    event.preventDefault();
-
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-
-});
 
 
 $(document).ready(function () {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
     $('select').material_select();
+    $('ul.tabs').tabs();
 
     try {
         $(".mh1").matchHeight({
@@ -82,13 +31,30 @@ $(document).ready(function () {
 
 
     let validationItems = $(".mvalidate");
-    $(validationItems).on("focusout", onValidateInput);
+    $(validationItems).on("focusout", function () {
+        onValidateInput(this);
+    });
 
+
+
+    $(".smooth_scroll").on('click', function (event) {
+
+        if (this.hash !== "") {
+            event.preventDefault();
+            let hash = this.hash;
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 500, function(){
+                window.location.hash = hash;
+            });
+        }
+
+    });
 
 });
 
 
- function showError(element, message) {
+function showError(element, message) {
     $(element).siblings('.validation-error').remove();
     $('<p class="validation-error">' + message + '</p>').insertAfter(element);
     $(element).addClass("invalid");
@@ -100,63 +66,61 @@ function hideError(element) {
 }
 
 
-function onValidateInput() {
-
-    let val = $(this).val();
+function onValidateInput(element) {
 
 
+    if (element === undefined)
+        element = this;
+
+    let val = $(element).val();
 
 
-
-    if ($(this).data("validate-email") !== undefined) {
+    if ($(element).data("validate-email") !== undefined) {
         let err_msg = "This field must contain a valid email";
         if (validateEmail(val))
-            hideError(this);
+            hideError(element);
         else {
-            showError(this, err_msg);
+            showError(element, err_msg);
             return;
         }
     }
 
-    if ($(this).data("min-length") !== undefined) {
-        if(val.length<$(this).data("min-length")) {
-            showError(this, "Text too short, must have at least " + $(this).data("min-length") + " character(s)");
+    if ($(element).data("min-length") !== undefined) {
+        if (val.length < $(element).data("min-length")) {
+            showError(element, "Text too short, must have at least " + $(element).data("min-length") + " character(s)");
             return;
-        }else
-            hideError(this)
+        } else
+            hideError(element)
     }
 
-    if ($(this).data("max-length") !== undefined) {
-        if(val.length>$(this).data("max-length")) {
-            showError(this, "Text too long, use at most " + $(this).data("max-length") + " characters");
+    if ($(element).data("max-length") !== undefined) {
+        if (val.length > $(element).data("max-length")) {
+            showError(element, "Text too long, use at most " + $(element).data("max-length") + " characters");
             return;
-        }else
-            hideError(this)
+        } else
+            hideError(element)
 
     }
 
-    if ($(this).data("validate-required") !== undefined) {
+    if ($(element).data("validate-required") !== undefined) {
         if (val.length < 1) {
-            showError(this, "This field is required");
+            showError(element, "This field is required");
             return;
-        }else
-            hideError(this);
+        } else
+            hideError(element);
     }
 
 
 }
 
-function isFormCompleted(form){
-     let ret  = true;
-    $(form).find("[data-validate-required]").each((i,obj)=>{
-        if($(obj).val().length<1) {
-            showError(obj, "This field is required");
-            ret = false
-        }
+function isFormCompleted(form) {
+    let ret = true;
+    $(form).find(".mvalidate").each((i, obj) => {
+        onValidateInput(obj);
     });
 
-    if($(form).find(".invalid").length>0){
-        ret= false;
+    if ($(form).find("input.invalid").length > 0) {
+        ret = false;
     }
 
     return ret;
