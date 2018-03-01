@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="css/materialize.css">
-    <link rel="stylesheet" href="css/prism.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -75,13 +74,10 @@
                     <div class="card ">
                         <div class="card-content white-text" style="padding-bottom:0; padding-top:10px;">
                             <div class="row m-b-0">
-
-                                <h4 class="deep-purple-text m-t-0 m-b-5"> Filters </h4>
-
-                                <div class="col m2 s6 p-0">
+                                <div class="col m3 s6 p-0">
                                     <div class="input-field col s12 deep-purple-text">
-                                        <select>
-                                            <option value="0" selected>All</option>
+                                        <select id="websites_filter">
+                                            <option class="deep-purple-text" value="0" selected>All</option>
                                             <option value="1">Option 1</option>
                                             <option value="2">Option 2</option>
                                             <option value="3">Option 3</option>
@@ -90,28 +86,33 @@
                                     </div>
                                 </div>
 
-                                <div class="col m2 s6 p-0">
+                                <div class="col m3 s6 p-0">
                                     <div class="input-field col s12 deep-purple-text">
-                                        <select>
+                                        <select id="forms_filter">
                                             <option value="0" selected>All</option>
                                             <option value="1">Option 1</option>
                                             <option value="2">Option 2</option>
                                             <option value="3">Option 3</option>
                                         </select>
-                                        <label>Website</label>
+                                        <label>Form</label>
                                     </div>
                                 </div>
 
 
-                                <div class="col m2 s6">
+                                <div class="col m3 s6">
                                     <label for="birthdate" class="active">Starting From</label>
                                     <input type="text" class="input-field datepicker deep-purple-text" id="birthdate" placeholder="Select start date">
 
                                 </div>
 
-                                <div class="col m2 s6">
+                                <div class="col m3 s6">
                                     <label for="birthdate2" class="active">Until</label>
                                     <input type="text" class="input-field datepicker deep-purple-text" id="birthdate2" placeholder="Select start date">
+                                </div>
+
+                                <div class="col s12 " style="margin-bottom:15px;">
+                                    <a class="waves-effect waves-light deep-purple btn">Search</a>
+
                                 </div>
 
 
@@ -204,18 +205,59 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script type="text/javascript" src="js/functionality.js"></script>
+
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/prism.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
 
 <script>
 
 
+    let websitesFilter = $("#websites_filter");
+    let formsFilter = $("#forms_filter");
+
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
             window.location.href = "authentication.html";
+        }else{
+
+            getWebsitesOfUser(onWebsitesLoaded)
         }
     });
+
+
+    function onWebsitesLoaded(websites){
+        populateSelects(websites);
+    }
+
+
+
+    function populateSelects(websites){
+        let websiteItems = '<option selected="selected" value="0">All</option>';
+        let formItems = '<option selected="selected" value="0">All</option>';
+
+
+        websites.forEach(website=>{
+            websiteItems+= '<option value="'+website.key+'">'+website.alias+'</option>';
+
+            let forms = objToArray(website.forms);
+            console.log(forms);
+
+            forms.forEach(form=>{
+                formItems+= '<option value="'+form.key+'">'+form.alias+'</option>';
+            });
+
+        });
+
+
+        $(websitesFilter).html(websiteItems);
+        $(websitesFilter).material_select();
+
+        $(formsFilter).html(formItems);
+        $(formsFilter).material_select();
+
+    }
+
 
 
 </script>

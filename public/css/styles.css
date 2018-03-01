@@ -204,6 +204,9 @@ body{
     color: #9575cd  !important;
 }
 
+ul.dropdown-content.select-dropdown li span {
+    color: #673ab7; /* no need for !important :) */
+}
 
 
 .purple-checkbox:checked + label:before {

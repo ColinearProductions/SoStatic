@@ -35,7 +35,10 @@ app.post("/:websiteid/:formid", (request, response) => {
     db.ref('/websites/' + websiteid).once('value').then(snapshot => {
 
         let website = snapshot.val();
+        website.id = websiteid;
+
         let currentForm = website.forms[formid];
+        currentForm.id = formid;
 
 
         if (website.httpsOnly && request.protocol !== 'https')
@@ -47,13 +50,13 @@ app.post("/:websiteid/:formid", (request, response) => {
         if (currentForm.recaptcha)
             validateRecaptcha(website.secret, formParams, website, currentForm, websiteid, formid);
         else{
-            emailMessage(message, website, currentForm);
-            onValidMessage(website, currentForm, websiteid, formid)
+            onValidMessage(formParams, website, currentForm)
         }
 
 
     }).catch((ex)=>{
         console.log("Exception on message received");
+        console.log(ex);
         console.log(ex.message);
     });
     let messageObj = request.body;
@@ -66,6 +69,7 @@ app.post("/:websiteid/:formid", (request, response) => {
 
 
 function validateRecaptcha(secret, message, website, form, websiteid, formid) {
+    console.log("Validating recaptcha");
     requestPromise({
         uri: recaptchaValidationURL,
         method: 'POST',
@@ -76,8 +80,9 @@ function validateRecaptcha(secret, message, website, form, websiteid, formid) {
         json: true
     }).then(result => {
         if (result.success) {
+            console.log("Recaptcha matched successfully");
             emailMessage(message, website, form);
-            onValidMessage(website, form, websiteid, formid)
+            onValidMessage(website, form, websiteid, form)
         } else
             console.log("Recaptcha validation failed, dropping message")
 
@@ -85,10 +90,10 @@ function validateRecaptcha(secret, message, website, form, websiteid, formid) {
 }
 
 
-function onValidMessage(message, website, form, websiteid) {
+function onValidMessage(message, website, form) {
 
     delete message['g-recaptcha-response'];
-    writeToDb(message, websiteid);
+    writeToDb(message, website, form);
     loadTemplate(message, website, form);
 }
 
@@ -123,13 +128,15 @@ function loadTemplate(message, website, form) {
     });
 }
 
-function writeToDb(message, website, formid) {
-    message.formId = formid;
+function writeToDb(message, website, form) {
+    message.formId = form.id;
     message.addedOn = admin.database.ServerValue.TIMESTAMP;
-    db.ref('/messages/' + website.id).push(message);
+    db.ref('/messages/' +website.id).push(message);
 }
 
 function emailMessage(message, website) {
+    delete message['formId'];
+    delete message['addedOn'];
 
 
     let email = objToArray(website.contacts)[0].email;
@@ -142,6 +149,7 @@ function emailMessage(message, website) {
     mailOptions.subject = 'New submission  - ' + website.alias;
     mailOptions.html = message;
 
+    console.log("Mail options");
     console.log(mailOptions);
     return mailtransport.sendMail(mailOptions).then(() => {
         console.log('New welcome email sent to:', email);

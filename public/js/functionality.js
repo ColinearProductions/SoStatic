@@ -113,4 +113,26 @@ function updateForm(websiteId, forminfo, formKey, callback){
 }
 
 
+function getMessages(websiteId, formId, start_date, end_date, callback){
+
+    /*
+    website_id = "-L631ucaTDhAN3m7ytba"
+    form_id = "-L63IJ--uAHZZy5khKJ_"
+    startAt = 1519923671242
+    endAt = 1519924173905
+    getMessages(website_id,form_id,startAt, endAt, console.log)
+     */
+
+
+    //todo limit the time window to ~1 month. The rest can be downloaded as json file.
+    firebase.database().ref('/messages/' + websiteId).orderByChild('addedOn').startAt(start_date).endAt(end_date).once('value').then(function(snapshot) {
+        let res = snapshotToArray(snapshot).filter(val=>{
+           return val['formId'] === formId;
+        });
+       callback(res);
+    });
+
+
+}
+
 //todo url should actually be called HOST or even better, DOMAIN
