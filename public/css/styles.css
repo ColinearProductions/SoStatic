@@ -337,3 +337,28 @@ main.with-sidenav {
     }
 }
 
+
+
+
+.preloader-background {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    position: relative;
+    z-index: 100;
+
+    height:calc( 100vh - 65px);
+}
+
+body, main{
+    height:100vh;
+}
+
+
+.spinner-purple,
+.spinner-purple-only {
+    border-color: #673ab7 ;
+}

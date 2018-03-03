@@ -68,7 +68,22 @@
             </div>
         </nav>
         <!-- Content -->
-        <div style="padding:1vh">
+        <div class="preloader-background" id="preloader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-purple-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="padding:1vh; display:none" id="main-container">
             <div class="row" style="width:100%;" id="websites_container">
 
 
@@ -293,11 +308,17 @@
     }
 
 
+    function hidePreloader(){
+        $("#main-container").show("slow", ()=>console.log("DONE"));
+        $("#preloader").hide();
+    }
+
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
             window.location.href = "authentication.html";
         } else {
             getWebsitesOfUser(onUserWebsitesLoaded);
+
         }
     });
 
@@ -329,6 +350,7 @@
             let rendered = Mustache.render(websiteTemplate, website);
             $(container).append(rendered);
         });
+        hidePreloader()
     }
 
 

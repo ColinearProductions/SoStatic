@@ -46,8 +46,11 @@
         <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
     </ul>
 </header>
-<main class="with-sidenav">
-    <div class="section" style="height:calc( 93vh - 45px); padding:0">
+<main class="with-sidenav" >
+
+
+
+    <div class="section" style="height:calc( 100vh); padding:0">
 
         <!--FAB-->
         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -65,15 +68,31 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <div class="col s12" id="breadcrumbs">
-                    <a href="#!" class="breadcrumb">Websites</a>
+                    <a href="websites.html" class="breadcrumb">Websites</a>
                 </div>
             </div>
         </nav>
         <!-- Content -->
-        <div style="padding:1vh">
+
+        <div class="preloader-background" id="preloader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-purple-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding:1vh; display:none" id="main-container">
 
             <div class="row" style="width:100%;">
-
 
                 <div class="col l6 m12 s12">
                     <div class="card" style="min-width:100%">
@@ -130,7 +149,7 @@
                     <div class="card" style="min-width:100%">
                         <div class="card-content black-text mh1">
                             <div>
-                                <span class="deep-purple-text m-0" style="font-size:30px;">Contacts</span><br>
+                                <span class="deep-purple-text m-0 bold" style="font-size:30px;">Contacts</span><br>
                                 <div id="contacts_container">
 
                                 </div>
@@ -767,7 +786,7 @@
         init: function (website) {
             Mustache.parse(this.contactsTemplate);
 
-            $("#breadcrumbs").append('<a href="#!" class="breadcrumb">' + website.Name + " - " + website.url + '</a>\n')
+            $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n')
 
             if (website.forms !== undefined) {
 
@@ -904,11 +923,17 @@
                 websiteElement.init(ws);
 
                 website = ws;
+
+                hidePreloader();
             });
 
         }
     });
 
+    function hidePreloader(){
+        $("#main-container").show("slow", ()=>console.log("DONE"));
+        $("#preloader").hide();
+    }
 
     function onGenerateBoilerplateClicked(formId) {
 
