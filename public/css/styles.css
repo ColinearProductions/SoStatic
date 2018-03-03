@@ -94,8 +94,13 @@
 }
 
 .m-t-10{
-    margin-top:10px !important;;
+    margin-top:10px !important;
 }
+
+.m-t-5{
+    margin-top:5px !important;
+}
+
 
 
 li.active{
@@ -246,6 +251,36 @@ ul.dropdown-content.select-dropdown li span {
 
 
 
+
+/*date time picker */
+
+
+.picker__date-display { background-color: #9575cd; }
+.picker__day.picker__day--today { color: #dd05ff; }
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected { background-color: #9575cd;}
+.picker__close { color: #9575cd !important;}
+.picker__today { color: #9575cd !important;}
+.clockpicker-tick:hover { background: #9575cd !important; }
+.clockpicker-canvas line { stroke: #9575cd !important; }
+.clockpicker-canvas-bearing { fill: #9575cd !important; }
+.clockpicker-canvas-bg { fill: #9575cd !important; }
+.picker__nav--prev:hover, .picker__nav--next:hover{ background: #c6aeff
+}
+.picker__close, .picker__today, .picker__clear{
+    color:#c6aeff !important;
+}
+
+button.picker__today:focus, button.picker__clear:focus, button.picker__close:focus{
+    background-color: transparent;
+
+}
+
+select:focus {
+    outline: 1px solid #c6aeff;
+}
+
+
+
 @media only screen and (max-width: 992px) {
 
     #nav-mobile{
@@ -266,9 +301,11 @@ input.select-dropdown{
     margin-bottom:0;
 }
 
+/*
 td, th{
     padding: 10px 5px !important;
 }
+*/
 
 
 
@@ -284,3 +321,19 @@ main.with-sidenav {
 
 
 .pointer {cursor: pointer;}
+
+
+
+.modal{
+    width:30vw;
+    max-height:80vh;
+    top:0;
+}
+
+
+@media only screen and (max-width: 992px) {
+    .modal {
+        width: 90%;
+    }
+}
+

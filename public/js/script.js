@@ -23,7 +23,7 @@ $(document).ready(function () {
         today: 'Today',
         clear: 'Clear',
         close: 'Ok',
-        closeOnSelect: false // Close upon selecting a date,
+        closeOnSelect: false, // Close upon selecting a date,
     });
 
 
@@ -74,8 +74,27 @@ function onValidateInput(element) {
 
     let val = $(element).val();
 
+    if( $(element).data("validate-if-checked") !== undefined){
+        let target = $($(element).data("validate-if-checked"));
+
+        $(target).change(()=>{
+           onValidateInput(element);
+        });
+
+        if(!$(target).prop("checked")) {
+            hideError(element);
+            return;
+        }
+    }
+
 
     if ($(element).data("validate-email") !== undefined) {
+
+        if($(element).data("validate-optional") !== undefined && val.length <1) {
+            hideError(element);
+            return;
+        }
+
         let err_msg = "This field must contain a valid email";
         if (validateEmail(val))
             hideError(element);
@@ -177,6 +196,8 @@ $.extend({
         return $.getUrlVars()[name];
     }
 });
+
+
 
 
 

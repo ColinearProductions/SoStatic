@@ -26,38 +26,51 @@ admin.initializeApp(functions.config().firebase);
 let db = admin.database();
 
 
-app.post("/:websiteid/:formid", (request, response) => {
-    let websiteid = request.params['websiteid'];
-    let formid = request.params['formid'];
-    let formParams = request.body;
+app.post("/:endpointId", (request, response) => {
+    let endpointId = request.params['endpointId'];
 
-    //read website configuration
-    db.ref('/websites/' + websiteid).once('value').then(snapshot => {
-
-        let website = snapshot.val();
-        website.id = websiteid;
-
-        let currentForm = website.forms[formid];
-        currentForm.id = formid;
+    let postParams = request.body;
 
 
-        if (website.httpsOnly && request.protocol !== 'https')
-            console.log("Website expected https, dropping request");
 
-        if (website.url !== request.get('host').split(":")[0])
-            console.log("Website defined domain does not match source domain of request, dropping request");
+    db.ref('/endpoints/' + endpointId).once('value').then(endpointSnapshot => {
 
-        if (currentForm.recaptcha)
-            validateRecaptcha(website.secret, formParams, website, currentForm, websiteid, formid);
-        else{
-            onValidMessage(formParams, website, currentForm)
-        }
+        console.log(endpointSnapshot.val());
+        let formId = endpointSnapshot.val().form;
+        let websiteId = endpointSnapshot.val().website;
+        let userId = endpointSnapshot.val().user;
 
 
-    }).catch((ex)=>{
-        console.log("Exception on message received");
-        console.log(ex);
-        console.log(ex.message);
+        //read website configuration
+        db.ref('/users/'+userId+'/websites/' + websiteId).once('value').then(websiteSnapshot => {
+
+            let websiteConfig = websiteSnapshot.val();
+            websiteConfig.key = websiteId;
+
+            let formConfig = websiteConfig.forms[formId];
+            formConfig.key = formId;
+
+
+            if (websiteConfig.httpsOnly && request.protocol !== 'https')
+                console.log("Website expected https, dropping request");
+
+            if (websiteConfig.url !== request.get('host').split(":")[0])
+                console.log("Website defined domain does not match source domain of request, dropping request");
+
+            if (formConfig.recaptcha)
+                //websiteConfig.secret,
+                validateRecaptcha(postParams, websiteConfig, formConfig);
+            else {
+                onValidMessage(postParams, websiteConfig, formConfig, userId)
+            }
+
+
+        }).catch((ex) => {
+            console.log("Exception on message received");
+            console.log(ex);
+            console.log(ex.message);
+        });
+
     });
     let messageObj = request.body;
     response.send(messageObj)
@@ -68,21 +81,21 @@ app.post("/:websiteid/:formid", (request, response) => {
 });
 
 
-function validateRecaptcha(secret, message, website, form, websiteid, formid) {
+function validateRecaptcha( postParams, websiteConfig, formConfig, userId) {
     console.log("Validating recaptcha");
     requestPromise({
         uri: recaptchaValidationURL,
         method: 'POST',
         formData: {
-            secret: secret,
-            response: message['g-recaptcha-response']
+            secret: websiteConfig.secret,
+            response: postParams['g-recaptcha-response']
         },
         json: true
     }).then(result => {
         if (result.success) {
             console.log("Recaptcha matched successfully");
-            emailMessage(message, website, form);
-            onValidMessage(website, form, websiteid, form)
+            emailMessage(postParams, websiteConfig, formConfig);
+            onValidMessage(postParams, websiteConfig, formConfig, userId)
         } else
             console.log("Recaptcha validation failed, dropping message")
 
@@ -90,32 +103,37 @@ function validateRecaptcha(secret, message, website, form, websiteid, formid) {
 }
 
 
-function onValidMessage(message, website, form) {
+function onValidMessage(postParams, websiteConfig, formConfig, userId) {
 
-    delete message['g-recaptcha-response'];
-    writeToDb(message, website, form);
-    loadTemplate(message, website, form);
+    delete postParams['g-recaptcha-response'];
+
+    loadTemplate(postParams, websiteConfig, formConfig);
+
+    postParams.formId = formConfig.key;
+    postParams.addedOn = admin.database.ServerValue.TIMESTAMP;
+    postParams.websiteId = websiteConfig.key;
+    return db.ref('/users/' + userId + '/messages').push(postParams);
 }
 
-function loadTemplate(message, website, form) {
+function loadTemplate(postParams, websiteConfig, formConfig) {
     request(pathToTemplate, (error, response, body) => {
         let template = body;
-
-
         let entries = [];
 
-        for (let key in message)
-            if (message.hasOwnProperty(key))
-                entries.push({key: key, value: message[key]});
+
+        for (let key in postParams)
+            if (postParams.hasOwnProperty(key))
+                entries.push({key: key, value: postParams[key]});
+
+        console.log(postParams);
 
 
-        console.log(message);
 
         let emailData = {
-            'alias': website.alias,
-            'formAlias': form.alias,
+            'alias': websiteConfig.alias,
+            'formAlias': formConfig.alias,
             'entries': entries,
-            'websiteurl': website.url,
+            'websiteurl': websiteConfig.url,
             'unsubscribeUrl': ""
 
         };
@@ -124,30 +142,23 @@ function loadTemplate(message, website, form) {
         let rendered = Mustache.render(template, emailData);
 
 
-        emailMessage(rendered, website)
+        emailMessage(rendered, websiteConfig)
     });
 }
 
-function writeToDb(message, website, form) {
-    message.formId = form.id;
-    message.addedOn = admin.database.ServerValue.TIMESTAMP;
-    db.ref('/messages/' +website.id).push(message);
-}
-
-function emailMessage(message, website) {
-    delete message['formId'];
-    delete message['addedOn'];
+function emailMessage(html, websiteConfig) {
 
 
-    let email = objToArray(website.contacts)[0].email;
+
+    let email = objToArray(websiteConfig.contacts)[0].email;
     const mailOptions = {
         from: "So Static",
         to: email
     };
 
     // The user subscribed to the newsletter.
-    mailOptions.subject = 'New submission  - ' + website.alias;
-    mailOptions.html = message;
+    mailOptions.subject = 'New submission  - ' + websiteConfig.alias;
+    mailOptions.html = html;
 
     console.log("Mail options");
     console.log(mailOptions);
@@ -163,7 +174,6 @@ function emailMessage(message, website) {
 }
 
 
-
 function objToArray(obj) {
     return Object.keys(obj).map(function (key) {
         obj[key]['key'] = key;
@@ -172,9 +182,44 @@ function objToArray(obj) {
 }
 
 
+const onFormCreated = functions.database.ref('/users/{userId}/websites/{websiteId}/forms/{formId}').onCreate((event) => {
+
+    let formid = event.params.formId;
+    let websiteid = event.params.websiteId;
+    let userid = event.params.userId;
+
+    console.log("TEST");
+    console.log(event);
+
+
+    let endpoint = db.ref('/endpoints').push({form: formid, website: websiteid, user: userid}).key;
+
+    console.log(endpoint);
+
+    return event.data.ref.update({endpoint: endpoint})
+
+});
+
+
+const onUserCreated = functions.auth.user().onCreate((event) => {
+    let blankUser = {
+        websites: [],
+        messages: [],
+        email: event.data.email
+    };
+
+
+    db.ref('/users/' + event.data.uid).set(blankUser).then((resp) => console.log("RESP: " + resp));
+
+});
+
+//todo maybe add event logs, with all the declined messages + reasons for decline
+
 
 const endpoint = functions.https.onRequest(app);
 
 module.exports = {
-    endpoint
+    endpoint,
+    onUserCreated: onUserCreated,
+    onFormCreated: onFormCreated
 };

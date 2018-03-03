@@ -79,17 +79,16 @@
                     <div class="card" style="min-width:100%">
                         <div class="card-content black-text mh1">
                             <div>
-                                <p id="website_name" class=" deep-purple-text m-0"
+                                <p id="website_name" class="deep-purple-text bold"
                                    style="font-size:30px;display:inline-block">Website Info </p>
-                                <span style="font-size:15px;" id="only_https"> only HTTPS</span> <br>
-                                <a id="website_url" class="deep-purple-text text-lighten-1 p-5" style="font-size:17px;">http://sostatic.xyz</a>
-                                <!--, <a class="deep-purple-text text-lighten-2 p-5" style="font-size:14px;">http://sostatic.xyz</a>,
-                                <a class="deep-purple-text text-lighten-2 p-5" style="font-size:14px;">http://sostatic.xyz</a> -->
+                                <span style="font-size:15px;" id="only_https" class="deep-purple-text text-lighten-1 "> only HTTPS</span>
+                                <br>
+                                <a id="website_url" class="deep-purple-text text-lighten-1 " style="font-size:17px;">http://sostatic.xyz</a>
 
 
                                 <br>
 
-                                <p class="bold deep-purple-text lighten-1 m-t-20  " style="display:inline-block">
+                                <p class="bold deep-purple-text lighten-1 m-t-10" style="display:inline-block">
                                     ReCAPTCHA
 
                                 </p>
@@ -98,22 +97,22 @@
                                    style="font-size:12px; display:inline-block">Disabled</p>
                                 <div id="website_recaptcha_container">
 
-                                    <p class="bold deep-purple-text lighten-1  m-b-10 " style="font-size:14px;">
+                                    <p class="bold deep-purple-text lighten-1  " style="font-size:14px;">
                                         Secret
                                     </p>
 
 
                                     <a id="recaptcha_secret"
-                                       class="deep-purple-text text-lighten-2 p-10 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
+                                       class="deep-purple-text text-lighten-2 p-5 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
 
 
-                                    <p class="bold deep-purple-text lighten-1 m-b-10 " style="font-size:14px;">
+                                    <p class="bold deep-purple-text lighten-1  " style="font-size:14px;">
                                         Site-key
                                     </p>
 
 
                                     <a id="recaptcha_site_key"
-                                       class="deep-purple-text text-lighten-2 p-10 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
+                                       class="deep-purple-text text-lighten-2 p-5 deep-purple lighten-5 truncate m-b-10">6LddK0QUAAAAAIfV8lbHc7J9VnwR0ZIMk2VS7t0P</a>
                                 </div>
 
                             </div>
@@ -131,7 +130,7 @@
                     <div class="card" style="min-width:100%">
                         <div class="card-content black-text mh1">
                             <div>
-                                <span class=" deep-purple-text m-0" style="font-size:30px;">Contacts</span><br>
+                                <span class="deep-purple-text m-0" style="font-size:30px;">Contacts</span><br>
                                 <div id="contacts_container">
 
                                 </div>
@@ -152,7 +151,7 @@
 
 
                 <div class="col s12 ">
-                    <h5 class="m-0 deep-purple-text text-lighten-1"> Forms</h5>
+                    <h5 class="deep-purple-text bold" style="margin-left:3px;"> Forms</h5>
                 </div>
 
                 <div id="forms_container">
@@ -173,8 +172,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
-                    <a class="modal-action waves-effect waves-green btn-flat" id="copy_boilerplate_button">Copy</a>
+                    <a class="modal-action modal-close waves-effect waves-purple btn-flat ">Close</a>
+                    <a class="modal-action waves-effect waves-purple btn-flat" id="copy_boilerplate_button">Copy</a>
                 </div>
             </div>
 
@@ -186,12 +185,13 @@
                     <input type="hidden" id="form_info_id">
                     <div class="container">
 
-                        <h4 id="form_info_title">Add form</h4>
+                        <h5 id="form_info_title" class="deep-purple-text bold">Add form</h5>
 
 
                         <div class="input-field tooltipped m-t-20"
                              data-tooltip="Email to redirect the messages to (can add more later)" data-position="top">
-                            <input id="form_info_modal_alias" type="text">
+                            <input id="form_info_modal_alias" type="text" class="mvalidate"
+                                   data-validate-required data-min-length="3">
                             <label for="form_info_modal_alias" class="">Form Alias</label>
                         </div>
 
@@ -215,8 +215,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                    <button id="modal_info_confirm_button" class="waves-effect waves-green btn-flat">Add</button>
+                    <a href="#" class="modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
+                    <button id="modal_info_confirm_button" class="waves-effect waves-purple btn-flat">Add</button>
                 </div>
             </div>
 
@@ -235,24 +235,26 @@
 
 
                                 <div class="input-field col s4 " style="padding-left:0;">
-                                    <input id="single_contact_alias1" type="text" class="validate contacts-alias">
+                                    <input id="single_contact_alias1" type="text" class="contacts-alias">
                                     <label for="single_contact_alias1">Alias</label>
                                 </div>
 
                                 <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email1" type="email" class="validate contacts-email">
+                                    <input id="single_contact_email1" type="email" class="contacts-email mvalidate"
+                                           data-validate-email data-validate-optional>
                                     <label for="single_contact_email1">Email</label>
                                 </div>
 
                             </div>
                             <div class="contacts-list-entry" data-entry-index="1">
                                 <div class="input-field col s4 " style="padding-left:0;">
-                                    <input id="single_contact_alias2" type="text" class="validate contacts-alias">
+                                    <input id="single_contact_alias2" type="text" class="contacts-alias">
                                     <label for="single_contact_alias2">Alias</label>
                                 </div>
 
                                 <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email2" type="email" class="validate contacts-email">
+                                    <input id="single_contact_email2" type="email" class="contacts-email mvalidate"
+                                           data-validate-email data-validate-optional>
                                     <label for="single_contact_email2">Email</label>
                                 </div>
                             </div>
@@ -260,12 +262,13 @@
                             <div class="contacts-list-entry" data-entry-index="2">
 
                                 <div class="input-field col s4 " style="padding-left:0;">
-                                    <input id="single_contact_alias3" type="text" class="validate contacts-alias">
+                                    <input id="single_contact_alias3" type="text" class="contacts-alias">
                                     <label for="single_contact_alias3">Alias</label>
                                 </div>
 
                                 <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email3" type="email" class="validate contacts-email">
+                                    <input id="single_contact_email3" type="email" class="contacts-email mvalidate"
+                                           data-validate-email data-validate-optional>
                                     <label for="single_contact_email3">Email</label>
                                 </div>
 
@@ -274,12 +277,13 @@
                             <div class="contacts-list-entry" data-entry-index="3">
 
                                 <div class="input-field col s4 " style="padding-left:0;">
-                                    <input id="single_contact_alias4" type="text" class="validate contacts-alias">
+                                    <input id="single_contact_alias4" type="text" class="contacts-alias">
                                     <label for="single_contact_alias4">Alias</label>
                                 </div>
 
                                 <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email4" type="email" class="validate contacts-email">
+                                    <input id="single_contact_email4" type="email" class="contacts-email mvalidate"
+                                           data-validate-email data-validate-optional>
                                     <label for="single_contact_email4">Email</label>
                                 </div>
 
@@ -288,12 +292,13 @@
 
                             <div class="contacts-list-entry" data-entry-index="4">
                                 <div class="input-field col s4 " style="padding-left:0;">
-                                    <input id="single_contact_alias5" type="text" class="validate contacts-alias">
+                                    <input id="single_contact_alias5" type="text" class="contacts-alias">
                                     <label for="single_contact_alias5">Alias</label>
                                 </div>
 
                                 <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email5" type="email" class="validate contacts-email">
+                                    <input id="single_contact_email5" type="email" class="contacts-email mvalidate"
+                                           data-validate-email data-validate-optional>
                                     <label for="single_contact_email5">Email</label>
                                 </div>
                             </div>
@@ -306,7 +311,7 @@
                 </div>
                 <div class="modal-footer">
                     <a id="confirm_edit_contacts_button"
-                       class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                       class="modal-action modal-close waves-effect waves-purple btn-flat ">Update</a>
                 </div>
             </div>
 
@@ -316,23 +321,25 @@
 
 
                     <div class="row">
-                        <div class="col m6 offset-m3 s12 ">
-                            <span class=" deep-purple-text m-0" style="font-size:25px;">Add Form</span><br>
+                        <div class="col m10 offset-m1 s12 ">
+                            <span class="deep-purple-text m-0" style="font-size:25px;">Edit Website</span><br>
 
                             <div class="input-field tooltipped " data-tooltip="An alias for your website"
                                  data-position="right">
-                                <input id="edit_website_name" class="m-b-5" type="text">
+                                <input id="edit_website_name" class="m-b-5 mvalidate" type="text"
+                                >
                                 <label for="edit_website_name" class="">Website Name</label>
                             </div>
                             <div class="input-field tooltipped "
                                  data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
                                  data-position="right">
-                                <input id="edit_website_url" type="text">
-                                <label for="edit_website_url" class="">Website URL</label>
+                                <input id="edit_website_url" type="text" class="mvalidate"
+                                       data-validate-required data-min-length="3">
+                                <label for="edit_website_url">Website URL</label>
                             </div>
 
 
-                            <p style="display:inline-block" class=" tooltipped "
+                            <p style="display:inline-block" class="tooltipped "
                                data-tooltip="Online consider messages sent from the HTTPS version of the site"
                                data-position="right">
                                 <input type="checkbox" class="purple-checkbox" id="edit_only_https" checked/>
@@ -360,12 +367,16 @@
 
                             <div class="m-t-20" id="edit_recaptcha_container">
                                 <div class="input-field">
-                                    <input id="edit_recaptcha_secret" type="text">
+                                    <input id="edit_recaptcha_secret" type="text"
+                                           class="mvalidate" data-validate-if-checked="#edit_website_recaptcha_switch"
+                                           data-min-length="5">
                                     <label for="edit_recaptcha_secret" class="">ReCAPTCHA Secret</label>
                                 </div>
 
                                 <div class="input-field">
-                                    <input id="edit_recaptcha_sitekey" type="text">
+                                    <input id="edit_recaptcha_sitekey" type="text"
+                                           class="mvalidate" data-validate-if-checked="#edit_website_recaptcha_switch"
+                                           data-min-length="5">
                                     <label for="edit_recaptcha_sitekey" class="">ReCAPTCHA Site-key</label>
                                 </div>
                             </div>
@@ -378,8 +389,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
-                    <a class="  waves-effect waves-green btn-flat" id="on_edit_website_confirm_button">Confirm</a>
+                    <a class="modal-action modal-close waves-effect waves-purple btn-flat ">Cancel</a>
+                    <a class=" waves-effect waves-purple btn-flat" id="on_edit_website_confirm_button">Confirm</a>
                 </div>
             </div>
 
@@ -428,13 +439,13 @@
         <div class="card">
             <div class="card-content black-text ">
                 <div>
-                    <span class=" deep-purple-text " style="font-size:26px;"> {{alias}}</span><br>
-                    <a class="deep-purple-text text-lighten-2" style="font-size:12px;">
+                    <span class="deep-purple-text bold" style="font-size:22px;"> {{alias}}</span><br>
+                    <a class="grey-text text-lighten-1 bold" style="font-size:12px;">
                         Added on {{formated_date}}
                     </a>
                     <br>
 
-                    <p class="bold deep-purple-text lighten-1 m-t-20 " style="font-size:18px;">
+                    <p class="bold deep-purple-text lighten-1 m-t-5 " style="font-size:15px;">
                         Messages 2/3
                     </p>
 
@@ -444,7 +455,7 @@
                     </div>
 
 
-                    <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
+                    <p class="bold deep-purple-text lighten-1 m-b-0" style="font-size:15px;">
                         ReCAPTCHA
                         {{#recaptcha}}
                         <small style="font-size:12px;">Enabled</small>
@@ -454,18 +465,17 @@
                         {{/recaptcha}}
                     </p>
 
-                    <p class="bold deep-purple-text lighten-1 m-t-20 m-b-10" style="font-size:18px;">
-                        Endpoint:
+                    <p class="bold deep-purple-text lighten-1 m-t-10 m-b-5" style="font-size:15px;">
+                        <i class="material-icons">http</i> Endpoint:
                     </p>
 
 
-                    <a class="deep-purple-text text-lighten-2 p-10 m-b-10 deep-purple lighten-5 truncate  pointer cpy-button"
-                    >
-                        https://sostatic.xyz/{{websiteid}}/{{key}}
+                    <a class="deep-purple-text text-lighten-2 p-5 m-b-10 deep-purple lighten-5 truncate  pointer cpy-button">
+                        https://sostatic.xyz/{{endpoint}}
                     </a>
 
-                    <a class="p-10 bold deep-purple-text pointer" onclick="onGenerateBoilerplateClicked('{{key}}')">Generate
-                        form boilerplate</a>
+                    <a class="p-t-10 bold deep-purple-text pointer " onclick="onGenerateBoilerplateClicked('{{key}}')">
+                        Generate form boilerplate</a>
 
 
                 </div>
@@ -492,7 +502,7 @@
     {{{url_to_recaptcha}}}
     {{/withRecaptcha}}
 
-    <form action="https://sostatic.xyz/{{websiteId}}/{{formId}}" method="POST">
+    <form action="https://sostatic.xyz/{{endpoint}}" method="POST">
         <label>
             Name
             <input type="text" name="name">
@@ -608,6 +618,9 @@
             matchHeightUpdate();
         },
         onUpdateConfirmClicked: function () {
+            if (!isFormCompleted($("#edit_website_modal")))
+                return;
+
 
             let updateObj = {
                 'alias': $(websiteElement.editWebsiteName).val(),
@@ -673,6 +686,14 @@
 
         },
         onConfirmClicked: function () {
+
+            if (!isFormCompleted($("#add_contacts_modal")))
+                return;
+
+
+
+
+
             let contacts = [];
             let getContactByEmail = (email) => {
                 return objToArray(website.contacts).filter((contact) => {
@@ -804,7 +825,6 @@
     }
 
 
-
     let formInfoModal = {
 
         confirmButton: $("#modal_info_confirm_button"),
@@ -835,6 +855,9 @@
         },
         onUpdateFormConfirmed: () => {
 
+            if (!isFormCompleted($("#form_info_modal")))
+                return;
+
             let websiteId = $.getUrlVar('website_id');
             let forminfo = {
                 'alias': $("#form_info_modal_alias").val(),
@@ -848,6 +871,8 @@
         },
         onAddFormConfirmed: () => {
 
+            if (!isFormCompleted($("#form_info_modal")))
+                return;
 
             let websiteId = $.getUrlVar('website_id');
             let forminfo = {
@@ -891,8 +916,9 @@
         let form = getFormById(formId);
         let data = {
             'url_to_recaptcha': urlToRecaptcha,
-            'websiteId': websiteId,
-            'formId': formId,
+            'endpoint': form.endpoint,
+            //'websiteId': websiteId,
+            //'formId': formId,
             'sitekey': website.sitekey,
             'withRecaptcha': form.recaptcha && website.recaptcha
         };

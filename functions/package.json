@@ -16,7 +16,9 @@
     "cors":"2.8.4",
     "nodemailer": "^4.0.1",
     "request-promise": "^4.2.2",
-    "mustache": "^2.3.0"
+    "mustache": "^2.3.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
 
   },
   "private": true

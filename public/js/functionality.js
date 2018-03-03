@@ -66,40 +66,40 @@ class Website{
 
 
 function addWebsite(website, callback){
-    firebase.database().ref('/websites').push(website).then(callback);
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites').push(website).then(callback);
 }
 
 function addFormToWebsite(website_id, form_info, callback){
     form_info.added_on = firebase.database.ServerValue.TIMESTAMP;
     form_info.message_count = 128;
 
-    firebase.database().ref('/websites/'+website_id+"/forms").push(form_info).then(callback);
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites/'+website_id+"/forms").push(form_info).then(callback);
 }
 
 
 function getWebsiteById(website_id, callback){
-    firebase.database().ref('/websites/' + website_id).once('value').then(function(snapshot) {
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites/' + website_id).once('value').then(function(snapshot) {
         callback(snapshot.val());
     });
 }
 
 
 function getWebsitesOfUser(callback){
-    firebase.database().ref('/websites').orderByChild('owner').equalTo(firebase.auth().currentUser.uid).once('value').then(function(snapshot){
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites').orderByChild('owner').equalTo(firebase.auth().currentUser.uid).once('value').then(function(snapshot){
         callback(snapshotToArray(snapshot));
     })
 }
 
 
 function updateContacts(website_id, contacts, callback){
-    firebase.database().ref('/websites/'+website_id+'/contacts').set(contacts).then(function(){
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites/'+website_id+'/contacts').set(contacts).then(function(){
        callback();
     });
 }
 
 
 function updateWebsite(website_id, updateObj, callback){
-    firebase.database().ref('/websites/'+website_id).update(updateObj).then(function(){
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites/'+website_id).update(updateObj).then(function(){
         callback();
     });
 }
@@ -107,7 +107,7 @@ function updateWebsite(website_id, updateObj, callback){
 
 function updateForm(websiteId, forminfo, formKey, callback){
     console.log(forminfo);
-    firebase.database().ref('/websites/'+websiteId+"/forms/"+formKey).update(forminfo).then(function(){
+    firebase.database().ref('/users/'+firebase.auth().currentUser.uid+'/websites/'+websiteId+"/forms/"+formKey).update(forminfo).then(function(){
         callback();
     });
 }
@@ -124,6 +124,8 @@ function getMessages(websiteId, formId, start_date, end_date, callback){
      */
 
 
+
+
     //todo limit the time window to ~1 month. The rest can be downloaded as json file.
     firebase.database().ref('/messages/' + websiteId).orderByChild('addedOn').startAt(start_date).endAt(end_date).once('value').then(function(snapshot) {
         let res = snapshotToArray(snapshot).filter(val=>{
@@ -136,3 +138,4 @@ function getMessages(websiteId, formId, start_date, end_date, callback){
 }
 
 //todo url should actually be called HOST or even better, DOMAIN
+//todo when a user is registered, add an entry to the db, all the websites and forms created by that user will be under the user node

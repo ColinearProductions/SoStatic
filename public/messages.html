@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -46,14 +45,6 @@
 </header>
 <main class="with-sidenav">
     <div class="section" style="height:calc( 93vh - 45px); padding:0">
-
-        <!--FAB-->
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-            <a class="btn-floating btn-large deep-purple tooltipped modal-trigger" data-position="left" data-delay="50"
-               data-tooltip="Add Form" href="#modal_id">
-                <i class="material-icons ">add</i>
-            </a>
-        </div>
 
         <!-- Navbar -->
         <nav>
@@ -101,17 +92,17 @@
 
                                 <div class="col m3 s6">
                                     <label for="birthdate" class="active">Starting From</label>
-                                    <input type="text" class="input-field datepicker deep-purple-text" id="birthdate" placeholder="Select start date">
+                                    <input type="text" class="input-field datepicker deep-purple-text" style="padding-top: 3px;" id="start_date_picker" placeholder="Select start date">
 
                                 </div>
 
                                 <div class="col m3 s6">
                                     <label for="birthdate2" class="active">Until</label>
-                                    <input type="text" class="input-field datepicker deep-purple-text" id="birthdate2" placeholder="Select start date">
+                                    <input type="text" class="input-field datepicker deep-purple-text" style="padding-top: 3px;"  id="end_date_picker" placeholder="Select start date">
                                 </div>
 
                                 <div class="col s12 " style="margin-bottom:15px;">
-                                    <a class="waves-effect waves-light deep-purple btn">Search</a>
+                                    <a class="waves-effect waves-light deep-purple btn" id="search_button">Search</a>
 
                                 </div>
 
@@ -215,6 +206,8 @@
 
     let websitesFilter = $("#websites_filter");
     let formsFilter = $("#forms_filter");
+    let startDatePicker = $("#start_date_picker");
+    let endDatePicker = $("#end_date_picker");
 
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
@@ -257,6 +250,28 @@
         $(formsFilter).material_select();
 
     }
+
+
+    $("#search_button").on('click',()=>{
+        let startDate = new Date($(startDatePicker).val())/1;
+        let endDate = new Date($(endDatePicker).val())/1;
+        let webId = $(websitesFilter).val();
+        let formId = $(formsFilter).val();
+
+        getMessages(webId, formId,startDate, endDate,onMessagesLoaded )
+
+
+    });
+
+
+
+
+    function onMessagesLoaded(messages){
+
+        console.log(messages);
+    }
+
+
 
 
 
