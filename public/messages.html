@@ -58,132 +58,76 @@
                 </div>
             </div>
         </nav>
+
+
+        <div class="card m-0">
+            <div class="card-content white-text" style="padding-bottom:0; padding-top:10px;">
+                <div class="row m-b-0 center-align">
+
+                    <div class="col m3 hide-on-small-only"></div>
+                    <div class="col m2 s12 p-0">
+                        <div class="input-field col s12 deep-purple-text">
+                            <select id="websites_filter">
+
+                            </select>
+                            <label>Website</label>
+                        </div>
+                    </div>
+
+                    <div class="col m2 s12 p-0">
+                        <div class="input-field col s12 deep-purple-text">
+                            <select id="forms_filter">
+
+                            </select>
+                            <label>Form</label>
+                        </div>
+                    </div>
+
+                    <div class="col m2 s12 p-0">
+                        <div class="input-field col s12 deep-purple-text">
+                            <select id="time_filter">
+                                <option value="0" selected>Today</option>
+                                <option value="1">Yesterday</option>
+                                <option value="2">Last 7 Days</option>
+                                <option value="3">Last 30 Days</option>
+                                <option value="-1">Archive</option>
+                            </select>
+                            <label>Form</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="preloader-background" id="preloader" style="  height:calc( 100vh - 233px); display:none">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-purple-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Content -->
         <div style="padding:1vh">
             <div class="row m-0">
-                <div class="col s12 ">
-                    <div class="card ">
-                        <div class="card-content white-text" style="padding-bottom:0; padding-top:10px;">
-                            <div class="row m-b-0">
-                                <div class="col m3 s6 p-0">
-                                    <div class="input-field col s12 deep-purple-text">
-                                        <select id="websites_filter">
-                                            <option class="deep-purple-text" value="0" selected>All</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                        <label>Website</label>
-                                    </div>
-                                </div>
-
-                                <div class="col m3 s6 p-0">
-                                    <div class="input-field col s12 deep-purple-text">
-                                        <select id="forms_filter">
-                                            <option value="0" selected>All</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                        <label>Form</label>
-                                    </div>
-                                </div>
 
 
-                                <div class="col m3 s6">
-                                    <label for="birthdate" class="active">Starting From</label>
-                                    <input type="text" class="input-field datepicker deep-purple-text" style="padding-top: 3px;" id="start_date_picker" placeholder="Select start date">
-
-                                </div>
-
-                                <div class="col m3 s6">
-                                    <label for="birthdate2" class="active">Until</label>
-                                    <input type="text" class="input-field datepicker deep-purple-text" style="padding-top: 3px;"  id="end_date_picker" placeholder="Select start date">
-                                </div>
-
-                                <div class="col s12 " style="margin-bottom:15px;">
-                                    <a class="waves-effect waves-light deep-purple btn" id="search_button">Search</a>
-
-                                </div>
-
-
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                <div id="messages_container">
 
 
                 </div>
-
-
-                <div class="col s12 l4 xl4 ">
-                    <div class="card ">
-                        <div class="card-content white-text" >
-                            <div class="row m-b-0">
-
-                                <p class="deep-purple-text" style="font-size:24px">
-                                    Website >  <span style="font-size:20px;">  Form</span>
-                                </p>
-
-                                <p class="deep-purple-text text-lighten-3">
-                                    Received on
-                                </p>
-
-                                <div>
-                                    <table class="deep-purple-text">
-                                        <thead>
-                                        <tr>
-                                            <th>Key</th>
-                                            <th>Value</th>
-
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <tr>
-                                            <td>Subject</td>
-                                            <td>Inquiry about the price</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Name</td>
-                                            <td>Jellybean</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Message</td>
-                                            <td>Too long, view all
-                                            </td>
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <h4 class="right-align m-0"><a class="bold deep-purple-text" style="font-size:20px;" href="#!">
-                                    View all
-                                </a></h4>
-
-
-
-
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-
 
 
             </div>
@@ -193,51 +137,126 @@
 </main>
 </body>
 
+<script id="messages_template" type="x-tmpl-mustache">
+
+
+    <div class="col s12 l4 xl4 message-item" id="message-{{key}}" style="display:none">
+        <div class="card ">
+            <div class="card-content white-text">
+                <div class="row m-b-0">
+
+                    <p class="deep-purple-text bold" style="font-size:24px">
+                        {{websiteAlias}} <span style="font-size:17px;">  {{formAlias}}</span>
+                    </p>
+
+                    <p class="deep-purple-text text-lighten-3 p-b-10">
+                        Received on {{addedOn}}
+                    </p>
+
+                    <div>
+                        <table class="deep-purple-text ">
+                            <thead>
+                            <tr>
+                                <th style="padding:0 15px 5px 0">Key</th>
+                                <th style="padding:0 15px 5px 0">Value</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            {{#data}}
+                            <tr>
+                                <td class="bold message-table-key">{{key}}</td>
+                                <td class="message-table-value">{{value}}</td>
+
+                            </tr>
+                            {{/data}}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{#moreFields}}
+
+                    <div class="clearfix"></div>
+                    <h5 class="right-align m-0">
+                        <a class="bold deep-purple-text" style="font-size:20px; padding-top:10px;" href="">
+                            View full message
+                        </a>
+                    </h5>
+                    {{/moreFields}}
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</script>
+
+
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/firebase4.9.0.js"></script>
 <script type="text/javascript" src="js/functionality.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
 
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/matchHeight.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
 <script>
 
 
     let websitesFilter = $("#websites_filter");
     let formsFilter = $("#forms_filter");
-    let startDatePicker = $("#start_date_picker");
-    let endDatePicker = $("#end_date_picker");
+    let timeframePicker = $("#time_filter");
+
+    let websiteMapping = {};
+    let formsMapping = {};
+
+
+
+
+
+    let allMessages = null;
 
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
             window.location.href = "authentication.html";
-        }else{
-
+        } else {
+            showPreloader();
             getWebsitesOfUser(onWebsitesLoaded)
         }
     });
 
 
-    function onWebsitesLoaded(websites){
+    function onWebsitesLoaded(websites) {
         populateSelects(websites);
+        hidePreloader();
+        $(websitesFilter).change();
     }
 
 
-
-    function populateSelects(websites){
+    function populateSelects(websites) {
         let websiteItems = '<option selected="selected" value="0">All</option>';
-        let formItems = '<option selected="selected" value="0">All</option>';
 
 
-        websites.forEach(website=>{
-            websiteItems+= '<option value="'+website.key+'">'+website.alias+'</option>';
+        //todo fill forms select based on selected website
+        websites.forEach(website => {
 
-            let forms = objToArray(website.forms);
-            console.log(forms);
+            websiteMapping[website.key] = website;
 
-            forms.forEach(form=>{
-                formItems+= '<option value="'+form.key+'">'+form.alias+'</option>';
+            websiteItems += '<option value="' + website.key + '">' + website.alias + '</option>';
+
+            objToArray(website.forms).forEach(form => {
+
+                formsMapping[form.key] = form;
             });
 
         });
@@ -246,33 +265,164 @@
         $(websitesFilter).html(websiteItems);
         $(websitesFilter).material_select();
 
+
+    }
+
+    $(websitesFilter).on('change', () => {
+        let website = websiteMapping[$(websitesFilter).val()];
+        populateFormsFilter(website, $(websitesFilter).val() === '0');
+        reFilter();
+    });
+
+    function populateFormsFilter(website, all) {
+        let formItems = '<option selected="selected" value="0">All</option>';
+        let websiteForms = (all ? objToArray(formsMapping) : objToArray(website.forms));
+        websiteForms.forEach(form => {
+
+            console.log("#########" + form.key);
+            formItems += '<option value="' + form.key + '">' + form.alias + '</option>';
+        });
         $(formsFilter).html(formItems);
         $(formsFilter).material_select();
 
     }
 
+    $(formsFilter).on('change', () => {
+      reFilter();
+    });
 
-    $("#search_button").on('click',()=>{
-        let startDate = new Date($(startDatePicker).val())/1;
-        let endDate = new Date($(endDatePicker).val())/1;
-        let webId = $(websitesFilter).val();
-        let formId = $(formsFilter).val();
 
-        getMessages(webId, formId,startDate, endDate,onMessagesLoaded )
+    function reFilter(){
+
+        if(allMessages===null)
+            return;
+
+        let currentFormFilter = $(formsFilter).val();
+        let currentWebFilter = $(websitesFilter).val();
+
+        //filter by form
+        let filteredMessages = allMessages.filter(function (message) {
+            if(currentFormFilter === "0")
+                return true;
+            else
+                return currentFormFilter === message.formId;
+
+        });
+
+        //filter by website
+        filteredMessages = filteredMessages.filter(function (message){
+            if(currentWebFilter === "0")
+                return true;
+            else
+                return currentWebFilter === message.websiteId;
+        });
+
+
+       $(".message-item").hide("slow", () => console.log("DONE"));
+       filteredMessages.forEach((message)=>{
+           $(message.element).show("slow", () => console.log("DONE"));
+       });
+
+
+
+
+
+    }
+
+
+    $(timeframePicker).on('change', () => {
+        showPreloader();
+
+        let val = $(timeframePicker).val();
+
+        let endDate = moment().startOf('day');
+        let startDate = moment().endOf('day');
+
+        if (val === "1")
+            startDate = moment().subtract(1, 'days').startOf('day');
+        else if (val === "2")
+            startDate = moment().subtract(7, 'days').startOf('day');
+        else if (val === "3")
+            startDate = moment().subtract(30, 'days').startOf('day');
+        else {
+
+        }
+
+
+        console.log(endDate.unix());
+        console.log(startDate.unix());
+
+        showPreloader();
+        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, onMessagesLoaded)
 
 
     });
 
 
+    let messagesTemplate = $("#messages_template").html();
+    Mustache.parse(messagesTemplate);
+    let messagesContainer = $("#messages_container");
 
 
-    function onMessagesLoaded(messages){
+    function onMessagesLoaded(messages) {
 
-        console.log(messages);
+        allMessages = messages;
+
+        $(messagesContainer).html("");
+        allMessages.forEach((message) => {
+            message = parseMessages(message);
+            let rendered = Mustache.render(messagesTemplate, message);
+            $(messagesContainer).append(rendered);
+            message.element = $(messagesContainer).find("#message-" + message.key);
+        });
+
+
+        hidePreloader();
+        reFilter();
     }
 
 
+    function parseMessages(message) {
 
+        console.log(message);
+
+
+        let D = [];
+
+
+        for (let key in message.data)
+            if (message.data.hasOwnProperty(key))
+                D.push({key: key, value: message.data[key]});
+
+
+        message.addedOn = new Date(message.addedOn);
+        message.addedOn = message.addedOn.toDateString();
+
+        message.moreFields = D.length > 3;
+
+        message.websiteAlias = websiteMapping[message.websiteId].alias;
+        message.formAlias = formsMapping[message.formId].alias;
+
+
+        message.data = D.splice(0, 3);
+
+
+        return message
+
+
+    }
+
+
+    function showPreloader() {
+        $("#main-container").hide("slow", () => console.log("DONE"));
+        $("#preloader").show();
+    }
+
+
+    function hidePreloader() {
+        $("#main-container").show("slow", () => console.log("DONE"));
+        $("#preloader").hide();
+    }
 
 
 </script>

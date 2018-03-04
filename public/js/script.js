@@ -16,16 +16,7 @@ $(document).ready(function () {
     }
 
     $(".button-collapse").sideNav();
-
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
-        today: 'Today',
-        clear: 'Clear',
-        close: 'Ok',
-        closeOnSelect: false, // Close upon selecting a date,
-    });
-
+//todo select with predefined values yesterday, 1 week, 1 month etc.
 
     Materialize.updateTextFields();
 
@@ -201,3 +192,8 @@ $.extend({
 
 
 
+function isSameDay(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate();
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="start()">Add messages</button>
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script type="text/javascript" src="js/functionality.js"></script>
+
+
+<script>
+
+
+    let formIds = ['-L6hIbYvJLwdffMbfiFY','-L6hIwhgTipvceVj-NCK','-L6hdlXj6njoKJg1XlJA'];
+    let wid = '-L6hIYGsRSJzFbyXLegc';
+    let messagePerFormPerDay = 2;
+    let daySpan = 5;
+
+    let M = {
+        name:'Razvan',
+        email:'razvan.becheru@gmail.com',
+        message:'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that',
+        extraField:'Extra field'
+    };
+
+    let today = new Date();
+
+    function start() {
+        for(let i=0;i<daySpan;i++){
+            let currentDate = new Date();
+            currentDate.setDate((today.getDate()+1)-i);
+            currentDate = currentDate/1;
+
+            formIds.forEach((formId)=>{
+
+                for(let j=0;j<messagePerFormPerDay;j++){
+                    addMessage(M, currentDate, wid, formId);
+                }
+
+            });
+
+
+
+        }
+    }
+
+
+    function addMessage(data, addedOn, websiteId, formId) {
+
+
+        let message = {
+            data: data,
+            addedOn: addedOn,
+            websiteId: websiteId,
+            formId: formId
+        };
+
+        firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/messages').push(message).then( ()=>{console.log("added messag")});
+    }
+</script>
+</html>

@@ -109,10 +109,13 @@ function onValidMessage(postParams, websiteConfig, formConfig, userId) {
 
     loadTemplate(postParams, websiteConfig, formConfig);
 
-    postParams.formId = formConfig.key;
-    postParams.addedOn = admin.database.ServerValue.TIMESTAMP;
-    postParams.websiteId = websiteConfig.key;
-    return db.ref('/users/' + userId + '/messages').push(postParams);
+    let message = {};
+    message.formId = formConfig.key;
+    message.addedOn = admin.database.ServerValue.TIMESTAMP;
+    message.websiteId = websiteConfig.key;
+    message.data = postParams;
+
+    return db.ref('/users/' + userId + '/messages').push(message);
 }
 
 function loadTemplate(postParams, websiteConfig, formConfig) {
@@ -149,6 +152,8 @@ function loadTemplate(postParams, websiteConfig, formConfig) {
 function emailMessage(html, websiteConfig) {
 
 
+    if(websiteConfig.contacts === undefined)
+        return;
 
     let email = objToArray(websiteConfig.contacts)[0].email;
     const mailOptions = {
