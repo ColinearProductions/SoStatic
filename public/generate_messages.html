@@ -19,27 +19,54 @@
     let formIds = ['-L6hIbYvJLwdffMbfiFY','-L6hIwhgTipvceVj-NCK','-L6hdlXj6njoKJg1XlJA'];
     let wid = '-L6hIYGsRSJzFbyXLegc';
     let messagePerFormPerDay = 2;
-    let daySpan = 5;
+    let daySpan = 1;
 
     let M = {
         name:'Razvan',
         email:'razvan.becheru@gmail.com',
         message:'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that',
+        extraField:'Extra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra field'
+    };
+
+
+    let M1 = {
+        name:'Razvan',
+        email:'razvan.becheru@gmail.com',
+        message:'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that' +
+        'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that',
+        extraField:'Extra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra ' +
+        'fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra fieldExtra field'
+    };
+
+    let M2 = {
+        name:'Razvan',
+        email:'razvan.becheru@gmail.com',
+        message:'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that' +
+        'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that' +
+        'Lorem ipsum blah blah blah I am ullr of the planet omycron perci I8 or something like that',
         extraField:'Extra field'
     };
 
     let today = new Date();
 
     function start() {
+        let p=0;
         for(let i=0;i<daySpan;i++){
             let currentDate = new Date();
-            currentDate.setDate((today.getDate()+1)-i);
+            currentDate.setDate((today.getDate()+2)-i);
             currentDate = currentDate/1;
 
             formIds.forEach((formId)=>{
 
                 for(let j=0;j<messagePerFormPerDay;j++){
-                    addMessage(M, currentDate, wid, formId);
+                    p+=1;
+
+                    if(p%1===0)
+                        addMessage(M, currentDate, wid, formId);
+                    if(p%2===0)
+                        addMessage(M1, currentDate, wid, formId);
+                    if(p%3===0)
+                        addMessage(M2, currentDate, wid, formId);
                 }
 
             });

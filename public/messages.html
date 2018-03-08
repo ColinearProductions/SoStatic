@@ -120,7 +120,7 @@
             </div>
         </div>
         <!-- Content -->
-        <div style="padding:1vh">
+        <div  style="padding: 0.5vw">
             <div class="row m-0">
 
 
@@ -128,6 +128,13 @@
 
 
                 </div>
+
+                <div class="col s12 center-align">
+                    <a class="bold btn-flat deep-purple-text " style="font-size:1.4m">
+                        Next
+                    </a>
+                </div>
+
 
 
             </div>
@@ -142,8 +149,8 @@
 
     <div class="col s12 l4 xl4 message-item" id="message-{{key}}" style="display:none">
         <div class="card ">
-            <div class="card-content white-text">
-                <div class="row m-b-0">
+            <div class="card-content white-text" style="padding:18px;">
+                <div class="row m-b-0 mh1">
 
                     <p class="deep-purple-text bold" style="font-size:24px">
                         {{websiteAlias}} <span style="font-size:17px;">  {{formAlias}}</span>
@@ -167,7 +174,7 @@
                             {{#data}}
                             <tr>
                                 <td class="bold message-table-key">{{key}}</td>
-                                <td class="message-table-value">{{value}}</td>
+                                <td class="message-table-value">{{shortValue}}</td>
 
                             </tr>
                             {{/data}}
@@ -240,6 +247,7 @@
         populateSelects(websites);
         hidePreloader();
         $(websitesFilter).change();
+        $(timeframePicker).change();
     }
 
 
@@ -335,12 +343,13 @@
 
         let val = $(timeframePicker).val();
 
-        let endDate = moment().startOf('day');
-        let startDate = moment().endOf('day');
+        let endDate = moment().endOf('day');
+        let startDate = moment().startOf('day');
 
-        if (val === "1")
+        if (val === "1"){
             startDate = moment().subtract(1, 'days').startOf('day');
-        else if (val === "2")
+            endDate = moment().subtract(1, 'days').endOf('day');
+        }else if (val === "2")
             startDate = moment().subtract(7, 'days').startOf('day');
         else if (val === "3")
             startDate = moment().subtract(30, 'days').startOf('day');
@@ -353,7 +362,7 @@
         console.log(startDate.unix());
 
         showPreloader();
-        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, onMessagesLoaded)
+        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, onMessagesLoaded) //todo only give some of the messages to render, the rest render on request :D
 
 
     });
@@ -375,6 +384,9 @@
             $(messagesContainer).append(rendered);
             message.element = $(messagesContainer).find("#message-" + message.key);
         });
+        $(".mh1").matchHeight({
+            property: 'min-height'
+        });
 
 
         hidePreloader();
@@ -391,8 +403,18 @@
 
 
         for (let key in message.data)
-            if (message.data.hasOwnProperty(key))
-                D.push({key: key, value: message.data[key]});
+            if (message.data.hasOwnProperty(key)) {
+                let val = message.data[key];
+
+
+                let shortValue =  val;
+                if(shortValue.length>40){
+                    shortValue = shortValue.substring(0,50)+" (More)"
+                }
+
+
+                D.push({key: key, value:val, shortValue: shortValue});
+            }
 
 
         message.addedOn = new Date(message.addedOn);
@@ -404,7 +426,11 @@
         message.formAlias = formsMapping[message.formId].alias;
 
 
+
+
         message.data = D.splice(0, 3);
+
+        console.log(message.data);
 
 
         return message
