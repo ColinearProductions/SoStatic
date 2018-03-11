@@ -6,20 +6,26 @@
 </head>
 <body>
 <button onclick="start()">Add messages</button>
+
+
+<button onclick="deleteMessages()">Delete all messages</button>
+
+
 </body>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
 <script type="text/javascript" src="js/functionality.js"></script>
 
 
 <script>
 
 
-    let formIds = ['-L6hIbYvJLwdffMbfiFY','-L6hIwhgTipvceVj-NCK','-L6hdlXj6njoKJg1XlJA'];
-    let wid = '-L6hIYGsRSJzFbyXLegc';
-    let messagePerFormPerDay = 2;
-    let daySpan = 1;
+    let formIds = ['-L7JstZdLItk2f3GBSOA','-L7JsvMIFSMQythbLJTJ'];
+    let wid = '-L7JsrwGOpdvVNdhIB-t';
+    let messagePerFormPerDay = 1;
+    let daySpan = 100;
 
     let M = {
         name:'Razvan',
@@ -76,6 +82,10 @@
         }
     }
 
+    function deleteMessages(){
+        firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/messages').set(null).then( ()=>{console.log("added messag")});
+
+    }
 
     function addMessage(data, addedOn, websiteId, formId) {
 
@@ -84,10 +94,11 @@
             data: data,
             addedOn: addedOn,
             websiteId: websiteId,
-            formId: formId
+            formId: formId,
+            userId: firebase.auth().currentUser.uid
         };
 
-        firebase.database().ref('/users/' + firebase.auth().currentUser.uid + '/messages').push(message).then( ()=>{console.log("added messag")});
+        firebase.firestore().collection('messages').add(message).then( ()=>{console.log("added messag")});
     }
 </script>
 </html>

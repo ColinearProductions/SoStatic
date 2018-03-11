@@ -25,6 +25,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 admin.initializeApp(functions.config().firebase);
 let db = admin.database();
 
+let firestore = admin.firestore();
+
 
 app.post("/:endpointId", (request, response) => {
     let endpointId = request.params['endpointId'];
@@ -111,11 +113,14 @@ function onValidMessage(postParams, websiteConfig, formConfig, userId) {
 
     let message = {};
     message.formId = formConfig.key;
-    message.addedOn = admin.database.ServerValue.TIMESTAMP;
+    message.addedOn = admin.firestore.FieldValue.serverTimestamp();
     message.websiteId = websiteConfig.key;
+    message.userId = userId;
     message.data = postParams;
 
-    return db.ref('/users/' + userId + '/messages').push(message);
+
+
+    return firestore.collection('messages').add(message);
 }
 
 function loadTemplate(postParams, websiteConfig, formConfig) {
@@ -165,8 +170,7 @@ function emailMessage(html, websiteConfig) {
     mailOptions.subject = 'New submission  - ' + websiteConfig.alias;
     mailOptions.html = html;
 
-    console.log("Mail options");
-    console.log(mailOptions);
+
     return mailtransport.sendMail(mailOptions).then(() => {
         console.log('New welcome email sent to:', email);
     }).catch((resolve, reject) => {

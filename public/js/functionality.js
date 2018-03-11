@@ -113,12 +113,40 @@ function updateForm(websiteId, forminfo, formKey, callback){
 }
 
 
-function getMessages(start_date, end_date, callback){
+function getMessages(start_date, end_date,websiteId, formId,showAmount,  callback){
 
-    firebase.database().ref('users/'+firebase.auth().currentUser.uid+'/messages').orderByChild('addedOn').startAt(start_date).endAt(end_date).once('value').then(function(snapshot) {
 
-       callback(snapshotToArray(snapshot));
+    let query =  firebase.firestore().collection('messages')
+        .where('userId','==',firebase.auth().currentUser.uid)
+        .where("addedOn","<=",end_date)
+        .where("addedOn",">=",start_date);
+
+    if(websiteId!=="0")
+        query =  query.where("websiteId","==",websiteId);
+    if(formId!=="0")
+        query = query.where("formId","==",formId);
+
+    query = query.orderBy("addedOn","desc");
+
+
+    if(showAmount>0){
+       query =  query.limit(showAmount);
+    }
+
+
+
+    query.get().then((snapshot)=>{
+
+        let res =  snapshot.docs.map((doc)=> {
+            let d = doc.data();
+            d.key = doc.id;
+           return doc.data();
+        });
+
+        callback(res);
     });
+
+
 
 
 }

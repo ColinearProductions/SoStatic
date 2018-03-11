@@ -90,6 +90,7 @@
                                 <option value="1">Yesterday</option>
                                 <option value="2">Last 7 Days</option>
                                 <option value="3">Last 30 Days</option>
+
                                 <option value="-1">Archive</option>
                             </select>
                             <label>Form</label>
@@ -120,18 +121,45 @@
             </div>
         </div>
         <!-- Content -->
-        <div  style="padding: 0.5vw">
+        <div style="padding: 0 0.5vw 0 0.5vw">
             <div class="row m-0">
 
-
+                <div class="col s12 right-align">
+                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount" >
+                        Amount:
+                    </p>
+                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25" onclick="onChangeAmount(25)">
+                        25
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-50" onclick="onChangeAmount(50)">
+                        50
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-100" onclick="onChangeAmount(100)">
+                        100
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-all" onclick="onChangeAmount(-1)">
+                        All
+                    </a>
+                </div>
                 <div id="messages_container">
 
 
                 </div>
-
-                <div class="col s12 center-align">
-                    <a class="bold btn-flat deep-purple-text " style="font-size:1.4m">
-                        Next
+                <div class="col s12 right-align">
+                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount" >
+                        Amount:
+                    </p>
+                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25" onclick="onChangeAmount(25)">
+                        25
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-50" onclick="onChangeAmount(50)">
+                        50
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-100" onclick="onChangeAmount(100)">
+                        100
+                    </a>
+                    <a class="bold btn-flat deep-purple-text p-5 amount amount-all" onclick="onChangeAmount(-1)">
+                        All
                     </a>
                 </div>
 
@@ -147,25 +175,25 @@
 <script id="messages_template" type="x-tmpl-mustache">
 
 
-    <div class="col s12 l4 xl4 message-item" id="message-{{key}}" style="display:none">
+    <div class="col s12 m6 l6 xl4 message-item" id="message-{{key}}" style="display:none">
         <div class="card ">
             <div class="card-content white-text" style="padding:18px;">
                 <div class="row m-b-0 mh1">
 
-                    <p class="deep-purple-text bold" style="font-size:24px">
-                        {{websiteAlias}} <span style="font-size:17px;">  {{formAlias}}</span>
+                    <p class="deep-purple-text bold text-xl" >
+                        {{websiteAlias}} <span class="text-l">  {{formAlias}}</span>
                     </p>
 
-                    <p class="deep-purple-text text-lighten-3 p-b-10">
-                        Received on {{addedOn}}
+                    <p class="deep-purple-text text-lighten-3 p-b-10 text-s" >
+                        {{addedOn}}
                     </p>
 
                     <div>
                         <table class="deep-purple-text ">
                             <thead>
                             <tr>
-                                <th style="padding:0 15px 5px 0">Key</th>
-                                <th style="padding:0 15px 5px 0">Value</th>
+                                <th style="padding:0 15px 5px 0" class="text-m">Key</th>
+                                <th style="padding:0 15px 5px 0" class="text-m">Value</th>
                             </tr>
                             </thead>
 
@@ -173,8 +201,8 @@
 
                             {{#data}}
                             <tr>
-                                <td class="bold message-table-key">{{key}}</td>
-                                <td class="message-table-value">{{shortValue}}</td>
+                                <td class="bold message-table-key text-m">{{key}}</td>
+                                <td class="message-table-value text-m">{{shortValue}}</td>
 
                             </tr>
                             {{/data}}
@@ -188,7 +216,7 @@
 
                     <div class="clearfix"></div>
                     <h5 class="right-align m-0">
-                        <a class="bold deep-purple-text" style="font-size:20px; padding-top:10px;" href="">
+                        <a class="bold deep-purple-text text-m text-lighten-2" style="padding-top:10px;" href="">
                             View full message
                         </a>
                     </h5>
@@ -209,7 +237,8 @@
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/firebase4.9.0.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
 <script type="text/javascript" src="js/functionality.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 
@@ -227,11 +256,9 @@
     let websiteMapping = {};
     let formsMapping = {};
 
+    let showAmount = 25;
 
-
-
-
-    let allMessages = null;
+    let loadedMessages = null;
 
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
@@ -279,7 +306,9 @@
     $(websitesFilter).on('change', () => {
         let website = websiteMapping[$(websitesFilter).val()];
         populateFormsFilter(website, $(websitesFilter).val() === '0');
-        reFilter();
+
+        reload();
+        //todo reFilter();
     });
 
     function populateFormsFilter(website, all) {
@@ -287,7 +316,7 @@
         let websiteForms = (all ? objToArray(formsMapping) : objToArray(website.forms));
         websiteForms.forEach(form => {
 
-            console.log("#########" + form.key);
+
             formItems += '<option value="' + form.key + '">' + form.alias + '</option>';
         });
         $(formsFilter).html(formItems);
@@ -296,49 +325,18 @@
     }
 
     $(formsFilter).on('change', () => {
-      reFilter();
+        reload();
+    });
+
+    $(timeframePicker).on('change', () => {
+     reload();
     });
 
 
-    function reFilter(){
 
-        if(allMessages===null)
-            return;
+    function reload(){
 
-        let currentFormFilter = $(formsFilter).val();
-        let currentWebFilter = $(websitesFilter).val();
-
-        //filter by form
-        let filteredMessages = allMessages.filter(function (message) {
-            if(currentFormFilter === "0")
-                return true;
-            else
-                return currentFormFilter === message.formId;
-
-        });
-
-        //filter by website
-        filteredMessages = filteredMessages.filter(function (message){
-            if(currentWebFilter === "0")
-                return true;
-            else
-                return currentWebFilter === message.websiteId;
-        });
-
-
-       $(".message-item").hide("slow", () => console.log("DONE"));
-       filteredMessages.forEach((message)=>{
-           $(message.element).show("slow", () => console.log("DONE"));
-       });
-
-
-
-
-
-    }
-
-
-    $(timeframePicker).on('change', () => {
+        $(".message-item").hide();
         showPreloader();
 
         let val = $(timeframePicker).val();
@@ -346,27 +344,27 @@
         let endDate = moment().endOf('day');
         let startDate = moment().startOf('day');
 
-        if (val === "1"){
+        if (val === "1") {
             startDate = moment().subtract(1, 'days').startOf('day');
             endDate = moment().subtract(1, 'days').endOf('day');
-        }else if (val === "2")
+        } else if (val === "2")
             startDate = moment().subtract(7, 'days').startOf('day');
         else if (val === "3")
             startDate = moment().subtract(30, 'days').startOf('day');
         else {
-
+            //todo archive
         }
 
 
-        console.log(endDate.unix());
-        console.log(startDate.unix());
-
-        showPreloader();
-        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, onMessagesLoaded) //todo only give some of the messages to render, the rest render on request :D
+        let currentFormFilter = $(formsFilter).val();
+        let currentWebFilter = $(websitesFilter).val();
 
 
-    });
+        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, currentWebFilter, currentFormFilter,showAmount, onMessagesLoaded) //todo only give some of the messages to render, the rest render on request :D
 
+
+
+    }
 
     let messagesTemplate = $("#messages_template").html();
     Mustache.parse(messagesTemplate);
@@ -374,29 +372,37 @@
 
 
     function onMessagesLoaded(messages) {
-
-        allMessages = messages;
+        console.log(messages);
+        loadedMessages = messages;
 
         $(messagesContainer).html("");
-        allMessages.forEach((message) => {
-            message = parseMessages(message);
-            let rendered = Mustache.render(messagesTemplate, message);
-            $(messagesContainer).append(rendered);
-            message.element = $(messagesContainer).find("#message-" + message.key);
-        });
+
+        renderMessages(loadedMessages);
         $(".mh1").matchHeight({
             property: 'min-height'
         });
 
 
+
         hidePreloader();
-        reFilter();
+        $(".message-item").show()
+
+    }
+
+    function renderMessages(messages) {
+        messages.forEach((message) => {
+            message = parseMessages(message);
+
+            let rendered = Mustache.render(messagesTemplate, message);
+            $(messagesContainer).append(rendered);
+            message.element = $(messagesContainer).find("#message-" + message.key);
+        });
+
+
     }
 
 
     function parseMessages(message) {
-
-        console.log(message);
 
 
         let D = [];
@@ -407,13 +413,13 @@
                 let val = message.data[key];
 
 
-                let shortValue =  val;
-                if(shortValue.length>40){
-                    shortValue = shortValue.substring(0,50)+" (More)"
+                let shortValue = val;
+                if (shortValue.length > 45) {
+                    shortValue = shortValue.substring(0, 45) + " ..."
                 }
 
 
-                D.push({key: key, value:val, shortValue: shortValue});
+                D.push({key: key, value: val, shortValue: shortValue});
             }
 
 
@@ -426,11 +432,7 @@
         message.formAlias = formsMapping[message.formId].alias;
 
 
-
-
         message.data = D.splice(0, 3);
-
-        console.log(message.data);
 
 
         return message
@@ -440,14 +442,35 @@
 
 
     function showPreloader() {
-        $("#main-container").hide("slow", () => console.log("DONE"));
+        $("#main-container").hide("slow");
         $("#preloader").show();
     }
 
 
     function hidePreloader() {
-        $("#main-container").show("slow", () => console.log("DONE"));
+        $("#main-container").show("slow");
         $("#preloader").hide();
+    }
+
+    function onChangeAmount(count){
+        showAmount = count;
+
+        $(".selected-amount").removeClass("selected-amount");
+
+
+        if(count===25){
+            $(".amount-25").addClass("selected-amount");
+        }else if(count ===50){
+            $(".amount-50").addClass("selected-amount");
+
+        }else if(count ===100){
+            $(".amount-100").addClass("selected-amount");
+
+        }else if(count ===-1){
+            $(".amount-all").addClass("selected-amount");
+
+        }
+        reload();
     }
 
 

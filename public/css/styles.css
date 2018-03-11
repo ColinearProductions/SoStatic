@@ -375,5 +375,32 @@ body, main{
     padding:8px 20px 8px 0;
 }
 
+.selected-amount{
+    font-size:1em !important;
+    font-weight: bold;
+}
+
+.amount{
+    font-size:.7em;
+}
 
 
+.text-xxl{
+    font-size: 28px !important;
+}
+
+.text-xl{
+    font-size: 22px !important;
+}
+
+.text-l{
+    font-size:18px !important;
+}
+
+.text-m{
+    font-size: 15px !important;
+}
+
+.text-s{
+    font-size: 12px !important;
+}
