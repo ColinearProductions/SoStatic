@@ -93,6 +93,22 @@
         <div style="padding: 0 0.5vw 0 0.5vw">
             <div class="row m-0">
 
+
+                <!-- Modal Structure -->
+                <div id="message_modal" class="modal">
+                    <div class="modal-content">
+                        <div id="message_modal_container" style="padding:0.3vw">
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat bold" >Close</a>
+                    </div>
+                </div>
+
+
                 <div class="col s12 right-align">
                     <p class="bold btn-flat deep-purple-text p-5 m-0 amount">
                         Amount:
@@ -140,7 +156,44 @@
         </div>
     </div>
 </main>
+
+
 </body>
+
+
+<script id="message_modal_template" type="x-tmpl-mustache">
+
+
+    <p class="deep-purple-text bold text-xxl m-0">
+        {{websiteAlias}} <span class="text-xl">  {{formAlias}}</span>
+    </p>
+
+    <p class="deep-purple-text text-lighten-3 p-b-30 m-0 text-m">
+        {{addedOn}}
+    </p>
+
+    <table class="deep-purple-text ">
+        <thead>
+        <tr>
+            <th style="padding:0 15px 5px 0" class="text-l">Key</th>
+            <th style="padding:0 15px 5px 0" class="text-l">Value</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        {{#data}}
+        <tr>
+            <td class="bold message-table-key text-l">{{key}}</td>
+            <td class="message-table-value text-m">{{value}}</td>
+
+        </tr>
+        {{/data}}
+
+
+        </tbody>
+    </table>
+</script>
 
 <script id="messages_template" type="x-tmpl-mustache">
 
@@ -150,11 +203,11 @@
             <div class="card-content white-text" style="padding:18px;">
                 <div class="row m-b-0 mh1">
 
-                    <p class="deep-purple-text bold text-xl" >
+                    <p class="deep-purple-text bold text-xl">
                         {{websiteAlias}} <span class="text-l">  {{formAlias}}</span>
                     </p>
 
-                    <p class="deep-purple-text text-lighten-3 p-b-10 text-s" >
+                    <p class="deep-purple-text text-lighten-3 p-b-10 text-s">
                         {{addedOn}}
                     </p>
 
@@ -186,7 +239,8 @@
 
                     <div class="clearfix"></div>
                     <h5 class="right-align m-0">
-                        <a class="bold deep-purple-text text-m text-lighten-2" style="padding-top:10px;" href="">
+                        <a class="bold btn-flat p-5 deep-purple-text text-m text-lighten-2" style="padding-top:10px;"
+                           onclick="onMessageClicked('{{key}}')">
                             View full message
                         </a>
                     </h5>
@@ -201,8 +255,6 @@
 
 
     </div>
-
-
 
 
 </script>
@@ -257,8 +309,6 @@
         $(websitesFilter).material_select();
 
 
-
-
         $(websitesFilter).change();
         $(timeframePicker).change();
 
@@ -291,9 +341,6 @@
             }
 
         });
-
-
-        console.log($.getUrlVar('website_id'));
 
 
         $(websitesFilter).html(websiteItems);
@@ -371,7 +418,6 @@
 
 
     function onMessagesLoaded(messages) {
-        console.log(messages);
         loadedMessages = messages;
 
         $(messagesContainer).html("");
@@ -390,7 +436,6 @@
     function renderMessages(messages) {
         messages.forEach((message) => {
             message = parseMessages(message);
-
             let rendered = Mustache.render(messagesTemplate, message);
             $(messagesContainer).append(rendered);
             message.element = $(messagesContainer).find("#message-" + message.key);
@@ -469,6 +514,31 @@
 
         }
         reload();
+    }
+
+
+    let messageModalTemplate = $("#message_modal_template").html();
+    Mustache.parse(messageModalTemplate);
+
+    let messageModalContainer = $("#message_modal_container");
+
+    let messageModal = $("#message_modal");
+
+    function onMessageClicked(message_key) {
+
+        let M = loadedMessages.filter((message) => {
+            return message.key === message_key;
+        })[0];
+
+        $(messageModalContainer).html("");
+
+        let rendered = Mustache.render(messageModalTemplate, M);
+
+        $(messageModalContainer).html(rendered);
+
+        $(messageModal).modal('open')
+
+
     }
 
 

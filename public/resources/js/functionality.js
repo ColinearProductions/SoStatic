@@ -142,7 +142,8 @@ function getMessages(start_date, end_date,websiteId, formId,showAmount,  callbac
         let res =  snapshot.docs.map((doc)=> {
             let d = doc.data();
             d.key = doc.id;
-           return doc.data();
+
+           return d;
         });
 
         callback(res);
