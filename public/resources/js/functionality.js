@@ -115,6 +115,8 @@ function updateForm(websiteId, forminfo, formKey, callback){
 
 function getMessages(start_date, end_date,websiteId, formId,showAmount,  callback){
 
+    console.log("WID: "+ websiteId);
+    console.log("FID: "+formId);
 
     let query =  firebase.firestore().collection('messages')
         .where('userId','==',firebase.auth().currentUser.uid)

@@ -7,42 +7,11 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/materialize.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="resources/css/materialize.css">
+    <link rel="stylesheet" href="resources/css/styles.css">
 </head>
 <body>
-<header>
-    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
-        <li class="valign-wrapper " style="height:64px;">
-            <span class="logo-text " style="width:100%; text-align: center;">Materialize</span>
-        </li>
-        <li class="bold ">
-            <a href="dashboard.html" class="waves-effect waves-light ">
-                <i class="material-icons">dashboard</i>
-                Dashboard
-            </a>
-        </li>
-        <li class="bold ">
-            <a href="websites.html" class="waves-effect waves-light">
-                <i class="material-icons">web</i>
-                Websites
-            </a>
-        </li>
-        <li class="bold active">
-            <a href="messages.html" class="waves-effect waves-light"> <i
-                    class="material-icons">insert_comment</i>
-                Messages</a>
-        </li>
-        <li class="bold">
-            <a href="settings.html" class="waves-effect waves-light">
-                <i class="material-icons">settings</i>
-                Settings
-            </a>
-        </li>
-
-        <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
-    </ul>
-</header>
+<%include file="_HEADER.html" args="path='messages'"/>
 <main class="with-sidenav">
     <div class="section" style="height:calc( 93vh - 45px); padding:0">
 
@@ -125,10 +94,11 @@
             <div class="row m-0">
 
                 <div class="col s12 right-align">
-                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount" >
+                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount">
                         Amount:
                     </p>
-                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25" onclick="onChangeAmount(25)">
+                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25"
+                       onclick="onChangeAmount(25)">
                         25
                     </a>
                     <a class="bold btn-flat deep-purple-text p-5 amount amount-50" onclick="onChangeAmount(50)">
@@ -146,10 +116,11 @@
 
                 </div>
                 <div class="col s12 right-align">
-                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount" >
+                    <p class="bold btn-flat deep-purple-text p-5 m-0 amount">
                         Amount:
                     </p>
-                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25" onclick="onChangeAmount(25)">
+                    <a class="bold btn-flat deep-purple-text p-5 amount selected-amount amount-25"
+                       onclick="onChangeAmount(25)">
                         25
                     </a>
                     <a class="bold btn-flat deep-purple-text p-5 amount amount-50" onclick="onChangeAmount(50)">
@@ -162,7 +133,6 @@
                         All
                     </a>
                 </div>
-
 
 
             </div>
@@ -232,18 +202,21 @@
 
     </div>
 
+
+
+
 </script>
 
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/materialize.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
-<script type="text/javascript" src="js/functionality.js"></script>
-<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="resources/js/functionality.js"></script>
+<script type="text/javascript" src="resources/js/moment.js"></script>
 
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/matchHeight.js"></script>
+<script type="text/javascript" src="resources/js/script.js"></script>
+<script type="text/javascript" src="resources/js/matchHeight.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
 <script>
@@ -271,10 +244,32 @@
 
 
     function onWebsitesLoaded(websites) {
+
         populateSelects(websites);
-        hidePreloader();
+
+
+        let websiteId = $.getUrlVar('website_id');
+        if (websiteId === undefined)
+            websiteId = 0;
+
+
+        $(websitesFilter).find('option[value="' + websiteId + '"]').prop('selected', true);
+        $(websitesFilter).material_select();
+
+
+
+
         $(websitesFilter).change();
         $(timeframePicker).change();
+
+
+        let formId = $.getUrlVar('form_id');
+        if (formId === undefined)
+            formId = 0;
+        $(formsFilter).find('option[value="' + formId + '"]').prop('selected', true);
+        $(formsFilter).material_select();
+        $(formsFilter).change();
+
     }
 
 
@@ -282,23 +277,26 @@
         let websiteItems = '<option selected="selected" value="0">All</option>';
 
 
-        //todo fill forms select based on selected website
         websites.forEach(website => {
 
             websiteMapping[website.key] = website;
 
             websiteItems += '<option value="' + website.key + '">' + website.alias + '</option>';
 
-            objToArray(website.forms).forEach(form => {
+            if (website.forms !== undefined) {
+                objToArray(website.forms).forEach(form => {
 
-                formsMapping[form.key] = form;
-            });
+                    formsMapping[form.key] = form;
+                });
+            }
 
         });
 
 
+        console.log($.getUrlVar('website_id'));
+
+
         $(websitesFilter).html(websiteItems);
-        $(websitesFilter).material_select();
 
 
     }
@@ -312,13 +310,16 @@
     });
 
     function populateFormsFilter(website, all) {
+
         let formItems = '<option selected="selected" value="0">All</option>';
-        let websiteForms = (all ? objToArray(formsMapping) : objToArray(website.forms));
+
+
+        let websiteForms = ((all || website === undefined) ? objToArray(formsMapping) : objToArray(website.forms));
         websiteForms.forEach(form => {
-
-
             formItems += '<option value="' + form.key + '">' + form.alias + '</option>';
         });
+
+
         $(formsFilter).html(formItems);
         $(formsFilter).material_select();
 
@@ -329,12 +330,11 @@
     });
 
     $(timeframePicker).on('change', () => {
-     reload();
+        reload();
     });
 
 
-
-    function reload(){
+    function reload() {
 
         $(".message-item").hide();
         showPreloader();
@@ -360,8 +360,7 @@
         let currentWebFilter = $(websitesFilter).val();
 
 
-        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, currentWebFilter, currentFormFilter,showAmount, onMessagesLoaded) //todo only give some of the messages to render, the rest render on request :D
-
+        getMessages(startDate.unix() * 1000, endDate.unix() * 1000, currentWebFilter, currentFormFilter, showAmount, onMessagesLoaded) //todo only give some of the messages to render, the rest render on request :D
 
 
     }
@@ -381,7 +380,6 @@
         $(".mh1").matchHeight({
             property: 'min-height'
         });
-
 
 
         hidePreloader();
@@ -452,21 +450,21 @@
         $("#preloader").hide();
     }
 
-    function onChangeAmount(count){
+    function onChangeAmount(count) {
         showAmount = count;
 
         $(".selected-amount").removeClass("selected-amount");
 
 
-        if(count===25){
+        if (count === 25) {
             $(".amount-25").addClass("selected-amount");
-        }else if(count ===50){
+        } else if (count === 50) {
             $(".amount-50").addClass("selected-amount");
 
-        }else if(count ===100){
+        } else if (count === 100) {
             $(".amount-100").addClass("selected-amount");
 
-        }else if(count ===-1){
+        } else if (count === -1) {
             $(".amount-all").addClass("selected-amount");
 
         }

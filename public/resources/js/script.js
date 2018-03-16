@@ -179,7 +179,11 @@ $.extend({
         for (let i = 0; i < hashes.length; i++) {
             hash = hashes[i].split('=');
             vars.push(hash[0]);
-            vars[hash[0]] = hash[1].replace("#", "");
+
+            if(hash[1]!==undefined)
+                vars[hash[0]] = hash[1].replace("#", "");
+            else
+                vars[hash[0]] = undefined
         }
         return vars;
     },

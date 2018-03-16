@@ -1,0 +1,49 @@
+
+<%page args="path"/>
+
+<header>
+    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
+
+
+
+        <li class="valign-wrapper " style="height:64px;">
+            <h4 style="width:100%; text-align: center;"><a class="deep-purple-text" href="index.html">So Static</a></h4>
+        </li>
+
+
+
+        <li class="bold ${'active' if path in ['dashboard','website'] else ''}">
+            <a href="dashboard.html" class="waves-effect waves-light ">
+                <i class="material-icons">dashboard</i>
+                Dashboard
+            </a>
+        </li>
+        <li class="bold  ${'active' if path in 'messages' else ''}">
+            <a href="messages.html" class="waves-effect waves-light"> <i
+                    class="material-icons">insert_comment</i>
+                Messages</a>
+        </li>
+        <li class="bold">
+            <a href="settings.html" class="waves-effect waves-light">
+                <i class="material-icons">settings</i>
+                Settings
+            </a>
+        </li>
+
+         <li class="bold">
+            <a href="settings.html" class="waves-effect waves-light">
+                <i class="material-icons">code</i>
+                Documentation
+            </a>
+        </li>
+
+         <li class="bold">
+            <a href="settings.html" class="waves-effect waves-light">
+                <i class="material-icons">assignment</i>
+                About
+            </a>
+        </li>
+
+        <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
+    </ul>
+</header>

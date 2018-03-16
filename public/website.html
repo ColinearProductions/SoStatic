@@ -9,43 +9,12 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/materialize.css">
-    <link rel="stylesheet" href="css/highlight.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="resources/css/materialize.css">
+    <link rel="stylesheet" href="resources/css/highlight.css">
+    <link rel="stylesheet" href="resources/css/styles.css">
 </head>
 <body>
-<header>
-    <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
-        <li class="valign-wrapper " style="height:64px;">
-            <span class="logo-text " style="width:100%; text-align: center;">Materialize</span>
-        </li>
-        <li class="bold ">
-            <a href="dashboard.html" class="waves-effect waves-light ">
-                <i class="material-icons">dashboard</i>
-                Dashboard
-            </a>
-        </li>
-        <li class="bold active">
-            <a href="websites.html" class="waves-effect waves-light">
-                <i class="material-icons">web</i>
-                Websites
-            </a>
-        </li>
-        <li class="bold">
-            <a href="messages.html" class="waves-effect waves-light"> <i
-                    class="material-icons">insert_comment</i>
-                Messages</a>
-        </li>
-        <li class="bold">
-            <a href="settings.html" class="waves-effect waves-light">
-                <i class="material-icons">settings</i>
-                Settings
-            </a>
-        </li>
-
-        <li><a class="waves-effect waves-light btn  deep-purple " href="#!" onclick="logout()">Logout</a></li>
-    </ul>
-</header>
+<%include file="_HEADER.html" args="path='website'"/>
 <main class="with-sidenav" >
 
 
@@ -68,7 +37,7 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <div class="col s12" id="breadcrumbs">
-                    <a href="websites.html" class="breadcrumb">Websites</a>
+                    <a href="dashboard.html" class="breadcrumb">Websites</a>
                 </div>
             </div>
         </nav>
@@ -465,7 +434,7 @@
                     <br>
 
                     <p class="bold deep-purple-text lighten-1 m-t-5 " style="font-size:15px;">
-                        Messages 2/3
+                        Messages 2/3   <a href="messages.html?form_id={{key}}" class="deep-purple-text text-lighten-3"> (Read) </a>
                     </p>
 
 
@@ -543,16 +512,16 @@
 
 </script>
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
-<script type="text/javascript" src="js/firebase4.10.1.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/highlight.js"></script>
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/materialize.min.js"></script>
+<script type="text/javascript" src="resources/js/firebase4.10.1.js"></script>
+<script type="text/javascript" src="resources/js/script.js"></script>
+<script type="text/javascript" src="resources/js/highlight.js"></script>
 
 
-<script type="text/javascript" src="js/functionality.js"></script>
-<script type="text/javascript" src="js/matchHeight.js"></script>
-<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="resources/js/functionality.js"></script>
+<script type="text/javascript" src="resources/js/matchHeight.js"></script>
+<script type="text/javascript" src="resources/js/moment.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
 <script>
@@ -786,7 +755,10 @@
         init: function (website) {
             Mustache.parse(this.contactsTemplate);
 
-            $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n')
+            $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n');
+
+            if(website.recaptcha === false)
+                $('#form_info_modal_use_recaptcha').attr("disabled",true);
 
             if (website.forms !== undefined) {
 
@@ -958,9 +930,9 @@
 
 
         $('code').each(function () {
-            var that = $(this);
+            let that = $(this);
             // cache the content of 'code'
-            var html = that.html().trim();
+            let html = that.html().trim();
             that.empty();
             // escape the content
             that.text(html);

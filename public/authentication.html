@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="resources/css/materialize.css">
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="resources/css/styles.css">
 
 
 </head>
@@ -18,7 +18,7 @@
 <main>
 
     <div class="section   deep-purple lighten-1 valign-wrapper"
-         style="height:calc( 100vh ); background-image: url('images/Photoshop/Untitled-1.png') ">
+         style="height:calc( 100vh ); background-image: url('resources/images/Photoshop/Untitled-1.png') ">
 
         <div class="overlay-container valign-wrapper " style="display:none">
             <div class="card-panel center p-40">
@@ -189,8 +189,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/functionality.js"></script>
+<script type="text/javascript" src="resources/js/script.js"></script>
+<script type="text/javascript" src="resources/js/functionality.js"></script>
 
 <script>
     $(".button-collapse").sideNav();
@@ -294,10 +294,10 @@
                 hideLoading();
                 state = null;
                 Materialize.toast('Succesfully logged in', 4000); // 4000 is the duration of the toast
-                window.location.href = "websites.html"
+                window.location.href = "dashboard.html"
             } else {
                 Materialize.toast('Welcome back ' + user.email, 4000); // 4000 is the duration of the toast
-                window.location.href = "websites.html"
+                window.location.href = "dashboard.html"
             }
 
 
