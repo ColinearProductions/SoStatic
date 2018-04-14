@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function () {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
@@ -27,7 +24,6 @@ $(document).ready(function () {
     });
 
 
-
     $(".smooth_scroll").on('click', function (event) {
 
         if (this.hash !== "") {
@@ -35,12 +31,26 @@ $(document).ready(function () {
             let hash = this.hash;
             $('html, body').animate({
                 scrollTop: $(hash).offset().top
-            }, 500, function(){
+            }, 500, function () {
                 window.location.hash = hash;
             });
         }
 
     });
+
+
+    $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: true, // Does not change width of dropdown to that of the activator
+            hover: false, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: true, // Displays dropdown below the button
+            alignment: 'center', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        }
+    );
+
 
 });
 
@@ -65,14 +75,14 @@ function onValidateInput(element) {
 
     let val = $(element).val();
 
-    if( $(element).data("validate-if-checked") !== undefined){
+    if ($(element).data("validate-if-checked") !== undefined) {
         let target = $($(element).data("validate-if-checked"));
 
-        $(target).change(()=>{
-           onValidateInput(element);
+        $(target).change(() => {
+            onValidateInput(element);
         });
 
-        if(!$(target).prop("checked")) {
+        if (!$(target).prop("checked")) {
             hideError(element);
             return;
         }
@@ -81,7 +91,7 @@ function onValidateInput(element) {
 
     if ($(element).data("validate-email") !== undefined) {
 
-        if($(element).data("validate-optional") !== undefined && val.length <1) {
+        if ($(element).data("validate-optional") !== undefined && val.length < 1) {
             hideError(element);
             return;
         }
@@ -165,6 +175,8 @@ function snapshotToArray(snapshot) {
 }
 
 function objToArray(obj) {
+    if(obj===undefined)
+        return [];
     return Object.keys(obj).map(function (key) {
         obj[key]['key'] = key;
         return obj[key];
@@ -180,7 +192,7 @@ $.extend({
             hash = hashes[i].split('=');
             vars.push(hash[0]);
 
-            if(hash[1]!==undefined)
+            if (hash[1] !== undefined)
                 vars[hash[0]] = hash[1].replace("#", "");
             else
                 vars[hash[0]] = undefined
@@ -192,12 +204,109 @@ $.extend({
     }
 });
 
-
-
-
-
 function isSameDay(d1, d2) {
     return d1.getFullYear() === d2.getFullYear() &&
         d1.getMonth() === d2.getMonth() &&
         d1.getDate() === d2.getDate();
 }
+
+
+
+
+function populateWebsitesDropdown(websites) {
+    let element = $("#websites_dropdown");
+
+
+    websites.forEach(website => {
+        $(element).append('<li><a  onclick="onWebsiteChanged(\''+website.key+'\')">' + website.alias + '</a></li>');
+
+
+    });
+
+    $(element).append(`
+      <li class="divider"></li>
+        <li>
+            <a href="!">
+                <i class="material-icons" style="margin-right:5px;">add</i> Add new website
+            </a>
+        </li>
+    `);
+
+
+}
+
+
+
+
+
+
+$(".append-website").click(function(e){
+    let target = $(this).attr('href');
+    //todo
+    e.preventDefault();
+    window.location.href= target+"?website_id=" + localStorage.getItem(CURRENT_WEBSITE_ID);
+
+});
+
+
+function getJsonFromUrl() {
+    let query = location.search.substr(1);
+    let result = {};
+    query.split("&").forEach(function(part) {
+        let item = part.split("=");
+        if(item[0]!=="")
+            result[item[0]] = decodeURIComponent(item[1]);
+    });
+
+    return result;
+}
+
+function getUrlFromJson(data){
+
+    return "?"+Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+    }).join('&')
+}
+
+
+
+//////////////////////////// STATE ///////////////////////
+
+const CURRENT_WEBSITE_ID = "CURRENT_WEBSITE_ID";
+const CURRENT_WEBSITE_NAME = "CURRENT_WEBSITE_NAME";
+const CURRENT_WEBSITE_URL = "CURRENT_WEBSITE_URL";
+
+let WEBSITES = null;
+
+$(document).ready(function () {
+    let current_website_name=$("#header_website_name");
+    let current_website_domains =$("#header_website_domains");
+
+    $(current_website_name).text(localStorage.getItem(CURRENT_WEBSITE_NAME));
+    $(current_website_domains).text(localStorage.getItem(CURRENT_WEBSITE_URL));
+
+});
+
+function onWebsiteChanged(website_key){
+
+    setCurrentWebsite(GET_WEBSITE_BY_ID(website_key));
+    let queryParams = getJsonFromUrl();
+    queryParams['website_id'] = website_key;
+    window.location.href = window.location.href.split("?")[0] + getUrlFromJson(queryParams)
+
+}
+
+
+function setCurrentWebsite(website){
+    localStorage.setItem(CURRENT_WEBSITE_ID, website.key);
+    localStorage.setItem(CURRENT_WEBSITE_NAME, website.alias);
+    localStorage.setItem(CURRENT_WEBSITE_URL, website.url);
+}
+
+function GET_WEBSITE_BY_ID(id){
+    for(let i=0;i<WEBSITES.length;i++){
+        if(WEBSITES[i].key === id)
+            return WEBSITES[i];
+    }
+}
+

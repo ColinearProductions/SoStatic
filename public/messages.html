@@ -298,6 +298,8 @@
     function onWebsitesLoaded(websites) {
 
         populateSelects(websites);
+        populateWebsitesDropdown(websites);
+        WEBSITES = websites;
 
 
         let websiteId = $.getUrlVar('website_id');

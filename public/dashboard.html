@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="resources/css/materialize.css">
     <link rel="stylesheet" href="resources/css/styles.css">
+    <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="resources/js/materialize.min.js"></script>
 </head>
 <body>
 <%include file="_HEADER.html" args="path='dashboard'"/>
@@ -211,8 +213,7 @@
 
 </script>
 
-<script type="text/javascript" src="resources/js/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/materialize.min.js"></script>
+
 
 
 <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
@@ -276,7 +277,7 @@
 
     function onWebsiteAdded(snapshot) {
         let id = snapshot.key;
-        window.location.href = "website_dashboard.html?website_id=" + id;
+        window.location.href = "website.html?website_id=" + id;
 
     }
 
@@ -297,7 +298,10 @@
 
 
     function onUserWebsitesLoaded(websites) {
+        populateWebsitesDropdown(websites);
         console.log(websites);
+
+        WEBSITES = websites;
 
         websites.forEach(website => {
             if (website.forms === undefined) {

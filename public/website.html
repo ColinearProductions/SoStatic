@@ -15,8 +15,7 @@
 </head>
 <body>
 <%include file="_HEADER.html" args="path='website'"/>
-<main class="with-sidenav" >
-
+<main class="with-sidenav">
 
 
     <div class="section" style="height:calc( 100vh); padding:0">
@@ -434,7 +433,8 @@
                     <br>
 
                     <p class="bold deep-purple-text lighten-1 m-t-5 " style="font-size:15px;">
-                        Messages 2/3   <a href="messages.html?form_id={{key}}" class="deep-purple-text text-lighten-3"> (Read) </a>
+                        Messages 2/3 <a href="messages.html?form_id={{key}}" class="deep-purple-text text-lighten-3">
+                        (Read) </a>
                     </p>
 
 
@@ -679,9 +679,6 @@
                 return;
 
 
-
-
-
             let contacts = [];
             let getContactByEmail = (email) => {
                 return objToArray(website.contacts).filter((contact) => {
@@ -757,8 +754,8 @@
 
             $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n');
 
-            if(website.recaptcha === false)
-                $('#form_info_modal_use_recaptcha').attr("disabled",true);
+            if (website.recaptcha === false)
+                $('#form_info_modal_use_recaptcha').attr("disabled", true);
 
             if (website.forms !== undefined) {
 
@@ -891,7 +888,19 @@
             window.location.href = "authentication.html";
         } else {
 
-            getWebsiteById(websiteId, (ws) => {
+            getWebsitesOfUser((websites) => {
+
+                populateWebsitesDropdown(websites);
+
+                let ws = null;
+                websites.forEach((website) => {
+                    if (website.key === websiteId)
+                        ws = website;
+
+
+                });
+
+
                 websiteElement.init(ws);
 
                 website = ws;
@@ -902,7 +911,7 @@
         }
     });
 
-    function hidePreloader(){
+    function hidePreloader() {
         $("#main-container").show();
         $("#preloader").hide();
     }

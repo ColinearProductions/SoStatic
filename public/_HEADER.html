@@ -1,21 +1,34 @@
-
 <%page args="path"/>
 
 <header>
     <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
 
 
+        <li class="valign-wrapper pointer" style="height:64px;">
+            <div class="dropdown-button" data-activates="websites_dropdown"
+                 style="margin-left:25px; width:250px; height:100%;padding:5px;">
+                <h6 class="bold deep-purple-text center-align">
+                    <span  id="header_website_name"></span>
 
-        <li class="valign-wrapper " style="height:64px;">
-            <h4 style="width:100%; text-align: center;"><a class="deep-purple-text" href="index.html">So Static</a></h4>
+                    <i class="material-icons"
+                       style="margin:0; position:absolute; right:20px;top:20px;">arrow_drop_down</i>
+                </h6>
+                <h6 class="deep-purple-text text-lighten-2 center-align text-s" id="header_website_domains"></h6>
+            </div>
+
+
+            <!-- Dropdown Structure -->
+            <ul id="websites_dropdown" class="dropdown-content" style="margin-left:25px;">
+
+
+            </ul>
         </li>
-
 
 
         <li class="bold ${'active' if path in ['dashboard','website'] else ''}">
             <a href="dashboard.html" class="waves-effect waves-light ">
-                <i class="material-icons">dashboard</i>
-                Dashboard
+                <i class="material-icons">assignment</i>
+                Froms
             </a>
         </li>
         <li class="bold  ${'active' if path in 'messages' else ''}">
@@ -23,21 +36,22 @@
                     class="material-icons">insert_comment</i>
                 Messages</a>
         </li>
-        <li class="bold">
-            <a href="settings.html" class="waves-effect waves-light">
+
+        <li class="bold   ${'active' if path in 'settings' else ''}">
+            <a href="settings.html" class="waves-effect waves-light append-website">
                 <i class="material-icons">settings</i>
                 Settings
             </a>
         </li>
 
-         <li class="bold">
+        <li class="bold">
             <a href="settings.html" class="waves-effect waves-light">
                 <i class="material-icons">code</i>
                 Documentation
             </a>
         </li>
 
-         <li class="bold">
+        <li class="bold">
             <a href="settings.html" class="waves-effect waves-light">
                 <i class="material-icons">assignment</i>
                 About
