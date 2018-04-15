@@ -68,6 +68,10 @@
     padding-bottom:60px;
 }
 
+.m-t-15{
+    margin-top:15px;
+}
+
 .p-b-30{
     padding-bottom: 30px;
 }
@@ -294,6 +298,11 @@ select:focus {
 
 }
 
+
+input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before,
+input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
+    background-color: rgba(194, 49, 255, 0.12);
+}
 
 
 

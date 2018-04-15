@@ -23,7 +23,7 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <div class="col s12">
-                    <a href="#!" class="breadcrumb">Websites</a>
+                    <a href="#!" class="breadcrumb">Messages</a>
                 </div>
             </div>
         </nav>
@@ -302,9 +302,13 @@
         WEBSITES = websites;
 
 
+
+
         let websiteId = $.getUrlVar('website_id');
         if (websiteId === undefined)
-            websiteId = 0;
+            websiteId = localStorage.getItem(CURRENT_WEBSITE_ID);
+
+
 
 
         $(websitesFilter).find('option[value="' + websiteId + '"]').prop('selected', true);

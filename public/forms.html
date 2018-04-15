@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<!--suppress JSJQueryEfficiency -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="resources/css/materialize.css">
+    <link rel="stylesheet" href="resources/css/highlight.css">
+    <link rel="stylesheet" href="resources/css/styles.css">
+</head>
+<body>
+<%include file="_HEADER.html" args="path='website'"/>
+<main class="with-sidenav">
+
+
+    <div class="section" style="height:calc( 100vh); padding:0">
+
+        <!--FAB-->
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button class="btn-floating btn-large deep-purple tooltipped" data-position="left" data-delay="50"
+                    data-tooltip="Add Form" onclick="formInfoModal.init()">
+                <i class="material-icons ">add</i>
+            </button>
+        </div>
+
+        <!-- Navbar -->
+        <nav>
+            <div class="nav-wrapper deep-purple  " style="padding-left:20px;">
+                <a href="#" data-activates="nav-mobile"
+                   class="button-collapse top-nav full hide-on-large-only">
+                    <i class="material-icons">menu</i>
+                </a>
+                <div class="col s12" id="breadcrumbs">
+                    <a class="breadcrumb">Forms</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Content -->
+
+        <div class="preloader-background" id="preloader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-purple-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding:1vh; display:none" id="main-container">
+
+            <div class="row" style="width:100%;">
+
+
+
+                <div id="forms_container">
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Boilerplate Modal -->
+            <div id="boilerplate_modal" class="modal ">
+                <div class="modal-content">
+                    <div>
+                           <pre>
+                               <code class="" id="boilerplate_container"></code>
+                           </pre>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-action modal-close waves-effect waves-purple btn-flat ">Close</a>
+                    <a class="modal-action waves-effect waves-purple btn-flat" id="copy_boilerplate_button">Copy</a>
+                </div>
+            </div>
+
+            <!-- Form Info Modal -->
+            <div id="form_info_modal" class="modal small-modal">
+                <div class="modal-content">
+
+
+                    <input type="hidden" id="form_info_id">
+                    <div class="container">
+
+                        <h5 id="form_info_title" class="deep-purple-text bold">Add form</h5>
+
+
+                        <div class="input-field tooltipped m-t-20"
+                             data-tooltip="Email to redirect the messages to (can add more later)" data-position="top">
+                            <input id="form_info_modal_alias" type="text" class="mvalidate"
+                                   data-validate-required data-min-length="3">
+                            <label for="form_info_modal_alias" class="">Form Alias</label>
+                        </div>
+
+
+                        <p class="bold deep-purple-text lighten-1 m-0  ">
+                            ReCAPTCHA
+                        </p>
+
+
+                        <div class="switch  tooltipped m-t-10" data-tooltip="Enable message filtering with recaptcha"
+                             data-position="top" style="display:inline-block">
+                            <label>
+                                Off
+                                <input type="checkbox" id="form_info_modal_use_recaptcha">
+                                <span class="lever deep-purple lighten-4"></span>
+                                On
+                            </label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="modal-action modal-close waves-effect waves-purple btn-flat">Cancel</a>
+                    <button id="modal_info_confirm_button" class="waves-effect waves-purple btn-flat">Add</button>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</main>
+</body>
+
+
+<script id="contacts_template" type="x-tmpl-mustache">
+    <ul class="collection ">
+
+        {{#contacts}}
+        <li class="collection-item">
+            <div>
+                <p class="deep-purple-text lighten-1 bold" style="display: inline-block;">{{alias}}</p> {{email}}
+                <a class="secondary-content">
+                    <i class="material-icons deep-purple-text text-lighten-1 pointer"
+                       onclick="contactsElement.onDeleteContactClicked('{{email}}')">delete</i>
+                    <i class="material-icons deep-purple-text text-lighten-1 pointer"
+
+                       onclick="contactsElement.onPauseContactClicked('{{email}}')">
+
+                        {{#paused}}
+                        play_arrow
+                        {{/paused}}
+
+                        {{^paused}}
+                        pause
+                        {{/paused}}
+
+
+                    </i>
+
+                </a>
+            </div>
+        </li>
+        {{/contacts}}
+    </ul>
+</script>
+
+<script id="forms_template" type="x-tmpl-mustache">
+
+    {{#forms}}
+    <div class="col l4 m6 s12">
+        <div class="card">
+            <div class="card-content black-text ">
+                <div>
+                    <span class="deep-purple-text bold" style="font-size:22px;"> {{alias}}</span><br>
+                    <a class="grey-text text-lighten-1 bold" style="font-size:12px;">
+                        Added on {{formated_date}}
+                    </a>
+                    <br>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-5 " style="font-size:15px;">
+                        Messages 2/3 <a href="messages.html?form_id={{key}}" class="deep-purple-text text-lighten-3 append-website">
+                        (Read) </a>
+                    </p>
+
+
+                    <div class="progress deep-purple lighten-4">
+                        <div class="determinate deep-purple lighten-1" style="width: 66%"></div>
+                    </div>
+
+
+                    <p class="bold deep-purple-text lighten-1 m-b-0" style="font-size:15px;">
+                        ReCAPTCHA
+                        {{#recaptcha}}
+                        <small style="font-size:12px;">Enabled</small>
+                        {{/recaptcha}}
+                        {{^recaptcha}}
+                        <small style="font-size:12px;">Disabled</small>
+                        {{/recaptcha}}
+                    </p>
+
+                    <p class="bold deep-purple-text lighten-1 m-t-10 m-b-5" style="font-size:15px;">
+                        <i class="material-icons">http</i> Endpoint:
+                    </p>
+
+
+                    <a class="deep-purple-text text-lighten-2 p-5 m-b-10 deep-purple lighten-5 truncate  pointer cpy-button">
+                        https://sostatic.xyz/{{endpoint}}
+                    </a>
+
+                    <a class="p-t-10 bold deep-purple-text pointer " onclick="onGenerateBoilerplateClicked('{{key}}')">
+                        Generate form boilerplate</a>
+
+
+                </div>
+
+
+            </div>
+            <div class="card-action">
+                <a onclick="onEditFormClicked('{{key}}')" class="bold deep-purple-text lighten-2 pointer">Edit</a>
+
+            </div>
+        </div>
+
+    </div>
+
+    {{/forms}}
+</script>
+
+
+<script id="code_boilerplate_template" type="x-tmpl-mustache">
+
+
+    {{#withRecaptcha}}
+    <!-- Include recaptcha from Google's CDN-->
+    {{{url_to_recaptcha}}}
+    {{/withRecaptcha}}
+
+    <form action="https://sostatic.xyz/{{endpoint}}" method="POST">
+        <label>
+            Name
+            <input type="text" name="name">
+        </label>
+        <label>
+            Email
+            <input type="text" name="email">
+        </label>
+        <label> Message
+            <textarea name="message" placeholder="Your message"></textarea>
+        </label>
+
+        {{#withRecaptcha}}
+        <div class="g-recaptcha" data-sitekey="{{sitekey}}"></div>
+        {{/withRecaptcha}}
+        <input type="submit" value="Submit">
+    </form>
+
+
+</script>
+
+<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/materialize.min.js"></script>
+<script type="text/javascript" src="resources/js/firebase4.10.1.js"></script>
+<script type="text/javascript" src="resources/js/script.js"></script>
+<script type="text/javascript" src="resources/js/highlight.js"></script>
+
+
+<script type="text/javascript" src="resources/js/functionality.js"></script>
+<script type="text/javascript" src="resources/js/matchHeight.js"></script>
+<script type="text/javascript" src="resources/js/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+
+<script>
+
+
+    //todo if website doesnt have a recaptha on. dont allow forms to turn it on either;
+    let websiteId = $.getUrlVar('website_id');
+    let boilerplateTemplate = $("#code_boilerplate_template").html();
+    Mustache.parse(boilerplateTemplate);
+
+
+    //////////// CONTACTS THINGS ////////////
+    let website;
+
+
+
+    let breadcrumbs = $('#breadcrumbs');
+
+
+    let formsElement = {
+        template: $("#forms_template").html(),
+        container: $("#forms_container"),
+        addFormAliasInput: $("#add_form_alias"),
+        addFormUseRecaptcha: $("#add_form_use_recaptcha"),
+        init: function (website) {
+            Mustache.parse(this.contactsTemplate);
+
+            $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n');
+
+            if (website.recaptcha === false)
+                $('#form_info_modal_use_recaptcha').attr("disabled", true);
+
+            if (website.forms !== undefined) {
+
+
+                let forms = objToArray(website.forms);
+
+
+                forms = forms.map((form) => {
+                    form.formated_date = moment.unix(form.added_on / 1000).format("YYYY-MM-DD HH:mm");
+                    form.websiteid = websiteId;
+                    return form;
+                });
+
+                let rendered = Mustache.render(this.template, {'forms': forms});
+
+                $(this.container).append(rendered);
+
+
+            }
+
+            $(".cpy-button").each(function (i, obj) {
+                $(obj).on('click', function () {
+                    let aux = document.createElement("input");
+
+                    console.log($(this).data("target"));
+
+                    if ($(this).data("target") === undefined)
+                        aux.setAttribute("value", this.innerHTML);
+                    else
+                        aux.setAttribute("value", document.getElementById($(this).data("target")).innerHTML);
+                    document.body.appendChild(aux);
+                    aux.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(aux);
+                    Materialize.toast("Copied to clipboard", 4000)
+
+                });
+            });
+
+        },
+        onAddFormConfirmed: function () {
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $(formsElement.addFormAliasInput).val(),
+                'recaptcha': $(formsElement.addFormUseRecaptcha).prop('checked')
+            };
+            addFormToWebsite(websiteId, forminfo, () => {
+                window.location.reload();
+            });
+        }
+    };
+
+    function onEditFormClicked(form_id) {
+        formInfoModal.init(form_id);
+    }
+
+
+    let formInfoModal = {
+
+        confirmButton: $("#modal_info_confirm_button"),
+        init: (form_id) => {
+
+
+            if (form_id !== undefined) {
+
+                let form = getFormById(form_id);
+                console.log(form);
+                $("#form_info_title").text("Update form");
+                $(formInfoModal.confirmButton).text("Update");
+                $("#form_info_modal_alias").val(form.alias);
+                $("#form_info_modal_use_recaptcha").attr("checked", form.recaptcha);
+                $("#form_info_id").val(form.key);
+                $(formInfoModal.confirmButton).on('click', formInfoModal.onUpdateFormConfirmed);
+            } else {
+                console.log(form_id);
+                $("#form_info_modal_alias").val("");
+                $(formInfoModal.confirmButton).text("Add");
+                $("#form_info_title").text("Add form");
+                $(formInfoModal.confirmButton).on('click', formInfoModal.onAddFormConfirmed);
+            }
+
+            $("#form_info_modal").modal('open');
+            Materialize.updateTextFields();
+
+        },
+        onUpdateFormConfirmed: () => {
+
+            if (!isFormCompleted($("#form_info_modal")))
+                return;
+
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $("#form_info_modal_alias").val(),
+                'recaptcha': $("#form_info_modal_use_recaptcha").prop('checked')
+            };
+            let formKey = $("#form_info_id").val();
+            updateForm(websiteId, forminfo, formKey, () => {
+                window.location.reload();
+            })
+
+        },
+        onAddFormConfirmed: () => {
+
+            if (!isFormCompleted($("#form_info_modal")))
+                return;
+
+            let websiteId = $.getUrlVar('website_id');
+            let forminfo = {
+                'alias': $("#form_info_modal_alias").val(),
+                'recaptcha': $("#form_info_modal_use_recaptcha").prop('checked')
+            };
+            addFormToWebsite(websiteId, forminfo, () => {
+                window.location.reload();
+            });
+        }
+
+    };
+
+    function getFormById(form_id) {
+        return objToArray(website.forms).filter((form) => {
+
+                return form.key === form_id
+            }
+        )[0];
+    }
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (!user) {
+            window.location.href = "authentication.html";
+        } else {
+
+            getWebsitesOfUser((websites) => {
+
+                populateWebsitesDropdown(websites);
+                WEBSITES = websites;
+
+                let ws = null;
+                websites.forEach((website) => {
+                    if (website.key === websiteId)
+                        ws = website;
+
+
+                });
+
+                website = ws;
+
+                formsElement.init(website);
+                hidePreloader();
+            });
+
+        }
+    });
+
+    function hidePreloader() {
+        $("#main-container").show();
+        $("#preloader").hide();
+    }
+
+    function onGenerateBoilerplateClicked(formId) {
+
+        let urlToRecaptcha = '<script src="https://www.google.com/recaptcha/api.js" async defer><' + '/script>';
+        let form = getFormById(formId);
+        let data = {
+            'url_to_recaptcha': urlToRecaptcha,
+            'endpoint': form.endpoint,
+            //'websiteId': websiteId,
+            //'formId': formId,
+            'sitekey': website.sitekey,
+            'withRecaptcha': form.recaptcha && website.recaptcha
+        };
+
+        let rendered = Mustache.render(boilerplateTemplate, data);
+
+        console.log(rendered);
+
+        let container = $("#boilerplate_container");
+
+        $(container).html(rendered);
+
+
+        $('code').each(function () {
+            let that = $(this);
+            // cache the content of 'code'
+            let html = that.html().trim();
+            that.empty();
+            // escape the content
+            that.text(html);
+        });
+
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        $("#copy_boilerplate_button").off("click");
+        $("#copy_boilerplate_button").on("click", () => {
+            let aux = document.createElement("input");
+
+
+            aux.setAttribute("value", rendered);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand("copy");
+            document.body.removeChild(aux);
+            Materialize.toast("Copied to clipboard", 4000)
+        });
+
+        $("#boilerplate_modal").modal('open');
+    }
+
+</script>
+</html>

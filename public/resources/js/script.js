@@ -226,8 +226,8 @@ function populateWebsitesDropdown(websites) {
     $(element).append(`
       <li class="divider"></li>
         <li>
-            <a href="!">
-                <i class="material-icons" style="margin-right:5px;">add</i> Add new website
+            <a href="/home.html">
+                 All
             </a>
         </li>
     `);
@@ -279,13 +279,17 @@ const CURRENT_WEBSITE_URL = "CURRENT_WEBSITE_URL";
 let WEBSITES = null;
 
 $(document).ready(function () {
+    update_header_website()
+});
+
+
+function update_header_website(){
     let current_website_name=$("#header_website_name");
     let current_website_domains =$("#header_website_domains");
 
     $(current_website_name).text(localStorage.getItem(CURRENT_WEBSITE_NAME));
     $(current_website_domains).text(localStorage.getItem(CURRENT_WEBSITE_URL));
-
-});
+}
 
 function onWebsiteChanged(website_key){
 

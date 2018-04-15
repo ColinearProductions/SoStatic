@@ -15,14 +15,10 @@
 </head>
 <body>
 <%include file="_HEADER.html" args="path='settings'"/>
-<main class="with-sidenav" >
-
+<main class="with-sidenav">
 
 
     <div class="section" style="height:calc( 100vh); padding:0">
-
-
-
         <!-- Navbar -->
         <nav>
             <div class="nav-wrapper deep-purple  " style="padding-left:20px;">
@@ -31,7 +27,7 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <div class="col s12" id="breadcrumbs">
-                    <a href="dashboard.html" class="breadcrumb">Websites</a>
+                    <a class="breadcrumb">Settings</a>
                 </div>
             </div>
         </nav>
@@ -53,156 +49,132 @@
             </div>
         </div>
 
-        <div style="padding:3vh; display:none" id="main-container">
+        <div style="padding:1vh; display:none" id="main-container">
 
-            <div class="row" style="width:100%;">
+            <div class="container">
 
 
+                <div class="card" style="min-width:100%;">
+                    <div class="card-content black-text" style=" padding-left:8vw;padding-right: 8vw;">
+                        <p class="deep-purple-text m-0 text-xxl bold">Website Details</p>
 
-                <div class="col l6 m12 s12">
-                    <div class="row">
-                        <div class="col m12 s12 ">
-                            <span class="deep-purple-text m-0" style="font-size:25px;">Edit Website</span><br>
+                        <div class="row" style="padding-top:20px">
+                            <div class="col l12 s12">
 
-                            <div class="input-field tooltipped " data-tooltip="An alias for your website"
-                                 data-position="right">
-                                <input id="edit_website_name" class="m-b-5 mvalidate" type="text"
-                                >
-                                <label for="edit_website_name" class="">Website Name</label>
+
+                                <div class="input-field tooltipped " data-tooltip="An alias for your website"
+                                     data-position="right">
+                                    <input id="edit_website_name" class="m-b-5 mvalidate" type="text">
+                                    <label for="edit_website_name" class="">Website Name</label>
+                                </div>
                             </div>
-                            <div class="input-field tooltipped "
-                                 data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
-                                 data-position="right">
-                                <input id="edit_website_url" type="text" class="mvalidate"
-                                       data-validate-required data-min-length="3">
-                                <label for="edit_website_url">Website URL</label>
+                            <div class="col l12 s12">
+                                <div class="input-field tooltipped "
+                                     data-tooltip="We will only consider requests from this website to avoid spam  (can add domains later)"
+                                     data-position="right">
+                                    <input id="edit_website_url" type="text" class="mvalidate"
+                                           data-validate-required data-min-length="3">
+                                    <label for="edit_website_url">Website URLs</label>
+                                </div>
                             </div>
 
 
-                            <p style="display:inline-block" class="tooltipped "
-                               data-tooltip="Online consider messages sent from the HTTPS version of the site"
-                               data-position="right">
-                                <input type="checkbox" class="purple-checkbox" id="edit_only_https" checked/>
-                                <label for="edit_only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
-                                    HTTPs</label>
-                            </p>
+                            <div class="col l12 s12">
+                                <p style="display:inline-block" class="tooltipped "
+                                   data-tooltip="Online consider messages sent from the HTTPS version of the site"
+                                   data-position="right">
+                                    <input type="checkbox" class="purple-checkbox" id="edit_only_https" checked/>
+                                    <label for="edit_only_https" class="deep-purple-text text-lighten-2 checkbox-label">Only
+                                        HTTPs</label>
+                                </p>
+                            </div>
 
 
-                            <p class="bold deep-purple-text lighten-1 m-0  ">
-                                ReCAPTCHA
-                            </p>
+                            <div class="col l12 m-t-15">
+                                <p class="bold deep-purple-text lighten-1 m-0  ">
+                                    ReCAPTCHA
+                                </p>
 
 
-                            <div class="switch  tooltipped m-t-10"
-                                 data-tooltip="Enable message filtering with recaptcha"
-                                 data-position="right" style="display:inline-block">
-                                <label>
-                                    Off
-                                    <input type="checkbox" id="edit_website_recaptcha_switch">
-                                    <span class="lever deep-purple lighten-4"></span>
-                                    On
-                                </label>
+                                <div class="switch  tooltipped m-t-10"
+                                     data-tooltip="Enable message filtering with recaptcha"
+                                     data-position="right" style="display:inline-block">
+                                    <label>
+                                        Off
+                                        <input type="checkbox" id="edit_website_recaptcha_switch">
+                                        <span class="lever deep-purple lighten-4"></span>
+                                        On
+                                    </label>
+                                </div>
                             </div>
 
 
                             <div class="m-t-20" id="edit_recaptcha_container">
-                                <div class="input-field">
-                                    <input id="edit_recaptcha_secret" type="text"
-                                           class="mvalidate" data-validate-if-checked="#edit_website_recaptcha_switch"
-                                           data-min-length="5">
-                                    <label for="edit_recaptcha_secret" class="">ReCAPTCHA Secret</label>
+                                <div class="col l12 s12">
+                                    <div class="input-field">
+                                        <input id="edit_recaptcha_secret" type="text"
+                                               class="mvalidate"
+                                               data-validate-if-checked="#edit_website_recaptcha_switch"
+                                               data-min-length="5">
+                                        <label for="edit_recaptcha_secret" class="">ReCAPTCHA Secret</label>
+                                    </div>
                                 </div>
 
-                                <div class="input-field">
-                                    <input id="edit_recaptcha_sitekey" type="text"
-                                           class="mvalidate" data-validate-if-checked="#edit_website_recaptcha_switch"
-                                           data-min-length="5">
-                                    <label for="edit_recaptcha_sitekey" class="">ReCAPTCHA Site-key</label>
+                                <div class="col l12 s12">
+                                    <div class="input-field">
+                                        <input id="edit_recaptcha_sitekey" type="text"
+                                               class="mvalidate"
+                                               data-validate-if-checked="#edit_website_recaptcha_switch"
+                                               data-min-length="5">
+                                        <label for="edit_recaptcha_sitekey" class="">ReCAPTCHA Site-key</label>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="m-t-20">
-                                <a class="waves-effect waves-light btn deep-purple">Save</a>
-
                             </div>
 
                         </div>
 
 
                     </div>
-                </div>
+                    <div class="card-action right-align" style="padding:5px;">
+                        <a href="#edit_website_modal" class="bold deep-purple-text lighten-2 btn btn-flat  disabled"
+                           style="padding: 0 2vh 0 0;">Save Changes</a>
 
-
-
-
-
-
-
-                <div class="col l6 m12 s12">
-                    <div class="card" style="min-width:100%">
-                        <div class="card-content black-text mh1">
-                            <div>
-                                <span class="deep-purple-text m-0 bold" style="font-size:30px;">Contacts</span><br>
-                                <div id="contacts_container">
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-                        <div class="card-action">
-                            <a href="#add_contacts_modal" id="add_contacts_button"
-                               class="bold deep-purple-text lighten-2 modal-trigger">Edit</a>
-
-                        </div>
                     </div>
-
                 </div>
 
 
+                <div class="card" style="min-width:100%">
+                    <div class="card-content black-text" style=" padding-left:8vw;padding-right: 8vw;">
 
+                        <span class="deep-purple-text m-0 text-xxl bold ">Contacts</span>
 
-
-
-            </div>
-
-
-            <!-- Edit Contacts Modal -->
-            <div id="add_contacts_modal" class="modal">
-                <div class="modal-content">
-
-
-                    <div class="container">
-                        <h5 class="deep-purple-text lighten-1">Edit contacts</h5>
-
-
-                        <div class="row" id="edit_contacts_list">
+                        <div class="row" id="edit_contacts_list" style="padding-top:20px">
 
                             <div class="contacts-list-entry" data-entry-index="0">
 
 
-                                <div class="input-field col s4 " style="padding-left:0;">
+                                <div class="input-field col s4 ">
                                     <input id="single_contact_alias1" type="text" class="contacts-alias">
                                     <label for="single_contact_alias1">Alias</label>
                                 </div>
 
-                                <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email1" type="email" class="contacts-email mvalidate"
+                                <div class="input-field col s8 ">
+                                    <input id="single_contact_email1" type="email"
+                                           class="contacts-email mvalidate"
                                            data-validate-email data-validate-optional>
                                     <label for="single_contact_email1">Email</label>
                                 </div>
 
                             </div>
                             <div class="contacts-list-entry" data-entry-index="1">
-                                <div class="input-field col s4 " style="padding-left:0;">
+                                <div class="input-field col s4 ">
                                     <input id="single_contact_alias2" type="text" class="contacts-alias">
                                     <label for="single_contact_alias2">Alias</label>
                                 </div>
 
-                                <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email2" type="email" class="contacts-email mvalidate"
+                                <div class="input-field col s8 ">
+                                    <input id="single_contact_email2" type="email"
+                                           class="contacts-email mvalidate"
                                            data-validate-email data-validate-optional>
                                     <label for="single_contact_email2">Email</label>
                                 </div>
@@ -210,13 +182,14 @@
 
                             <div class="contacts-list-entry" data-entry-index="2">
 
-                                <div class="input-field col s4 " style="padding-left:0;">
+                                <div class="input-field col s4 ">
                                     <input id="single_contact_alias3" type="text" class="contacts-alias">
                                     <label for="single_contact_alias3">Alias</label>
                                 </div>
 
-                                <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email3" type="email" class="contacts-email mvalidate"
+                                <div class="input-field col s8 ">
+                                    <input id="single_contact_email3" type="email"
+                                           class="contacts-email mvalidate"
                                            data-validate-email data-validate-optional>
                                     <label for="single_contact_email3">Email</label>
                                 </div>
@@ -225,13 +198,14 @@
 
                             <div class="contacts-list-entry" data-entry-index="3">
 
-                                <div class="input-field col s4 " style="padding-left:0;">
+                                <div class="input-field col s4 ">
                                     <input id="single_contact_alias4" type="text" class="contacts-alias">
                                     <label for="single_contact_alias4">Alias</label>
                                 </div>
 
-                                <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email4" type="email" class="contacts-email mvalidate"
+                                <div class="input-field col s8 ">
+                                    <input id="single_contact_email4" type="email"
+                                           class="contacts-email mvalidate"
                                            data-validate-email data-validate-optional>
                                     <label for="single_contact_email4">Email</label>
                                 </div>
@@ -240,13 +214,14 @@
                             </div>
 
                             <div class="contacts-list-entry" data-entry-index="4">
-                                <div class="input-field col s4 " style="padding-left:0;">
+                                <div class="input-field col s4 ">
                                     <input id="single_contact_alias5" type="text" class="contacts-alias">
                                     <label for="single_contact_alias5">Alias</label>
                                 </div>
 
-                                <div class="input-field col s8 p-0">
-                                    <input id="single_contact_email5" type="email" class="contacts-email mvalidate"
+                                <div class="input-field col s8 ">
+                                    <input id="single_contact_email5" type="email"
+                                           class="contacts-email mvalidate"
                                            data-validate-email data-validate-optional>
                                     <label for="single_contact_email5">Email</label>
                                 </div>
@@ -257,17 +232,21 @@
 
 
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a id="confirm_edit_contacts_button"
-                       class="modal-action modal-close waves-effect waves-purple btn-flat ">Update</a>
-                </div>
-            </div>
+                    <div class="card-action right-align" style="padding:5px;">
+                        <a href="#edit_website_modal" class="bold deep-purple-text lighten-2 btn btn-flat  disabled"
+                           style="padding: 0 2vh 0 0;">Save Changes</a>
 
+                    </div>
+                </div>
+
+
+            </div>
 
 
         </div>
     </div>
+
+
 </main>
 </body>
 
@@ -303,7 +282,6 @@
         {{/contacts}}
     </ul>
 </script>
-
 
 
 <script type="text/javascript" src="resources/js/jquery.min.js"></script>
@@ -472,9 +450,6 @@
                 return;
 
 
-
-
-
             let contacts = [];
             let getContactByEmail = (email) => {
                 return objToArray(website.contacts).filter((contact) => {
@@ -540,25 +515,37 @@
     let breadcrumbs = $('#breadcrumbs');
 
 
-
-
     firebase.auth().onAuthStateChanged(function (user) {
         if (!user) {
             window.location.href = "authentication.html";
         } else {
 
-            getWebsiteById(websiteId, (ws) => {
-                websiteElement.init(ws);
 
-                website = ws;
+            getWebsitesOfUser((websites)=>{
+
+                WEBSITES = websites;
+                website = GET_WEBSITE_BY_ID(websiteId);
+                setCurrentWebsite(website);
+                populateWebsitesDropdown(websites);
+
+                update_header_website();
+
+                websiteElement.init(website);
+
+
 
                 hidePreloader();
+
+                $(breadcrumbs).append('<a href="#!" class="breadcrumb">' + website.alias + " - " + website.url + '</a>\n');
+
             });
+
+
 
         }
     });
 
-    function hidePreloader(){
+    function hidePreloader() {
         $("#main-container").show();
         $("#preloader").hide();
     }
